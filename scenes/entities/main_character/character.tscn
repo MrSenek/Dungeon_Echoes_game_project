@@ -119,6 +119,10 @@ wait_time = 0.2
 [node name="dash_state" type="Node" parent="state_machine" unique_id=1997009307]
 script = ExtResource("10_4qou0")
 
+[node name="dash_timer" type="Timer" parent="state_machine/dash_state" unique_id=1711828911]
+wait_time = 0.2
+one_shot = true
+
 [node name="weapon_state_machine" type="Node2D" parent="." unique_id=2124445293 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("8_2wsin")
 initial_state = NodePath("fireball")
@@ -168,6 +172,7 @@ grav_grenade = ExtResource("16_qq1ml")
 
 [connection signal="death" from="HP" to="." method="_on_hp_death"]
 [connection signal="timeout" from="state_machine/recoil_state/recoil" to="state_machine/recoil_state" method="_on_recoil_timeout"]
+[connection signal="timeout" from="state_machine/dash_state/dash_timer" to="state_machine/dash_state" method="_on_dash_timer_timeout"]
 [connection signal="weapon_fired" from="weapon_state_machine/fireball" to="state_machine" method="_on_fireball_weapon_fired"]
 [connection signal="body_entered" from="weapon_state_machine/electro/Area2D" to="weapon_state_machine/electro" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="weapon_state_machine/electro/Area2D/timer_DOT" to="weapon_state_machine/electro" method="_on_timer_dot_timeout"]

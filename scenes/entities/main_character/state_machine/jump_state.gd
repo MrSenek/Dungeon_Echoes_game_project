@@ -36,6 +36,7 @@ func physics_update(delta: float):
 			state_machine.change_state("walk_state")
 		else:
 			state_machine.change_state("idle_state")
-	
 
-	
+func handle_input(event: InputEvent):
+	if event.is_action_pressed("shift"):
+		state_machine.change_state("dash_state")

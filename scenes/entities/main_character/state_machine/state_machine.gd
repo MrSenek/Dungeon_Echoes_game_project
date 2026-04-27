@@ -31,7 +31,8 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if current_state:
 		current_state.handle_input(event)
-	
+		
+		
 func change_state(new_state_name: String, data: Dictionary = {}) -> void:
 	if current_state:
 		current_state.exit()

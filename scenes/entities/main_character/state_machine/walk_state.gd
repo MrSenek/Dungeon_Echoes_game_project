@@ -37,5 +37,7 @@ func physics_update(delta: float):
 	
 func handle_input(event: InputEvent):
 	
-	if Input.is_action_just_pressed("ui_accept"):
+	if event.is_action_pressed("ui_accept"):
 		state_machine.change_state("jump_state")
+	if event.is_action_pressed("shift"):
+		state_machine.change_state("dash_state")

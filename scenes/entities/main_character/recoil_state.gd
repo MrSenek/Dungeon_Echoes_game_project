@@ -24,18 +24,8 @@ func physics_update(delta: float):
 	if Input.is_action_just_pressed("ui_accept"):
 		
 		state_machine.change_state("jump_state")
-	if abs(character.velocity.x) > 100:
-		spawn_ghost()
 	character.move_and_slide()
 	
 
 func _on_recoil_timeout() -> void:
 	state_machine.change_state("idle_state")
-
-func spawn_ghost():
-	var ghost = GHOST.instantiate()
-	ghost.texture = character.sprite_2d.texture
-	ghost.global_position = character.global_position
-	ghost.flip_h = character.sprite_2d.flip_h
-	ghost.scale = character.sprite_2d.scale
-	get_tree().current_scene.add_child(ghost)
