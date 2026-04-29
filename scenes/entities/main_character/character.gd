@@ -1,5 +1,6 @@
 extends CharacterBody2D
-@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var sprite_2d: AnimatedSprite2D = $Sprite2D
+
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 @onready var HEALTH_POINTS: int = PlayerData.max_health
@@ -11,6 +12,7 @@ func _ready() -> void:
 	SPAWN_POINT = global_position
 	self.add_to_group("Player")
 	dir = sprite_2d.flip_h
+	
 
 func _process(delta: float) -> void:
 	if Input.get_axis("ui_left","ui_right") != 0:

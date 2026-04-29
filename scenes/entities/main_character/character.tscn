@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b0m0ts1gobg1v" path="res://scenes/entities/main_character/character.gd" id="1_w0rc6"]
 [ext_resource type="PackedScene" uid="uid://b2u5wxfry5dtj" path="res://scenes/entities/universal/health_bar/health.tscn" id="3_tlbcw"]
 [ext_resource type="Shader" uid="uid://dpie1h35rm23x" path="res://scenes/entities/main_character/character.gdshader" id="3_utmtp"]
+[ext_resource type="Texture2D" uid="uid://bhcjuwuggow2h" path="res://scenes/entities/main_character/player_dash.png" id="4_rvm66"]
 [ext_resource type="Script" uid="uid://c5dirk1s2q0qq" path="res://scenes/entities/main_character/state_machine/state_machine.gd" id="4_u6tu1"]
 [ext_resource type="Texture2D" uid="uid://cccskynyp23eo" path="res://scenes/entities/main_character/player_sprite.png" id="4_utmtp"]
 [ext_resource type="Script" uid="uid://ca6ho6sa8d3gm" path="res://scenes/entities/main_character/state_machine/idle_state.gd" id="5_utmtp"]
@@ -23,6 +24,33 @@
 shader = ExtResource("3_utmtp")
 shader_parameter/blur_amount = 0.0
 shader_parameter/blur_direction = Vector2(1, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84ou4"]
+atlas = ExtResource("4_rvm66")
+region = Rect2(0, 0, 21, 39)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oaeto"]
+atlas = ExtResource("4_utmtp")
+region = Rect2(0, 0, 21, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rll1i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84ou4")
+}],
+"loop": true,
+"name": &"dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oaeto")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n7fvo"]
 size = Vector2(19, 36)
@@ -83,10 +111,11 @@ script = ExtResource("1_w0rc6")
 [node name="HP" parent="." unique_id=1591294406 instance=ExtResource("3_tlbcw")]
 position = Vector2(0, -11)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520758644]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1123078486]
 material = SubResource("ShaderMaterial_4qou0")
-texture = ExtResource("4_utmtp")
-region_rect = Rect2(67.59714, 16.68981, 21.817436, 37.443436)
+sprite_frames = SubResource("SpriteFrames_rll1i")
+animation = &"dash"
+autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2083763825]
 shape = SubResource("RectangleShape2D_n7fvo")

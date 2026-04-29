@@ -8,6 +8,7 @@ const IDLE_TIMER := 1.0
 
 
 func physics_update(delta: float):
+	print(character.is_on_wall())
 	if not character.is_on_floor():
 		character.velocity += character.get_gravity() * delta * character.speed_modifier
 

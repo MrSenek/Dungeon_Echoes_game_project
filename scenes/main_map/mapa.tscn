@@ -324,7 +324,7 @@ environment = SubResource("Environment_efsqn")
 position = Vector2(277, 433)
 
 [node name="CharacterBody2D" parent="." unique_id=2124554108 instance=ExtResource("23_m1s8n")]
-position = Vector2(549, 71)
+position = Vector2(547, -52)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=963944604]
 position = Vector2(536, 439)
@@ -335,7 +335,7 @@ position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_bon58")
 
 [node name="blob_enemy" parent="." unique_id=1650501818 instance=ExtResource("11_jxony")]
-visible = false
-position = Vector2(483, 417)
+position = Vector2(85, 437)
+wall_min_slide_angle = 0.0
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
