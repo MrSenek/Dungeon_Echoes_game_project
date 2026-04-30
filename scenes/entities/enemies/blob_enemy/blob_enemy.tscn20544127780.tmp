@@ -10,9 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://brxxv2beb60uj" path="res://scenes/entities/enemies/blob_enemy/excl-mark.png" id="9_18fx8"]
 [ext_resource type="Script" uid="uid://who4v86lvvdq" path="res://scenes/entities/enemies/blob_enemy/charge_state.gd" id="10_18fx8"]
 [ext_resource type="Script" uid="uid://3qo400q15oly" path="res://scenes/entities/enemies/blob_enemy/attack_state.gd" id="10_kd70p"]
-[ext_resource type="Script" uid="uid://ccnennsc63y73" path="res://scenes/entities/enemies/blob_enemy/stun_state.gd" id="11_601bl"]
-[ext_resource type="PackedScene" uid="uid://ro1wueymykbp" path="res://scenes/entities/enemies/blob_enemy/electric_trail.tscn" id="11_8838m"]
-[ext_resource type="Texture2D" uid="uid://dqta773kno5cq" path="res://scenes/entities/enemies/blob_enemy/star.png" id="12_8838m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6nayp"]
 atlas = ExtResource("1_vfqwy")
@@ -228,32 +225,6 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="Curve" id="Curve_7f87r"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.52150536, 0.6599553), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_ikka4"]
-curve = SubResource("Curve_7f87r")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p3a5n"]
-particle_flag_disable_z = true
-emission_shape = 6
-emission_ring_axis = Vector3(0, 0, 1)
-emission_ring_height = 0.0
-emission_ring_radius = 20.0
-emission_ring_inner_radius = 15.0
-emission_ring_cone_angle = 90.0
-angular_velocity_min = -1.6093254e-05
-angular_velocity_max = -1.6093254e-05
-orbit_velocity_min = 0.080000095
-orbit_velocity_max = 0.5300001
-radial_velocity_min = -2.2351742e-05
-radial_velocity_max = -2.2351742e-05
-gravity = Vector3(0, 0, 0)
-scale_min = 0.01
-scale_max = 0.01
-scale_curve = SubResource("CurveTexture_ikka4")
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_gfo5w"]
 radius = 150.0
 
@@ -265,7 +236,7 @@ script = ExtResource("1_adslp")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=798987947]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_iu781")
-animation = &"new_animation"
+animation = &"charge_anim"
 autoplay = "new_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1552319726]
@@ -274,13 +245,13 @@ shape = SubResource("CapsuleShape2D_5yxax")
 
 [node name="blob_state_machine" type="Node2D" parent="." unique_id=1391643409 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("1_eqdcg")
-initial_state = NodePath("charge_state")
+initial_state = NodePath("wander_state")
 
 [node name="idle_state" type="Node" parent="blob_state_machine" unique_id=1551243273]
 script = ExtResource("5_gfo5w")
 
 [node name="look_around_timer" type="Timer" parent="blob_state_machine/idle_state" unique_id=790168205]
-one_shot = true
+wait_time = 1.5
 
 [node name="wander_state" type="Node2D" parent="blob_state_machine" unique_id=912676425]
 script = ExtResource("2_vfqwy")
@@ -305,37 +276,18 @@ position = Vector2(0, -44.999996)
 scale = Vector2(0.05, 0.05)
 sprite_frames = SubResource("SpriteFrames_5iglt")
 autoplay = "default"
-frame_progress = 0.10893521
+frame_progress = 0.4469677
 
 [node name="alert_time" type="Timer" parent="blob_state_machine/alert_state" unique_id=2071485932]
-wait_time = 2.0
+wait_time = 3.0
 
 [node name="charge_state" type="Node" parent="blob_state_machine" unique_id=1815287452]
 script = ExtResource("10_18fx8")
 
 [node name="attack_state" type="Node" parent="blob_state_machine" unique_id=156169712]
 script = ExtResource("10_kd70p")
-electric_trail = ExtResource("11_8838m")
-
-[node name="attack_timer" type="Timer" parent="blob_state_machine/attack_state" unique_id=1861938348]
-wait_time = 0.5
-
-[node name="stun_state" type="Node2D" parent="blob_state_machine" unique_id=1631176103]
-script = ExtResource("11_601bl")
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="blob_state_machine/stun_state" unique_id=1956322356]
-position = Vector2(0, -35)
-scale = Vector2(1, 0.3)
-emitting = false
-amount = 11
-texture = ExtResource("12_8838m")
-process_material = SubResource("ParticleProcessMaterial_p3a5n")
-
-[node name="Timer" type="Timer" parent="blob_state_machine/stun_state" unique_id=2089986038]
-wait_time = 3.0
 
 [node name="detecting_player" type="Node2D" parent="." unique_id=1144466248]
-visible = false
 
 [node name="detection_range" type="Area2D" parent="detecting_player" unique_id=371104380]
 
@@ -344,13 +296,10 @@ shape = SubResource("CircleShape2D_gfo5w")
 
 [node name="eyes" type="RayCast2D" parent="detecting_player" unique_id=2073828317]
 target_position = Vector2(70, 0)
-collision_mask = 17
 
 [connection signal="animation_finished" from="Sprite2D" to="blob_state_machine/charge_state" method="_on_sprite_2d_animation_finished"]
 [connection signal="timeout" from="blob_state_machine/idle_state/look_around_timer" to="blob_state_machine/idle_state" method="_on_look_around_timer_timeout"]
 [connection signal="timeout" from="blob_state_machine/wander_state/random_timer" to="blob_state_machine/wander_state" method="_on_random_timer_timeout"]
 [connection signal="timeout" from="blob_state_machine/alert_state/alert_time" to="blob_state_machine/alert_state" method="_on_alert_time_timeout"]
-[connection signal="timeout" from="blob_state_machine/attack_state/attack_timer" to="blob_state_machine/attack_state" method="_on_attack_timer_timeout"]
-[connection signal="timeout" from="blob_state_machine/stun_state/Timer" to="blob_state_machine/stun_state" method="_on_timer_timeout"]
 [connection signal="body_entered" from="detecting_player/detection_range" to="." method="_on_detection_range_body_entered"]
 [connection signal="body_exited" from="detecting_player/detection_range" to="." method="_on_detection_range_body_exited"]

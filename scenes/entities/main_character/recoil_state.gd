@@ -11,7 +11,7 @@ func enter(data = {}):
 	char_dir = character.dir
 	character.velocity.x = char_dir*recoil_strength*-1
 	recoil.start()
-	character.sprite_2d.material.set_shader_parameter("blur_amount", 2.0)
+	character.sprite_2d.material.set_shader_parameter("blur_amount", 3.0)
 	
 
 func exit():

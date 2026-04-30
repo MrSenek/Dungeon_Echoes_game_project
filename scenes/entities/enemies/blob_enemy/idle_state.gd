@@ -3,11 +3,15 @@ extends Enemy_State
 @onready var sprite_2d: AnimatedSprite2D = $"../../Sprite2D"
 
 var times_checked:int = 0
+
+
+
 func enter(data = {}):
 	look_around_timer.start()
 	times_checked = 0
 
 func exit():
+	print("exiting")
 	look_around_timer.stop()
 
 func _on_look_around_timer_timeout() -> void:
@@ -17,9 +21,6 @@ func _on_look_around_timer_timeout() -> void:
 	
 
 func update(delta: float):
-	print(times_checked)
-	#if character.can_see:
-	#	enemy_state_machine.change_state("chase_state")
-	if times_checked == 4 :
+	if times_checked >= 4 :
 		enemy_state_machine.change_state("wander_state")
 	

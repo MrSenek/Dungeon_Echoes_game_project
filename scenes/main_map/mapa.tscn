@@ -335,7 +335,7 @@ position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_bon58")
 
 [node name="blob_enemy" parent="." unique_id=1650501818 instance=ExtResource("11_jxony")]
-position = Vector2(85, 437)
+position = Vector2(370, 435)
 wall_min_slide_angle = 0.0
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
