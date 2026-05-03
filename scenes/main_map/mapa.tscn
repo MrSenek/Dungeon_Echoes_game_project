@@ -2,12 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://dx1l7hxbl320d" path="res://scenes/main_map/Pochodnia_001.png" id="1_bcv56"]
 [ext_resource type="Texture2D" uid="uid://cup7pqcblmxya" path="res://scenes/main_map/Asset_Loch_001.png" id="1_mttvy"]
+[ext_resource type="Script" uid="uid://bbf63kky85x6w" path="res://scenes/main_map/mapa.gd" id="1_na1hj"]
 [ext_resource type="Texture2D" uid="uid://2o17l75frosh" path="res://scenes/main_map/okno.png" id="2_r6tku"]
 [ext_resource type="PackedScene" uid="uid://h4umvvf3hq5x" path="res://scenes/entities/main_character/character.tscn" id="3_fmfh6"]
 [ext_resource type="PackedScene" uid="uid://bbud38hhcnb8l" path="res://scenes/entities/collectables/truskawka.tscn" id="4_bp082"]
 [ext_resource type="PackedScene" uid="uid://obi64alvyh1l" path="res://scenes/entities/main_character/HUD.tscn" id="5_87tx7"]
 [ext_resource type="PackedScene" uid="uid://cvojmf8b58cdf" path="res://scenes/entities/enemies/spawnpoint.tscn" id="6_pc0c0"]
 [ext_resource type="PackedScene" uid="uid://cepda1jqcoa65" path="res://scenes/entities/enemies/blob_enemy/blob_enemy.tscn" id="11_jxony"]
+[ext_resource type="PackedScene" uid="uid://dvyi3w87od8d6" path="res://scenes/main_menu/fade_anim.tscn" id="12_bahuv"]
 [ext_resource type="PackedScene" uid="uid://d12q2nq1tggh6" path="res://scenes/entities/universal/healing_totem/totem.tscn" id="23_aas22"]
 [ext_resource type="PackedScene" uid="uid://ccqqdic6y5t3x" path="res://scenes/entities/enemies/cacodemon/cacodemon.tscn" id="23_m1s8n"]
 [ext_resource type="Script" uid="uid://dqegi1mvvou7b" path="res://scenes/main_map/shop_door.gd" id="23_otmq7"]
@@ -266,6 +268,7 @@ fog_density = 1.0
 size = Vector2(12, 19)
 
 [node name="Mapa" type="Node2D" unique_id=911471941]
+script = ExtResource("1_na1hj")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=2060430909]
 navigation_polygon = SubResource("NavigationPolygon_xvy7v")
@@ -337,5 +340,13 @@ shape = SubResource("RectangleShape2D_bon58")
 [node name="blob_enemy" parent="." unique_id=1650501818 instance=ExtResource("11_jxony")]
 position = Vector2(370, 435)
 wall_min_slide_angle = 0.0
+
+[node name="fade_transition" parent="." unique_id=1346027126 instance=ExtResource("12_bahuv")]
+z_index = 2
+offset_left = -500.0
+offset_top = -24.0
+offset_right = 1466.0
+offset_bottom = 932.0
+mouse_filter = 1
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

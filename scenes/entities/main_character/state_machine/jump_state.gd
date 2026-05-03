@@ -21,7 +21,7 @@ func physics_update(delta: float):
 		character.velocity += character.get_gravity() * delta
 		
 	#change direction and move in air
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = Input.get_axis("left", "right")
 	character.velocity.x = direction * character.SPEED
 	if direction < 0:
 		character.sprite_2d.flip_h = true

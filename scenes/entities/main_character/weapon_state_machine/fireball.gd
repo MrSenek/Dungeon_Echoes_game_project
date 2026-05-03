@@ -5,6 +5,7 @@ class_name fireball
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 signal weapon_fired(recoil_strength)
 
+
 func enter():
 	if not is_node_ready():
 		await tree_entered
@@ -14,6 +15,7 @@ func exit():
 	sprite_2d.hide()
 
 func update(_delta):
+	
 	if character.sprite_2d.flip_h:
 		sprite_2d.position.x = 15
 		sprite_2d.flip_h = false
@@ -29,7 +31,7 @@ var last_dir: int = 1
 var can_shoot: bool = true
 
 func handle_input(event: InputEvent) -> void:
-	var input_dir = Input.get_axis("ui_left", "ui_right")
+	var input_dir = Input.get_axis("left", "right")
 	if input_dir != 0:
 		last_dir = input_dir
 

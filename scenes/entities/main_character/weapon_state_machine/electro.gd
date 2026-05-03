@@ -18,7 +18,7 @@ func handle_input(event: InputEvent):
 		attack()
 		
 func update(delta: float):
-	var direction := Input.get_axis("ui_left","ui_right")
+	var direction := Input.get_axis("left","right")
 	if direction:
 		if direction > 0:
 			last_dir = 1

@@ -14,7 +14,7 @@
 
 [sub_resource type="Resource" id="Resource_xl650"]
 script = ExtResource("2_v3mbm")
-max_health = 200
+max_health = 500
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tmoiu"]
@@ -137,7 +137,7 @@ radius = 236.05296
 [sub_resource type="CircleShape2D" id="CircleShape2D_d1pmh"]
 radius = 100.005
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=2124554108]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=2124554108 groups=["enemy"]]
 collision_layer = 2
 collision_mask = 20
 script = ExtResource("1_c6qjd")

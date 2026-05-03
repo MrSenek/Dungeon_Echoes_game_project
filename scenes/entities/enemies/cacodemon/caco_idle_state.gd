@@ -5,6 +5,8 @@ class_name caco_idle_state
 @onready var animated_sprite_2d: AnimatedSprite2D = $"../../AnimatedSprite2D"
 @onready var timer: Timer = $Timer
 
+
+
 var dir: int = 1
 
 

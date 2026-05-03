@@ -3,9 +3,12 @@ extends Enemy_State
 @export var charge_speed: float = 500.0
 @onready var sprite_2d: AnimatedSprite2D = $"../../Sprite2D"
 @export var electric_trail: PackedScene
+@onready var ray_cast_2d: RayCast2D = $RayCast2D
+
+
 
 var charge_dir = 1
-var spawn_rate = 0.081
+var spawn_rate = 0.05
 var spawn_timer = 0.0
 
 
@@ -44,8 +47,7 @@ func physics_update(delta: float):
 func spawn_electric_trail():
 	if electric_trail:
 		var trail = electric_trail.instantiate()
-		trail.global_position = character.global_position
-		trail.global_position.y += 25
+		trail.global_position = ray_cast_2d.get_collision_point()
 		get_tree().current_scene.add_child(trail)
 
 func _on_attack_timer_timeout() -> void:

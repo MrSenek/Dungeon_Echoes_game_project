@@ -34,6 +34,7 @@ func physics_update(delta: float):
 	character.move_and_slide()
 
 
+
 func _on_dash_timer_timeout() -> void:
 	state_machine.change_state("idle_state")
 

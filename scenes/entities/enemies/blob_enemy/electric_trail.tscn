@@ -1,23 +1,106 @@
 [gd_scene format=3 uid="uid://ro1wueymykbp"]
 
 [ext_resource type="Script" uid="uid://bbbhhoj21dgdh" path="res://scenes/entities/enemies/blob_enemy/electric_trail.gd" id="1_aclqo"]
-
-[sub_resource type="Gradient" id="Gradient_aclqo"]
-colors = PackedColorArray(1, 1, 1, 1, 2.0214916e-06, 0.6242538, 0.8439395, 1)
+[ext_resource type="Texture2D" uid="uid://cvrop75fiem1y" path="res://scenes/entities/enemies/blob_enemy/spritesheet.png" id="3_moudy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aclqo"]
+size = Vector2(45, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66dqp"]
+atlas = ExtResource("3_moudy")
+region = Rect2(0, 0, 66, 66)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pl4ld"]
+atlas = ExtResource("3_moudy")
+region = Rect2(66, 0, 66, 66)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l52dg"]
+atlas = ExtResource("3_moudy")
+region = Rect2(132, 0, 66, 66)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m470h"]
+atlas = ExtResource("3_moudy")
+region = Rect2(198, 0, 66, 66)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b01x8"]
+atlas = ExtResource("3_moudy")
+region = Rect2(264, 0, 66, 66)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tut8q"]
+atlas = ExtResource("3_moudy")
+region = Rect2(330, 0, 66, 66)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a30bx"]
+atlas = ExtResource("3_moudy")
+region = Rect2(396, 0, 66, 66)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3n7e"]
+atlas = ExtResource("3_moudy")
+region = Rect2(462, 0, 66, 66)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40t74"]
+atlas = ExtResource("3_moudy")
+region = Rect2(528, 0, 66, 66)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dsyv8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66dqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pl4ld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l52dg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m470h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b01x8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tut8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a30bx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3n7e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40t74")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
 
 [node name="electric_trail" type="Area2D" unique_id=1712902665]
+modulate = Color(0, 1.5270679, 2.4490464, 1)
+z_index = 1
 script = ExtResource("1_aclqo")
 
-[node name="Line2D" type="Line2D" parent="." unique_id=1664410640]
-modulate = Color(2.067836, 2.067836, 2.067836, 1)
-z_index = 1
-width = 1.0
-gradient = SubResource("Gradient_aclqo")
-begin_cap_mode = 2
-end_cap_mode = 2
-antialiased = true
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1830714425]
+position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_aclqo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=140745352]
+position = Vector2(7.1054274e-15, -22)
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_dsyv8")
+autoplay = "default"
+frame_progress = 0.010861016
+
+[node name="life_timer" type="Timer" parent="." unique_id=87656220]
+wait_time = 2.0
+
+[node name="damage_timer" type="Timer" parent="." unique_id=1119219510]
+wait_time = 0.2
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="life_timer" to="." method="_on_life_timer_timeout"]
+[connection signal="timeout" from="damage_timer" to="." method="_on_damage_timer_timeout"]

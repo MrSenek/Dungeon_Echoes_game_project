@@ -1,14 +1,12 @@
 extends CharacterBody2D
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var eyes: RayCast2D = $detecting_player/eyes
-
+@export var stats: Stats
 
 var player_in_range: CharacterBody2D = null
 var can_see: bool = false
 var dir: int = 1
 
-func _ready() -> void:
-	add_to_group("enemy")
 
 
 func _process(_delta: float) -> void:

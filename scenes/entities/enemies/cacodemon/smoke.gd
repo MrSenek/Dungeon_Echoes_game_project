@@ -10,11 +10,9 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.has_method("change_speed"):
 		body.change_speed(0.75)
 	
-	# Sprawdzamy czy to gracz ORAZ czy nie ma go już na liście
 	if body.is_in_group("Player") and body.has_node("HP"):
 		if not bodies_list.has(body):
 			bodies_list.append(body)
-			#body.get_node("HP").damage_taken(1) # Pierwszy dmg przy wejściu
 			
 			if damage_cooldown.is_stopped():
 				damage_cooldown.start()

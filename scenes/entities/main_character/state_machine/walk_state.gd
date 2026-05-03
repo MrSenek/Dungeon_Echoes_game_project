@@ -11,7 +11,7 @@ func physics_update(delta: float):
 	if not character.is_on_floor():
 		character.velocity += character.get_gravity() * delta * character.speed_modifier
 
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis("left", "right")
 	var speed = direction*character.SPEED*character.speed_modifier
 	if direction:
 		character.velocity.x = move_toward(character.velocity.x, speed, character.SPEED)

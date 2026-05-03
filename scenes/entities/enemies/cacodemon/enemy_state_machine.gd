@@ -35,3 +35,7 @@ func change_state(new_state_name: String) -> void:
 	
 	if current_state:
 		current_state.enter()
+
+
+func _on_hp_death() -> void:
+	change_state("death_state")

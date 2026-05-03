@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dow8o22rj2ijp" path="res://scenes/entities/enemies/cacodemon/enemy_state_machine.gd" id="1_eqdcg"]
 [ext_resource type="Texture2D" uid="uid://c1jxrvcdraq1q" path="res://scenes/entities/enemies/blob_enemy/blue-enim.png" id="1_vfqwy"]
 [ext_resource type="Texture2D" uid="uid://dtla7ydlsjwtm" path="res://scenes/entities/enemies/blob_enemy/blue-en-bez-strz.png" id="2_6nayp"]
+[ext_resource type="Script" uid="uid://5weskl28l2ye" path="res://scenes/entities/universal/stats.gd" id="2_ikka4"]
 [ext_resource type="Script" uid="uid://cn1ensojndjqx" path="res://scenes/entities/enemies/blob_enemy/wander_state.gd" id="2_vfqwy"]
 [ext_resource type="Script" uid="uid://dqfsipojcah6o" path="res://scenes/entities/enemies/blob_enemy/idle_state.gd" id="5_gfo5w"]
 [ext_resource type="Script" uid="uid://cy0mbdf2j21n7" path="res://scenes/entities/enemies/blob_enemy/alert_state.gd" id="8_dsbfs"]
@@ -13,6 +14,12 @@
 [ext_resource type="Script" uid="uid://ccnennsc63y73" path="res://scenes/entities/enemies/blob_enemy/stun_state.gd" id="11_601bl"]
 [ext_resource type="PackedScene" uid="uid://ro1wueymykbp" path="res://scenes/entities/enemies/blob_enemy/electric_trail.tscn" id="11_8838m"]
 [ext_resource type="Texture2D" uid="uid://dqta773kno5cq" path="res://scenes/entities/enemies/blob_enemy/star.png" id="12_8838m"]
+[ext_resource type="PackedScene" uid="uid://b2u5wxfry5dtj" path="res://scenes/entities/universal/health_bar/health.tscn" id="14_7f87r"]
+[ext_resource type="Script" uid="uid://dx7nkam1vq27w" path="res://scenes/entities/enemies/blob_enemy/death_state.gd" id="15_p3a5n"]
+
+[sub_resource type="Resource" id="Resource_p3a5n"]
+script = ExtResource("2_ikka4")
+metadata/_custom_type_script = "uid://5weskl28l2ye"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6nayp"]
 atlas = ExtResource("1_vfqwy")
@@ -257,10 +264,11 @@ scale_curve = SubResource("CurveTexture_ikka4")
 [sub_resource type="CircleShape2D" id="CircleShape2D_gfo5w"]
 radius = 150.0
 
-[node name="blob_enemy" type="CharacterBody2D" unique_id=1650501818]
+[node name="blob_enemy" type="CharacterBody2D" unique_id=1650501818 groups=["enemy"]]
 collision_layer = 2
 collision_mask = 20
 script = ExtResource("1_adslp")
+stats = SubResource("Resource_p3a5n")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=798987947]
 position = Vector2(0, -8)
@@ -273,8 +281,9 @@ position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_5yxax")
 
 [node name="blob_state_machine" type="Node2D" parent="." unique_id=1391643409 node_paths=PackedStringArray("initial_state")]
+z_index = 1
 script = ExtResource("1_eqdcg")
-initial_state = NodePath("charge_state")
+initial_state = NodePath("idle_state")
 
 [node name="idle_state" type="Node" parent="blob_state_machine" unique_id=1551243273]
 script = ExtResource("5_gfo5w")
@@ -313,12 +322,16 @@ wait_time = 2.0
 [node name="charge_state" type="Node" parent="blob_state_machine" unique_id=1815287452]
 script = ExtResource("10_18fx8")
 
-[node name="attack_state" type="Node" parent="blob_state_machine" unique_id=156169712]
+[node name="attack_state" type="Node2D" parent="blob_state_machine" unique_id=42317528]
 script = ExtResource("10_kd70p")
 electric_trail = ExtResource("11_8838m")
 
 [node name="attack_timer" type="Timer" parent="blob_state_machine/attack_state" unique_id=1861938348]
 wait_time = 0.5
+
+[node name="RayCast2D" type="RayCast2D" parent="blob_state_machine/attack_state" unique_id=1845583313]
+target_position = Vector2(0, 70)
+collision_mask = 16
 
 [node name="stun_state" type="Node2D" parent="blob_state_machine" unique_id=1631176103]
 script = ExtResource("11_601bl")
@@ -334,6 +347,12 @@ process_material = SubResource("ParticleProcessMaterial_p3a5n")
 [node name="Timer" type="Timer" parent="blob_state_machine/stun_state" unique_id=2089986038]
 wait_time = 3.0
 
+[node name="death_state" type="Node2D" parent="blob_state_machine" unique_id=1167217659]
+script = ExtResource("15_p3a5n")
+
+[node name="death_timer" type="Timer" parent="blob_state_machine/death_state" unique_id=1780953769]
+wait_time = 6.53
+
 [node name="detecting_player" type="Node2D" parent="." unique_id=1144466248]
 visible = false
 
@@ -346,11 +365,17 @@ shape = SubResource("CircleShape2D_gfo5w")
 target_position = Vector2(70, 0)
 collision_mask = 17
 
+[node name="HP" parent="." unique_id=1180813858 instance=ExtResource("14_7f87r")]
+z_index = 0
+position = Vector2(-3, -21)
+
 [connection signal="animation_finished" from="Sprite2D" to="blob_state_machine/charge_state" method="_on_sprite_2d_animation_finished"]
 [connection signal="timeout" from="blob_state_machine/idle_state/look_around_timer" to="blob_state_machine/idle_state" method="_on_look_around_timer_timeout"]
 [connection signal="timeout" from="blob_state_machine/wander_state/random_timer" to="blob_state_machine/wander_state" method="_on_random_timer_timeout"]
 [connection signal="timeout" from="blob_state_machine/alert_state/alert_time" to="blob_state_machine/alert_state" method="_on_alert_time_timeout"]
 [connection signal="timeout" from="blob_state_machine/attack_state/attack_timer" to="blob_state_machine/attack_state" method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="blob_state_machine/stun_state/Timer" to="blob_state_machine/stun_state" method="_on_timer_timeout"]
+[connection signal="timeout" from="blob_state_machine/death_state/death_timer" to="blob_state_machine/death_state" method="_on_death_timer_timeout"]
 [connection signal="body_entered" from="detecting_player/detection_range" to="." method="_on_detection_range_body_entered"]
 [connection signal="body_exited" from="detecting_player/detection_range" to="." method="_on_detection_range_body_exited"]
+[connection signal="death" from="HP" to="blob_state_machine" method="_on_hp_death"]

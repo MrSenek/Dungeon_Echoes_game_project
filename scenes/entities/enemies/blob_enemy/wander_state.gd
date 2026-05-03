@@ -7,11 +7,17 @@ extends Enemy_State
 var jump_velocity = 145.8
 var blob_wander_speed = 100.0
 
+@warning_ignore("unused_parameter")
 func enter(data = {}):
+	var direction = character.dir
+	jump_collider.target_position.x = abs(jump_collider.target_position.x) * direction
+	edge_detection.position.x = abs(edge_detection.position.x) * direction
+	edge_detection.target_position.x = edge_detection.target_position.x * direction
 	print("going wander")
 	random_timer.start(randi_range(3,9))
 
 
+@warning_ignore("unused_parameter")
 func update(delta: float):
 	if character.can_see:
 		enemy_state_machine.change_state("alert_state")

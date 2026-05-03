@@ -490,7 +490,7 @@ shape = SubResource("WorldBoundaryShape2D_4ujhu")
 libraries/ = SubResource("AnimationLibrary_i7nm7")
 
 [node name="fade_transition" parent="." unique_id=1346027126 instance=ExtResource("21_i7nm7")]
-visible = false
+mouse_filter = 2
 
 [node name="fade_timer" type="Timer" parent="fade_transition" unique_id=13308777]
 wait_time = 2.0

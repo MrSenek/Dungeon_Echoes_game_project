@@ -5,6 +5,11 @@ var button_type:String
 @onready var fade_transition: ColorRect = $fade_transition
 @onready var fade_animation: AnimationPlayer = $fade_transition/AnimationPlayer
 
+func _ready() -> void:
+	fade_transition.show()
+	fade_animation.play("fade_out")
+
+
 func _on_start_pressed() -> void:
 	button_type = "start"
 	animation_player.play("button_start")

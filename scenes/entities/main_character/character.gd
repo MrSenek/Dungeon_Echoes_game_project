@@ -15,8 +15,8 @@ func _ready() -> void:
 	
 
 func _process(delta: float) -> void:
-	if Input.get_axis("ui_left","ui_right") != 0:
-		dir = Input.get_axis("ui_left", "ui_right")
+	if Input.get_axis("left","right") != 0:
+		dir = Input.get_axis("left", "right")
 
 func _on_hp_death() -> void:
 		global_position = SPAWN_POINT
