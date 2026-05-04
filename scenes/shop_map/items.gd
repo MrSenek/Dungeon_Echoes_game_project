@@ -2,17 +2,8 @@ extends Node2D
 @onready var coins: GPUParticles2D = $coins
 
 
-var org_items_list = ["+10HP", "Electric Weapon","Gravity Grenade", "Self Guiding Missile", "1,5x Damage"]
 @export var available_items: Array[ItemData] = []
 
-
-var items_prices = {
-	"+10HP": 10,
-	"Electric Weapon": 10,
-	"Gravity Grenade": 10,
-	"Self Guiding Missile": 10,
-	"1,5x Damage": 10
-}
 
 var player_in = {
 	"item1": false,
@@ -47,7 +38,7 @@ func delete_items():
 
 
 func attempt_purchase(item):
-	var price = items_prices[item]
+	var price = item.price
 	if PlayerData.player_coins < price:
 		print("not enough money")
 		return
@@ -66,23 +57,24 @@ func randomize_items():
 	items_list.erase(item1)
 	
 	item2 = items_list.pick_random()
-	get_node("Item2/Node2D/Label").text = item2
+	get_node("Item2/Node2D/Label").text = item2.item_name
 	items_list.erase(item2)
 	
 	item3 = items_list.pick_random()
-	get_node("Item3/Node2D/Label").text = item3
+	get_node("Item3/Node2D/Label").text = item3.item_name
+	items_list.erase(item3)
 	
 
 func give_item(item):
-	if item == "+10HP":
+	if item.item_name == "+10HP":
 		PlayerData.max_health+=10
-	if item == "Electric Weapon":
+	if item.item_name == "Electric Weapon":
 		PlayerData.owned_weapons.append("Electric Weapon")
-	if item == "Gravity Grenade":
+	if item.item_name == "Gravity Grenade":
 		PlayerData.owned_weapons.append("Gravity Grenade")
-	if item == "Self Guiding Missile":
+	if item.item_name == "Self Guiding Missile":
 		PlayerData.owned_weapons.append("Self Guiding Missile")
-	if item == "1,5x Damage":
+	if item.item_name == "1,5x Damage":
 		PlayerData.attack = 1.5
 
 

@@ -12,7 +12,7 @@ func enter(data = {}):
 	var direction = character.dir
 	jump_collider.target_position.x = abs(jump_collider.target_position.x) * direction
 	edge_detection.position.x = abs(edge_detection.position.x) * direction
-	edge_detection.target_position.x = edge_detection.target_position.x * direction
+	edge_detection.target_position.x = abs(edge_detection.target_position.x) * direction
 	random_timer.start(randi_range(3,9))
 
 
@@ -45,6 +45,7 @@ func is_at_edge():
 func turn_around():
 		jump_collider.target_position.x *= -1
 		edge_detection.position.x *= -1
+		edge_detection.target_position.x *= -1 
 		sprite_2d.flip_h = not sprite_2d.flip_h
 
 func _on_random_timer_timeout() -> void:

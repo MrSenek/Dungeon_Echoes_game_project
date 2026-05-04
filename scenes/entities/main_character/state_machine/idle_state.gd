@@ -3,7 +3,6 @@ extends State
 class_name idle_state
 
 func enter(data = {}):
-	print("going idle")
 	character.velocity.x = 0
 
 

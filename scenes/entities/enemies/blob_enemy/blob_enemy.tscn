@@ -350,7 +350,7 @@ wait_time = 3.0
 script = ExtResource("15_p3a5n")
 
 [node name="death_timer" type="Timer" parent="blob_state_machine/death_state" unique_id=1780953769]
-wait_time = 6.53
+wait_time = 2.0
 
 [node name="detecting_player" type="Node2D" parent="." unique_id=1144466248]
 visible = false
