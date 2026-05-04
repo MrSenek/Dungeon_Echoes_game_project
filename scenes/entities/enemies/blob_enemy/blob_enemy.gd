@@ -6,8 +6,10 @@ extends CharacterBody2D
 var player_in_range: CharacterBody2D = null
 var can_see: bool = false
 var dir: int = 1
+var dmg_multiplier
 
-
+func _ready() -> void:
+	dmg_multiplier = stats.attack
 
 func _process(_delta: float) -> void:
 	player_detection()

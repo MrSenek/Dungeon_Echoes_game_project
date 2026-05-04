@@ -11,7 +11,6 @@ func enter(data = {}):
 	times_checked = 0
 
 func exit():
-	print("exiting")
 	look_around_timer.stop()
 
 func _on_look_around_timer_timeout() -> void:

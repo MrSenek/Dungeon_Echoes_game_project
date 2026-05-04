@@ -7,4 +7,4 @@ class_name Stats
 		max_health = value
 		emit_changed() # To wyśle sygnał 'changed', który odbierze skrypt HP
 @export var defence: int = 10
-@export var attack: float = 10
+@export var attack: float = 1.0

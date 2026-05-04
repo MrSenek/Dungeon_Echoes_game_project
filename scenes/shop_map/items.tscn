@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://kur7jxb6jwj2" path="res://scenes/shop_map/items.gd" id="1_332u0"]
 [ext_resource type="FontFile" uid="uid://dbd7tkga4sx1u" path="res://scenes/shop_map/VCR_OSD_MONO_1.001.ttf" id="2_f0tsd"]
+[ext_resource type="Script" uid="uid://cb8abpm52h0m1" path="res://scenes/shop_map/item_data.gd" id="2_gln24"]
+[ext_resource type="Texture2D" uid="uid://khy3cwgqyr1c" path="res://scenes/entities/collectables/monetka.png" id="3_1ieia"]
+[ext_resource type="Resource" uid="uid://cf4yop0cojpyf" path="res://scenes/shop_map/items/HP_Boost.tres" id="3_mivt5"]
+[ext_resource type="Resource" uid="uid://b5fm50faqh8m6" path="res://scenes/shop_map/items/DMG_Boost1,5.tres" id="4_b2mvd"]
+[ext_resource type="Resource" uid="uid://b5qkthbhiyxjm" path="res://scenes/shop_map/items/Electro_weapon.tres" id="5_vhvr7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f65g5"]
 
@@ -22,8 +27,29 @@ font_size = 128
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f1klk"]
 
-[node name="Node2D" type="Node2D" unique_id=502013343]
+[sub_resource type="Curve" id="Curve_1ieia"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.30645162, 0.6241611), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_f1klk"]
+curve = SubResource("Curve_1ieia")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f1klk"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 77.259995
+initial_velocity_max = 124.46999
+gravity = Vector3(0, 0, 0)
+damping_min = 61.847004
+damping_max = 66.666
+scale_min = 0.7
+scale_max = 0.7
+scale_curve = SubResource("CurveTexture_f1klk")
+
+[node name="items" type="Node2D" unique_id=502013343]
 script = ExtResource("1_332u0")
+available_items = Array[ExtResource("2_gln24")]([ExtResource("3_mivt5"), ExtResource("4_b2mvd"), ExtResource("5_vhvr7")])
 
 [node name="Item1" type="Area2D" parent="." unique_id=2019347757]
 position = Vector2(-121, 0)
@@ -98,6 +124,15 @@ label_settings = SubResource("LabelSettings_f0tsd")
 horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 2
+
+[node name="coins" type="GPUParticles2D" parent="." unique_id=1937440037]
+z_index = 2
+emitting = false
+amount = 10
+texture = ExtResource("3_1ieia")
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_f1klk")
 
 [connection signal="body_entered" from="Item1" to="." method="_on_item_1_body_entered"]
 [connection signal="body_exited" from="Item1" to="." method="_on_item_1_body_exited"]

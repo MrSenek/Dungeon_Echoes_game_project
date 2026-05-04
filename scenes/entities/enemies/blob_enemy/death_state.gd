@@ -4,7 +4,6 @@ extends Enemy_State
 
 
 func enter(data = {}):
-	print("ded")
 	death_timer.start()
 	sprite_2d.stop()
 	sprite_2d.frame = 3

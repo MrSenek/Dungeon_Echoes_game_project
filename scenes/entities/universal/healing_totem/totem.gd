@@ -49,7 +49,7 @@ func locate_healing_targets():
 			var cur_HP: float = body.get_node("HP").CURRENT_HEALTH
 			var max_HP: float = body.get_node("HP").MAX_HEALTH
 			var percent_HP:float  = cur_HP/max_HP
-			if percent_HP < 0.5:
+			if percent_HP < 0.5 and cur_HP>=1:
 				important_targets.append({"node": body,"health": percent_HP})
 	important_targets.sort_custom(func(a,b): return a["health"]<b["health"])
 	if important_targets:

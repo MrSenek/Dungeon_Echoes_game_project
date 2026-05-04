@@ -7,6 +7,7 @@ extends Area2D
 
 var lifetime_end: bool = false
 var last_frame_played: bool = false
+var dmg_multiplier 
 
 func _ready() -> void:
 	life_timer.start()
@@ -24,7 +25,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player") and body.has_node("HP"):
-		body.get_node("HP").damage_taken(10)
+		body.get_node("HP").damage_taken(10*dmg_multiplier)
 		damage_timer.start()
 		if body.has_method("change_speed"):
 			body.change_speed(0.5)
@@ -40,4 +41,4 @@ func _on_damage_timer_timeout() -> void:
 	var targets = get_overlapping_bodies()
 	for target in targets:
 		if target.is_in_group("Player") and target.has_node("HP"):
-			target.get_node("HP").damage_taken(8) # DOT może być mniejszy niż initial
+			target.get_node("HP").damage_taken(8*dmg_multiplier)

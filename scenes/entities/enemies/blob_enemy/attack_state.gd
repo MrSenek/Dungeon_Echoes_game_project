@@ -14,7 +14,6 @@ var spawn_timer = 0.0
 
 func enter(data = {}):
 	character.move_and_slide()
-	print("attacking")
 	attack_timer.start()
 	if character.player_in_range:
 		charge_dir = sign(character.player_in_range.global_position.x - character.global_position.x)
@@ -24,7 +23,6 @@ func enter(data = {}):
 			sprite_2d.flip_h = true
 
 func exit():
-	print("exit attack")
 	attack_timer.stop()
 
 func physics_update(delta: float):
@@ -47,6 +45,7 @@ func physics_update(delta: float):
 func spawn_electric_trail():
 	if electric_trail:
 		var trail = electric_trail.instantiate()
+		trail.dmg_multiplier = character.stats.attack
 		trail.global_position = ray_cast_2d.get_collision_point()
 		get_tree().current_scene.add_child(trail)
 

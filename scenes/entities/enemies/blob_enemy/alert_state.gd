@@ -4,7 +4,6 @@ extends Enemy_State
 
 
 func enter(data = {}):
-	print("going alert")
 	alert_time.start()
 	sprite_2d.show()
 

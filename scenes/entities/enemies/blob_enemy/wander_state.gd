@@ -13,7 +13,6 @@ func enter(data = {}):
 	jump_collider.target_position.x = abs(jump_collider.target_position.x) * direction
 	edge_detection.position.x = abs(edge_detection.position.x) * direction
 	edge_detection.target_position.x = edge_detection.target_position.x * direction
-	print("going wander")
 	random_timer.start(randi_range(3,9))
 
 

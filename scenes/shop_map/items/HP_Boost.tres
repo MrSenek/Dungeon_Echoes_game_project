@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cf4yop0cojpyf"]
+
+[ext_resource type="Script" uid="uid://cb8abpm52h0m1" path="res://scenes/shop_map/item_data.gd" id="1_tijtu"]
+
+[resource]
+script = ExtResource("1_tijtu")
+item_name = "+10HP"
+type = "Stat"
+metadata/_custom_type_script = "uid://cb8abpm52h0m1"
