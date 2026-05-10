@@ -19,6 +19,7 @@
 
 [sub_resource type="Resource" id="Resource_p3a5n"]
 script = ExtResource("2_ikka4")
+spawn_cost = 40
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6nayp"]
@@ -326,7 +327,7 @@ script = ExtResource("10_kd70p")
 electric_trail = ExtResource("11_8838m")
 
 [node name="attack_timer" type="Timer" parent="blob_state_machine/attack_state" unique_id=1861938348]
-wait_time = 0.5
+wait_time = 0.6
 
 [node name="RayCast2D" type="RayCast2D" parent="blob_state_machine/attack_state" unique_id=1845583313]
 target_position = Vector2(0, 70)

@@ -13,10 +13,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	player_detection()
-	
 
-func _physics_process(delta: float) -> void:
-	dir = -1 if sprite_2d.flip_h else 1
+
 
 
 func _on_detection_range_body_entered(body: Node2D) -> void:

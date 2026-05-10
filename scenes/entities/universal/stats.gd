@@ -8,3 +8,7 @@ class_name Stats
 		emit_changed() # To wyśle sygnał 'changed', który odbierze skrypt HP
 @export var defence: int = 10
 @export var attack: float = 1.0
+
+#wave stats
+@export var spawn_cost: int = 10;
+@export var min_wave: int = 1;

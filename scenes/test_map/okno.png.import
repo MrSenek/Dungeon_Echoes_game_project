@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://2o17l75frosh"
-path="res://.godot/imported/okno.png-2d6e876fc88395814ad0408a2ba4fd65.ctex"
+path="res://.godot/imported/okno.png-775f4f833ffe85ecf24901eb87ad82d5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/main_map/okno.png"
-dest_files=["res://.godot/imported/okno.png-2d6e876fc88395814ad0408a2ba4fd65.ctex"]
+source_file="res://scenes/test_map/okno.png"
+dest_files=["res://.godot/imported/okno.png-775f4f833ffe85ecf24901eb87ad82d5.ctex"]
 
 [params]
 

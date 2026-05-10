@@ -173,6 +173,7 @@ damage = 20.0
 [node name="lightning_line" type="Line2D" parent="weapon_state_machine/electro" unique_id=1745800343]
 visible = false
 modulate = Color(2.342, 2.342, 2.342, 1)
+z_index = -1
 points = PackedVector2Array(12, 0, 144, 0)
 width = 2.0
 default_color = Color(0.39607844, 1, 1, 1)

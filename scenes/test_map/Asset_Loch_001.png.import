@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dx1l7hxbl320d"
-path="res://.godot/imported/Pochodnia_001.png-0a6e28541be9606b3c17d4c604a7f6d0.ctex"
+uid="uid://cup7pqcblmxya"
+path="res://.godot/imported/Asset_Loch_001.png-300b06176ef525062b77b367e7ae40aa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/main_map/Pochodnia_001.png"
-dest_files=["res://.godot/imported/Pochodnia_001.png-0a6e28541be9606b3c17d4c604a7f6d0.ctex"]
+source_file="res://scenes/test_map/Asset_Loch_001.png"
+dest_files=["res://.godot/imported/Asset_Loch_001.png-300b06176ef525062b77b367e7ae40aa.ctex"]
 
 [params]
 

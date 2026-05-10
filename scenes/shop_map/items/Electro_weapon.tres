@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_58uhy")
-item_name = "Electro Weapon"
+item_name = "Electric Weapon"
 metadata/_custom_type_script = "uid://cb8abpm52h0m1"

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cup7pqcblmxya"
-path="res://.godot/imported/Asset_Loch_001.png-43c4adac164209468b63a5645517c702.ctex"
+uid="uid://dbitrfb5fowf3"
+path="res://.godot/imported/Strawberry.png-01475b73b4756370a5337a078609964c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/main_map/Asset_Loch_001.png"
-dest_files=["res://.godot/imported/Asset_Loch_001.png-43c4adac164209468b63a5645517c702.ctex"]
+source_file="res://scenes/test_map/Strawberry.png"
+dest_files=["res://.godot/imported/Strawberry.png-01475b73b4756370a5337a078609964c.ctex"]
 
 [params]
 

@@ -35,8 +35,8 @@ func _on_quit_pressed() -> void:
 
 func _on_fade_timer_timeout() -> void:
 	if button_type == "start":
-		animation_player.play("button_start")
+		get_tree().change_scene_to_file("res://scenes/main_map/main_map.tscn")
 	elif button_type == "test arena":
-		get_tree().change_scene_to_file("res://scenes/main_map/mapa.tscn")
+		get_tree().change_scene_to_file("res://scenes/test_map/mapa.tscn")
 	elif button_type == "quit":
 		get_tree().quit()

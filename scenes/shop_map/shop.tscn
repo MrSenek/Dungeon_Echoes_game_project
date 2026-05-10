@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://sefc1fp5nsc"]
 
-[ext_resource type="Texture2D" uid="uid://cup7pqcblmxya" path="res://scenes/main_map/Asset_Loch_001.png" id="1_ph6pj"]
-[ext_resource type="Texture2D" uid="uid://dx1l7hxbl320d" path="res://scenes/main_map/Pochodnia_001.png" id="2_c022o"]
+[ext_resource type="Texture2D" uid="uid://cup7pqcblmxya" path="res://scenes/test_map/Asset_Loch_001.png" id="1_ph6pj"]
+[ext_resource type="Texture2D" uid="uid://dx1l7hxbl320d" path="res://scenes/test_map/Pochodnia_001.png" id="2_c022o"]
 [ext_resource type="PackedScene" uid="uid://h4umvvf3hq5x" path="res://scenes/entities/main_character/character.tscn" id="4_wak3q"]
 [ext_resource type="Script" uid="uid://b05do55xep76l" path="res://scenes/shop_map/main_map_door.gd" id="18_s6y5a"]
 [ext_resource type="PackedScene" uid="uid://bo38sj65xoql2" path="res://scenes/shop_map/items.tscn" id="19_w2346"]

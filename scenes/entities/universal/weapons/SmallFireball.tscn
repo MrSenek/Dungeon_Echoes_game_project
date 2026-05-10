@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cx8m3gb7xlvnb"]
 
 [ext_resource type="Script" uid="uid://cv4ww5qbl7l0i" path="res://scenes/entities/universal/weapons/small_fireball.gd" id="1_kumsy"]
-[ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/main_map/light.png" id="2_u58qu"]
+[ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/test_map/light.png" id="2_u58qu"]
 [ext_resource type="Texture2D" uid="uid://cjrkfjenvlwve" path="res://scenes/entities/enemies/small_skeleton/avg_fire_ball.png" id="3_2lytu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eln5l"]

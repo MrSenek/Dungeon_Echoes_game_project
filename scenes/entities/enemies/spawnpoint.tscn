@@ -1,9 +1,6 @@
 [gd_scene format=3 uid="uid://cvojmf8b58cdf"]
 
-[ext_resource type="Script" uid="uid://c4prrdhd3rxlj" path="res://scenes/entities/enemies/spawnpoint.gd" id="1_kppdj"]
-
-[node name="Node2D" type="Node2D" unique_id=1401195623]
-script = ExtResource("1_kppdj")
+[node name="spawn_point" type="Node2D" unique_id=1401195623]
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=271341651]
 gizmo_extents = 20.0

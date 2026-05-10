@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbitrfb5fowf3"
-path="res://.godot/imported/Strawberry.png-2ac07227222bcda24632b4997b47000b.ctex"
+uid="uid://dx1l7hxbl320d"
+path="res://.godot/imported/Pochodnia_001.png-56b35ef79610bc713892662c27b6f53d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/main_map/Strawberry.png"
-dest_files=["res://.godot/imported/Strawberry.png-2ac07227222bcda24632b4997b47000b.ctex"]
+source_file="res://scenes/test_map/Pochodnia_001.png"
+dest_files=["res://.godot/imported/Pochodnia_001.png-56b35ef79610bc713892662c27b6f53d.ctex"]
 
 [params]
 

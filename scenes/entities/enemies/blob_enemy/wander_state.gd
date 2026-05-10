@@ -9,10 +9,9 @@ var blob_wander_speed = 100.0
 
 @warning_ignore("unused_parameter")
 func enter(data = {}):
-	var direction = character.dir
-	jump_collider.target_position.x = abs(jump_collider.target_position.x) * direction
-	edge_detection.position.x = abs(edge_detection.position.x) * direction
-	edge_detection.target_position.x = abs(edge_detection.target_position.x) * direction
+	jump_collider.target_position.x = abs(jump_collider.target_position.x) * character.dir
+	edge_detection.position.x = abs(edge_detection.position.x) * character.dir
+	edge_detection.target_position.x = abs(edge_detection.target_position.x) * character.dir
 	random_timer.start(randi_range(3,9))
 
 
@@ -29,6 +28,7 @@ func physics_update(delta: float):
 	character.move_and_slide()
 
 func wander(delta: float):
+	sprite_2d.flip_h = false if character.dir == 1 else true
 	if not character.is_on_floor():
 		character.velocity += character.get_gravity() * delta
 	character.velocity.x = blob_wander_speed * character.dir
@@ -43,10 +43,14 @@ func is_at_edge():
 		turn_around()
 
 func turn_around():
-		jump_collider.target_position.x *= -1
-		edge_detection.position.x *= -1
-		edge_detection.target_position.x *= -1 
-		sprite_2d.flip_h = not sprite_2d.flip_h
+	character.dir *= -1 
+
+	sprite_2d.flip_h = (character.dir == -1)
+	
+	jump_collider.target_position.x = abs(jump_collider.target_position.x) * character.dir
+	edge_detection.position.x = abs(edge_detection.position.x) * character.dir
+	edge_detection.target_position.x = abs(edge_detection.target_position.x) * character.dir
+
 
 func _on_random_timer_timeout() -> void:
 	random_timer.start(randi_range(3,8))

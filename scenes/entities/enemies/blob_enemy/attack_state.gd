@@ -17,6 +17,7 @@ func enter(data = {}):
 	attack_timer.start()
 	if character.player_in_range:
 		charge_dir = sign(character.player_in_range.global_position.x - character.global_position.x)
+		character.dir = charge_dir
 		if charge_dir == 1:
 			sprite_2d.flip_h = false
 		else:

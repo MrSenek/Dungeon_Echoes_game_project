@@ -11,6 +11,7 @@ resource_local_to_scene = true
 script = ExtResource("2_iu7pn")
 max_health = 150
 attack = 0.7
+spawn_cost = 25
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2hibj"]
@@ -259,7 +260,7 @@ position = Vector2(2, 1.0000005)
 scale = Vector2(0.7, 0.7)
 
 [node name="RayCast2D2" type="RayCast2D" parent="." unique_id=2047179929]
-position = Vector2(20, 0)
+position = Vector2(43, 0)
 target_position = Vector2(0, 104)
 collision_mask = 16
 

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bi5x701x451i4"]
 
 [ext_resource type="Script" uid="uid://cj4hi13rrdwdy" path="res://scenes/entities/collectables/moneta.gd" id="1_8l82t"]
-[ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/main_map/light.png" id="2_om81n"]
+[ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/test_map/light.png" id="2_om81n"]
 [ext_resource type="Texture2D" uid="uid://bhs1uka88pfa2" path="res://scenes/entities/collectables/Monetka_002.png" id="3_om1h8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ttmor"]

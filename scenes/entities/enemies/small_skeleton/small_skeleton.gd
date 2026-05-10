@@ -94,7 +94,6 @@ func _on_hp_death() -> void:
 		is_dead = true
 		collision_layer = 0
 		collision_layer = 0
-		get_parent().current_enemies -= 1
 		await get_tree().create_timer(2).timeout
 		var moneta = monetka.instantiate()
 		moneta.global_position = global_position

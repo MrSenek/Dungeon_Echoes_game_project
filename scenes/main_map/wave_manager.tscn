@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://hx532381cu4j"]
+
+[ext_resource type="Script" uid="uid://bmutvqxusa8gd" path="res://wave_manager.gd" id="1_uf7uh"]
+
+[node name="WaveManager" type="Node" unique_id=1653306634]
+script = ExtResource("1_uf7uh")
+
+[node name="spawn_timer" type="Timer" parent="." unique_id=1680182786]
+wait_time = 5.0
+
+[connection signal="timeout" from="spawn_timer" to="." method="_on_spawn_timer_timeout"]

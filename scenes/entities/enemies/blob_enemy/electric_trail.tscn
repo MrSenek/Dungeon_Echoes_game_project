@@ -94,7 +94,7 @@ autoplay = "default"
 frame_progress = 0.010861016
 
 [node name="life_timer" type="Timer" parent="." unique_id=87656220]
-wait_time = 2.0
+wait_time = 2.4
 
 [node name="damage_timer" type="Timer" parent="." unique_id=1119219510]
 wait_time = 0.2
