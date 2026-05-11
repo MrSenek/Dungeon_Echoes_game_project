@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://h4umvvf3hq5x"]
 
 [ext_resource type="Script" uid="uid://b0m0ts1gobg1v" path="res://scenes/entities/main_character/character.gd" id="1_w0rc6"]
+[ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/test_map/light.png" id="2_2wsin"]
 [ext_resource type="PackedScene" uid="uid://b2u5wxfry5dtj" path="res://scenes/entities/universal/health_bar/health.tscn" id="3_tlbcw"]
 [ext_resource type="Shader" uid="uid://dpie1h35rm23x" path="res://scenes/entities/main_character/character.gdshader" id="3_utmtp"]
 [ext_resource type="Texture2D" uid="uid://bhcjuwuggow2h" path="res://scenes/entities/main_character/player_dash.png" id="4_rvm66"]
@@ -108,6 +109,13 @@ size = Vector2(150, 20)
 z_index = 1
 script = ExtResource("1_w0rc6")
 
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1926618234]
+energy = 0.3
+shadow_enabled = true
+shadow_filter = 1
+texture = ExtResource("2_2wsin")
+texture_scale = 10.7
+
 [node name="HP" parent="." unique_id=1591294406 instance=ExtResource("3_tlbcw")]
 position = Vector2(0, -11)
 
@@ -118,6 +126,7 @@ animation = &"dash"
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2083763825]
+visible = false
 shape = SubResource("RectangleShape2D_n7fvo")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=931485598]
@@ -187,6 +196,7 @@ collision_mask = 18
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="weapon_state_machine/electro/Area2D" unique_id=1218208969]
+visible = false
 shape = SubResource("RectangleShape2D_jr2ie")
 
 [node name="timer_DOT" type="Timer" parent="weapon_state_machine/electro/Area2D" unique_id=173519699]

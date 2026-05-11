@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://byuym4gd2ym1g" path="res://scenes/main_map/pause_menu.gd" id="1_xglce"]
 [ext_resource type="Shader" uid="uid://bwefjcubmibpm" path="res://scenes/main_map/pause_menu.gdshader" id="2_tlxfd"]
+[ext_resource type="Texture2D" uid="uid://d1o43ag2rk1cj" path="res://scenes/main_map/buttons/save_normal.png" id="3_h871e"]
+[ext_resource type="Texture2D" uid="uid://dc4d4kka7n7p8" path="res://scenes/main_map/buttons/save_click.png" id="4_tacrc"]
+[ext_resource type="Texture2D" uid="uid://c1ycuu6e1lboo" path="res://scenes/main_map/buttons/save_hover.png" id="5_8wwok"]
+[ext_resource type="Texture2D" uid="uid://dtuedx0b1856k" path="res://scenes/main_map/buttons/resume_normal.png" id="6_f83ur"]
+[ext_resource type="Texture2D" uid="uid://bpf3h5kpdd0ma" path="res://scenes/main_map/buttons/resume_click.png" id="7_2b2vc"]
+[ext_resource type="Texture2D" uid="uid://cwejwjsxefx68" path="res://scenes/main_map/buttons/resume_hover.png" id="8_hk6y1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_omo8h"]
 shader = ExtResource("2_tlxfd")
@@ -32,10 +38,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 823.0
-offset_top = 445.0
-offset_right = 1057.0
-offset_bottom = 595.0
+offset_left = 675.0
+offset_top = 265.0
+offset_right = 1205.0
+offset_bottom = 798.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -44,17 +50,20 @@ size_flags_vertical = 4
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer" unique_id=299386554]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
+theme_override_constants/separation = 64
 alignment = 1
 
-[node name="resume" type="Button" parent="Control/MarginContainer/VBoxContainer" unique_id=1789040181]
+[node name="resume" type="TextureButton" parent="Control/MarginContainer/VBoxContainer" unique_id=2073169385]
 layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "wznów"
+texture_normal = ExtResource("6_f83ur")
+texture_pressed = ExtResource("7_2b2vc")
+texture_hover = ExtResource("8_hk6y1")
 
-[node name="exit&save" type="Button" parent="Control/MarginContainer/VBoxContainer" unique_id=1712167279]
+[node name="exit&save" type="TextureButton" parent="Control/MarginContainer/VBoxContainer" unique_id=1169128452]
 layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "zapisz i wyjdź"
+texture_normal = ExtResource("3_h871e")
+texture_pressed = ExtResource("4_tacrc")
+texture_hover = ExtResource("5_8wwok")
 
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/exit&save" to="." method="_on_exitsave_pressed"]

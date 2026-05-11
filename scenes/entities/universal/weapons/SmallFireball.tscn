@@ -73,8 +73,11 @@ script = ExtResource("1_kumsy")
 position = Vector2(3, -2.3841858e-07)
 scale = Vector2(0.9921875, 0.9609375)
 color = Color(1, 1, 0, 1)
+energy = 0.3
+shadow_enabled = true
+shadow_filter = 1
 texture = ExtResource("2_u58qu")
-texture_scale = 0.5
+texture_scale = 8.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=716039594]
 position = Vector2(-1, 0)

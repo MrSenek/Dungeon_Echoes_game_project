@@ -58,7 +58,11 @@ script = ExtResource("1_djvif")
 position = Vector2(6, -2.0000014)
 scale = Vector2(0.9921875, 0.9609375)
 color = Color(1, 1, 0, 1)
+energy = 0.3
+shadow_enabled = true
+shadow_filter = 1
 texture = ExtResource("2_v4vcj")
+texture_scale = 8.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=956496570]
 texture_filter = 1

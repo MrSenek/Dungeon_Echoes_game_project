@@ -242,7 +242,10 @@ script = ExtResource("1_8l82t")
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=695234563]
 color = Color(1, 1, 0, 1)
 energy = 0.2
+shadow_enabled = true
+shadow_filter = 1
 texture = ExtResource("2_om81n")
+texture_scale = 7.9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1470167385]
 shape = SubResource("CircleShape2D_ttmor")
