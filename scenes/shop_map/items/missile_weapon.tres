@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bwsbkvkdtbou6"]
+
+[ext_resource type="Script" uid="uid://cb8abpm52h0m1" path="res://scenes/shop_map/item_data.gd" id="1_6q4xr"]
+
+[resource]
+script = ExtResource("1_6q4xr")
+item_name = "Self Guiding Missile"
+price = 50
+metadata/_custom_type_script = "uid://cb8abpm52h0m1"

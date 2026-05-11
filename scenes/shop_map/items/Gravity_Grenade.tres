@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://ctp0bn1e1piae"]
+
+[ext_resource type="Script" uid="uid://cb8abpm52h0m1" path="res://scenes/shop_map/item_data.gd" id="1_g0no6"]
+
+[resource]
+script = ExtResource("1_g0no6")
+item_name = "Gravity Grenade"
+price = 50
+metadata/_custom_type_script = "uid://cb8abpm52h0m1"

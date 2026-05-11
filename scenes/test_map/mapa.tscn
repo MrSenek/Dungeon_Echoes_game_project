@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cvojmf8b58cdf" path="res://scenes/entities/enemies/spawnpoint.tscn" id="6_pc0c0"]
 [ext_resource type="PackedScene" uid="uid://cepda1jqcoa65" path="res://scenes/entities/enemies/blob_enemy/blob_enemy.tscn" id="11_jxony"]
 [ext_resource type="PackedScene" uid="uid://dvyi3w87od8d6" path="res://scenes/main_menu/fade_anim.tscn" id="12_bahuv"]
+[ext_resource type="PackedScene" uid="uid://c3klkmtufbied" path="res://scenes/main_map/pause_menu.tscn" id="14_k1go4"]
 [ext_resource type="PackedScene" uid="uid://d12q2nq1tggh6" path="res://scenes/entities/universal/healing_totem/totem.tscn" id="23_aas22"]
 [ext_resource type="PackedScene" uid="uid://ccqqdic6y5t3x" path="res://scenes/entities/enemies/cacodemon/cacodemon.tscn" id="23_m1s8n"]
 [ext_resource type="Script" uid="uid://dqegi1mvvou7b" path="res://scenes/test_map/shop_door.gd" id="23_otmq7"]
@@ -318,7 +319,6 @@ position = Vector2(197, 447)
 
 [node name="Spawn_Point" parent="." unique_id=1401195623 instance=ExtResource("6_pc0c0")]
 position = Vector2(278, 448)
-max_enemies = 3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=468433762]
 environment = SubResource("Environment_efsqn")
@@ -349,5 +349,7 @@ offset_top = -24.0
 offset_right = 1466.0
 offset_bottom = 932.0
 mouse_filter = 1
+
+[node name="PauseMenu" parent="." unique_id=1191515484 instance=ExtResource("14_k1go4")]
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

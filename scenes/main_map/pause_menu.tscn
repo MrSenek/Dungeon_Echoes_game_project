@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://c3klkmtufbied"]
+
+[ext_resource type="Script" uid="uid://byuym4gd2ym1g" path="res://scenes/main_map/pause_menu.gd" id="1_xglce"]
+[ext_resource type="Shader" uid="uid://bwefjcubmibpm" path="res://scenes/main_map/pause_menu.gdshader" id="2_tlxfd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_omo8h"]
+shader = ExtResource("2_tlxfd")
+shader_parameter/lod = 2.0
+shader_parameter/color_tint = Color(0, 0, 0, 0.3)
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1191515484]
+process_mode = 3
+layer = 100
+visible = false
+script = ExtResource("1_xglce")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=107166327]
+material = SubResource("ShaderMaterial_omo8h")
+offset_right = 1925.0
+offset_bottom = 1093.0
+
+[node name="Control" type="Control" parent="." unique_id=1302122418]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=921093751]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 823.0
+offset_top = 445.0
+offset_right = 1057.0
+offset_bottom = 595.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer" unique_id=299386554]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+alignment = 1
+
+[node name="resume" type="Button" parent="Control/MarginContainer/VBoxContainer" unique_id=1789040181]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "wznów"
+
+[node name="exit&save" type="Button" parent="Control/MarginContainer/VBoxContainer" unique_id=1712167279]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "zapisz i wyjdź"
+
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/exit&save" to="." method="_on_exitsave_pressed"]
