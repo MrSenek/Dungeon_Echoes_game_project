@@ -20,6 +20,7 @@ texture_progress = ExtResource("3_udh4e")
 script = ExtResource("5_daq23")
 
 [node name="Label" type="Label" parent="TextureProgressBar" unique_id=1641752789]
+visible = false
 layout_mode = 0
 offset_left = 13.0
 offset_top = -18.0

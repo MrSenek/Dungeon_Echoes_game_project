@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://buk84ifep15dt"]
+
+[ext_resource type="Script" uid="uid://da7g80rwjuxxt" path="res://scenes/main_map/moving_platform.gd" id="1_cu0fs"]
+[ext_resource type="Texture2D" uid="uid://cup7pqcblmxya" path="res://scenes/test_map/Asset_Loch_001.png" id="1_f2kni"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cu0fs"]
+size = Vector2(48.435, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cu0fs"]
+atlas = ExtResource("1_f2kni")
+region = Rect2(112.79918, 79.521576, 46.650757, 15.301445)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_for38"]
+size = Vector2(46, 14)
+
+[sub_resource type="Animation" id="Animation_cu0fs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f2kni"]
+resource_name = "moving_platform_up"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -336)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cu0fs"]
+_data = {
+&"RESET": SubResource("Animation_cu0fs"),
+&"moving_platform_up": SubResource("Animation_f2kni")
+}
+
+[node name="moving_platform" type="Node2D" unique_id=556522239]
+script = ExtResource("1_cu0fs")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=1583813376]
+collision_layer = 16
+collision_mask = 3
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="AnimatableBody2D" unique_id=1126609453]
+visible = false
+shape = SubResource("RectangleShape2D_cu0fs")
+target_position = Vector2(0, -15)
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=1878205012]
+texture = SubResource("AtlasTexture_cu0fs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D" unique_id=1262450247]
+visible = false
+shape = SubResource("RectangleShape2D_for38")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1127100167]
+libraries/ = SubResource("AnimationLibrary_cu0fs")

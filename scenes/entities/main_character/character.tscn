@@ -110,7 +110,7 @@ z_index = 1
 script = ExtResource("1_w0rc6")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1926618234]
-energy = 0.3
+energy = 0.5
 shadow_enabled = true
 shadow_filter = 1
 texture = ExtResource("2_2wsin")
@@ -177,7 +177,7 @@ autoplay = "default"
 
 [node name="electro" type="Node2D" parent="weapon_state_machine" unique_id=1936269907]
 script = ExtResource("11_oaeto")
-damage = 20.0
+damage = 45.0
 
 [node name="lightning_line" type="Line2D" parent="weapon_state_machine/electro" unique_id=1745800343]
 visible = false
@@ -185,7 +185,7 @@ modulate = Color(2.342, 2.342, 2.342, 1)
 z_index = -1
 points = PackedVector2Array(12, 0, 144, 0)
 width = 2.0
-default_color = Color(0.39607844, 1, 1, 1)
+default_color = Color(0.4543986, 1.1364014, 1.1364014, 1)
 begin_cap_mode = 2
 end_cap_mode = 2
 script = ExtResource("12_rll1i")
@@ -200,7 +200,7 @@ visible = false
 shape = SubResource("RectangleShape2D_jr2ie")
 
 [node name="timer_DOT" type="Timer" parent="weapon_state_machine/electro/Area2D" unique_id=173519699]
-wait_time = 0.1
+wait_time = 0.009999999999999998
 
 [node name="missile" type="Node2D" parent="weapon_state_machine" unique_id=458861615]
 script = ExtResource("13_0lvym")

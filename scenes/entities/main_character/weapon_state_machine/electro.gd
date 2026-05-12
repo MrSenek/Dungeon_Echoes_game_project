@@ -5,20 +5,26 @@ class_name electro
 @onready var collision: Area2D = $Area2D
 @onready var timer_dot: Timer = $Area2D/timer_DOT
 @export var damage: float
-
+var direction
 var last_dir = 1
 func enter():
+	direction = character.dir
+	if direction:
+		if direction > 0:
+			last_dir = 1
+			collision.position.x = abs(collision.position.x) * direction
+		elif direction < 0:
+			last_dir = -1
+			collision.position.x = abs(collision.position.x) * direction
 	collision.monitoring = false
-	
-func exit():
-	pass
+
 
 func handle_input(event: InputEvent):
 	if Input.is_action_just_pressed("strzal"):
 		attack()
 		
 func update(delta: float):
-	var direction := Input.get_axis("left","right")
+	direction = Input.get_axis("left","right")
 	if direction:
 		if direction > 0:
 			last_dir = 1
@@ -35,7 +41,7 @@ func attack():
 	lightning_line.show()
 	lightning_line.create_lightning(Vector2.ZERO, target_pos)
 	
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.4).timeout
 	lightning_line.hide()
 	collision.monitoring = false
 	timer_dot.stop()
