@@ -48,11 +48,13 @@ func shoot():
 		shoot_cooldown.start(3)
 		for i in range(3):
 			var add_bullet = bullet_scena.instantiate()
+			if i != 0:
+				add_bullet.get_node("PointLight2D").enabled = false
 			add_bullet.global_position = global_position
 			add_bullet.global_position.y += randi_range(2,5) * [-1,1].pick_random()
 			add_bullet.direction = direction
 			add_bullet.shooter = "enemy"
-			add_bullet.damage *= stats.attack
+			add_bullet.damage *= stats.get_scaled_attack(PlayerData.current_round)
 			get_tree().current_scene.add_child(add_bullet)
 			if i < 2:
 				await get_tree().create_timer(0.2).timeout

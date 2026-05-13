@@ -9,7 +9,7 @@ var dir: int = 1
 var dmg_multiplier
 
 func _ready() -> void:
-	dmg_multiplier = stats.attack
+	dmg_multiplier = stats.get_scaled_attack(PlayerData.current_round)
 
 func _process(_delta: float) -> void:
 	player_detection()

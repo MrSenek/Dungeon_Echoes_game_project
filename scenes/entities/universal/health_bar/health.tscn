@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dx8hjkqblqwk6" path="res://scenes/entities/universal/health_bar/health-ziel.png" id="3_udh4e"]
 [ext_resource type="Script" uid="uid://cg7qb14ckfja5" path="res://scenes/entities/universal/health_bar/texture_progress_bar.gd" id="5_daq23"]
 
-[node name="Node" type="Node2D" unique_id=1180813858]
+[node name="HP" type="Node2D" unique_id=1180813858]
 z_index = 1
 script = ExtResource("1_ueyo1")
 
@@ -20,7 +20,6 @@ texture_progress = ExtResource("3_udh4e")
 script = ExtResource("5_daq23")
 
 [node name="Label" type="Label" parent="TextureProgressBar" unique_id=1641752789]
-visible = false
 layout_mode = 0
 offset_left = 13.0
 offset_top = -18.0

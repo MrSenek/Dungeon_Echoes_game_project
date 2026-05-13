@@ -19,6 +19,7 @@ func _ready() -> void:
 
 
 func start_new_wave():
+	PlayerData.current_round += 1
 	current_wave += 1
 	var budget = calc_budget()
 	fill_queue(budget)
@@ -56,6 +57,8 @@ func spawn_random(scene: PackedScene):
 
 func _on_enemy_removed():
 	active_enemies -= 1
+	if active_enemies <= 0:
+		start_new_wave()
 
 
 func _on_spawn_timer_timeout() -> void:

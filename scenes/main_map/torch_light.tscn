@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://hom108itpagh"]
+
+[ext_resource type="Script" uid="uid://fh4kkclbf8yb" path="res://scenes/main_map/torch_light.gd" id="2_ynqdn"]
+
+[sub_resource type="Gradient" id="Gradient_dn5p1"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ynqdn"]
+gradient = SubResource("Gradient_dn5p1")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.7413194, 0.23090278)
+
+[node name="torch_light" type="PointLight2D" unique_id=1024275792]
+color = Color(0.83856595, 0.72220486, 7.70092e-07, 1)
+energy = 3.0
+range_z_min = -100
+range_z_max = 100
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ynqdn")
+texture_scale = 4.0
+script = ExtResource("2_ynqdn")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1619790144]
+rect = Rect2(-88, -84, 172, 172)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

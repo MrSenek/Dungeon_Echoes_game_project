@@ -1,7 +1,7 @@
 extends Node
 signal stats_changed
 
-@export var max_health: int = 200:
+@export var max_health: int = 500:
 	set(value):
 		max_health = value
 		stats_changed.emit()
@@ -17,7 +17,12 @@ var current_round = 0
 const SAVE_PATH = "user://player_data.json"
 
 func _ready() -> void:
-	load_data()
+	#load_data()
+	pass
+
+
+
+
 
 func save_game():
 	var data = {

@@ -6,7 +6,12 @@ func _ready() -> void:
 	# Łączymy się z sygnałem globalnym przy starcie gry
 	Money.coin_collected.connect(_on_coin_collected)
 	# Ustawiamy tekst początkowy
-	label.text = str(Money.coins)
+	#label.text = str(Money.coins)
+	
+
+func _process(delta: float) -> void:
+	label.text = str(Engine.get_frames_per_second())
+	label.text = str(PlayerData.current_round)
 
 func _on_coin_collected(new_amount):
 	label.text = str(new_amount) # Aktualizujemy tekst, gdy przyjdzie sygnał

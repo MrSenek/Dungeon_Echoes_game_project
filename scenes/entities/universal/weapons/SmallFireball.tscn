@@ -1,8 +1,32 @@
 [gd_scene format=3 uid="uid://cx8m3gb7xlvnb"]
 
 [ext_resource type="Script" uid="uid://cv4ww5qbl7l0i" path="res://scenes/entities/universal/weapons/small_fireball.gd" id="1_kumsy"]
-[ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/test_map/light.png" id="2_u58qu"]
 [ext_resource type="Texture2D" uid="uid://cjrkfjenvlwve" path="res://scenes/entities/enemies/small_skeleton/avg_fire_ball.png" id="3_2lytu"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5cs1v"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_2lytu"]
+offsets = PackedFloat32Array(0, 0.36298078, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0.32941177, 0.3647059, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_eln5l"]
+gradient = SubResource("Gradient_2lytu")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8663194, 0.16840278)
+
+[sub_resource type="Gradient" id="Gradient_5cs1v"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2lytu"]
+gradient = SubResource("Gradient_5cs1v")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.6649306, 0.27256945)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eln5l"]
 atlas = ExtResource("3_2lytu")
@@ -69,15 +93,23 @@ collision_layer = 8
 collision_mask = 3
 script = ExtResource("1_kumsy")
 
+[node name="glow_sprite" type="Sprite2D" parent="." unique_id=1207031689]
+modulate = Color(0.63529414, 0.63529414, 0.63529414, 0.105882354)
+texture_filter = 2
+material = SubResource("CanvasItemMaterial_5cs1v")
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture2D_eln5l")
+
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=375194232]
+visible = false
 position = Vector2(3, -2.3841858e-07)
-scale = Vector2(0.9921875, 0.9609375)
+enabled = false
 color = Color(1, 1, 0, 1)
-energy = 0.3
-shadow_enabled = true
-shadow_filter = 1
-texture = ExtResource("2_u58qu")
-texture_scale = 8.0
+energy = 4.04
+range_z_min = -500
+range_z_max = 500
+texture = SubResource("GradientTexture2D_2lytu")
+texture_scale = 6.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=716039594]
 position = Vector2(-1, 0)

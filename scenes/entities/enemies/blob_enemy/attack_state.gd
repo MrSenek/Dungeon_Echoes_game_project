@@ -46,7 +46,7 @@ func physics_update(delta: float):
 func spawn_electric_trail():
 	if electric_trail:
 		var trail = electric_trail.instantiate()
-		trail.dmg_multiplier = character.stats.attack
+		trail.dmg_multiplier = character.stats.get_scaled_attack(PlayerData.current_round)
 		trail.global_position = ray_cast_2d.get_collision_point()
 		get_tree().current_scene.add_child(trail)
 

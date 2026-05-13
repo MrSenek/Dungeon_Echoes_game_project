@@ -28,7 +28,7 @@ func get_hp(amount):
 
 func _ready() -> void:
 	if get_parent().is_in_group("enemy"):
-		MAX_HEALTH = get_parent().stats.max_health
+		MAX_HEALTH = get_parent().stats.get_scaled_max_hp(PlayerData.current_round)
 	else:
 		PlayerData.stats_changed.connect(_on_player_stats_changed)
 		MAX_HEALTH = PlayerData.max_health
@@ -40,7 +40,7 @@ func _on_player_stats_changed():
 
 func update_stats():
 	if get_parent().is_in_group("enemy"):
-		MAX_HEALTH = get_parent().stats.max_health
+		MAX_HEALTH = get_parent().stats.get_scaled_max_hp(PlayerData.current_round)
 	else:
 		MAX_HEALTH = PlayerData.max_health
 	set_health(CURRENT_HEALTH)

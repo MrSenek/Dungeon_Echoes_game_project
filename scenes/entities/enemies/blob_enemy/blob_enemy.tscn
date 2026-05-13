@@ -19,6 +19,7 @@
 
 [sub_resource type="Resource" id="Resource_p3a5n"]
 script = ExtResource("2_ikka4")
+max_health = 500
 spawn_cost = 40
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 

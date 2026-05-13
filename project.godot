@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Zaliczenie"
-run/main_scene="uid://hgeebqi4gvob"
+run/main_scene="uid://cnoidlupab5nw"
 config/features=PackedStringArray("4.6", "Mobile")
 
 [autoload]
@@ -24,7 +24,7 @@ PlayerData="*uid://cicacqiedb47w"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=3
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=2
 
 [global_group]

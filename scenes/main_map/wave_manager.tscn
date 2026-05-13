@@ -6,6 +6,6 @@
 script = ExtResource("1_uf7uh")
 
 [node name="spawn_timer" type="Timer" parent="." unique_id=1680182786]
-wait_time = 5.0
+wait_time = 2.0
 
 [connection signal="timeout" from="spawn_timer" to="." method="_on_spawn_timer_timeout"]

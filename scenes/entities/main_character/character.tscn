@@ -200,7 +200,7 @@ visible = false
 shape = SubResource("RectangleShape2D_jr2ie")
 
 [node name="timer_DOT" type="Timer" parent="weapon_state_machine/electro/Area2D" unique_id=173519699]
-wait_time = 0.009999999999999998
+wait_time = 0.00999999999999999
 
 [node name="missile" type="Node2D" parent="weapon_state_machine" unique_id=458861615]
 script = ExtResource("13_0lvym")
