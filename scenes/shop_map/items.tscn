@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://cf4yop0cojpyf" path="res://scenes/shop_map/items/HP_Boost.tres" id="3_mivt5"]
 [ext_resource type="Resource" uid="uid://b5fm50faqh8m6" path="res://scenes/shop_map/items/DMG_Boost1,5.tres" id="4_b2mvd"]
 [ext_resource type="Resource" uid="uid://b5qkthbhiyxjm" path="res://scenes/shop_map/items/Electro_weapon.tres" id="5_vhvr7"]
+[ext_resource type="AudioStream" uid="uid://byjwuwh85wwfs" path="res://scenes/shop_map/cash_sound.mp3" id="8_mivt5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f65g5"]
 
@@ -133,6 +134,10 @@ texture = ExtResource("3_1ieia")
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_f1klk")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1405924642]
+stream = ExtResource("8_mivt5")
+volume_db = -12.45
 
 [connection signal="body_entered" from="Item1" to="." method="_on_item_1_body_entered"]
 [connection signal="body_exited" from="Item1" to="." method="_on_item_1_body_exited"]

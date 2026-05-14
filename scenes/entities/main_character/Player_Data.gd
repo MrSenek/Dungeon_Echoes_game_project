@@ -1,7 +1,7 @@
 extends Node
 signal stats_changed
 
-@export var max_health: int = 500:
+@export var max_health: int = 100:
 	set(value):
 		max_health = value
 		stats_changed.emit()

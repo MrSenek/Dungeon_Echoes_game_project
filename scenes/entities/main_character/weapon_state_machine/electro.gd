@@ -5,9 +5,17 @@ class_name electro
 @onready var collision: Area2D = $Area2D
 @onready var timer_dot: Timer = $Area2D/timer_DOT
 @export var damage: float
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+
+
 var direction
 var last_dir = 1
+
+
+
+
 func enter():
+	
 	direction = character.dir
 	if direction:
 		if direction > 0:
@@ -35,6 +43,7 @@ func update(delta: float):
 		
 
 func attack():
+	audio_stream_player.play()
 	collision.monitoring = true
 	timer_dot.start()
 	var target_pos = Vector2(150*last_dir,0)
@@ -45,6 +54,7 @@ func attack():
 	lightning_line.hide()
 	collision.monitoring = false
 	timer_dot.stop()
+	audio_stream_player.stop()
 
 
 func _on_timer_dot_timeout() -> void:

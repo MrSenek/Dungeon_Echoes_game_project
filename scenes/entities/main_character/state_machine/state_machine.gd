@@ -49,3 +49,7 @@ func _on_fireball_weapon_fired(recoil_strength: Variant) -> void:
 	}
 	change_state("recoil_state", data)
 	
+
+
+func _on_hp_death() -> void:
+	change_state("death_state")

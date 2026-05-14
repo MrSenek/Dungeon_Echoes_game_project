@@ -6,6 +6,7 @@ var shooter = ""
 var direction = 1
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 
 func _ready() -> void:
@@ -13,6 +14,7 @@ func _ready() -> void:
 	if direction < 0:
 		sprite_2d.flip_h = true
 		collision_shape_2d.position.x *= -1
+	audio_stream_player_2d.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

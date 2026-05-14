@@ -1,6 +1,6 @@
 extends Node
 
-signal health_changed(amount)
+signal health_changed(current, max)
 signal death()
 
 
@@ -8,18 +8,23 @@ var MAX_HEALTH: int
 var CURRENT_HEALTH: int
 var can_take_damage: bool = true
 
+
 # Ta funkcja zostaje, wywołujemy ją zawsze przy zmianie HP
 func set_health(amount):
 	# Zabezpieczamy, żeby CURRENT_HEALTH nie przekroczyło MAX_HEALTH
 	CURRENT_HEALTH = clamp(amount, 0, MAX_HEALTH)
-	health_changed.emit(CURRENT_HEALTH)
+	health_changed.emit(CURRENT_HEALTH, MAX_HEALTH)
 
 func damage_taken(amount):
 	if can_take_damage:
 		can_take_damage = false
 		set_health(CURRENT_HEALTH - amount) # Używamy set_health, by wysłać sygnał
 		if CURRENT_HEALTH <= 0:
-			death.emit()
+			if get_parent().is_in_group("enemy"):
+				emit_signal("death")
+			else:
+				if get_parent().is_alive:
+					emit_signal("death")
 		await get_tree().create_timer(0.2).timeout
 		can_take_damage = true
 
@@ -43,4 +48,5 @@ func update_stats():
 		MAX_HEALTH = get_parent().stats.get_scaled_max_hp(PlayerData.current_round)
 	else:
 		MAX_HEALTH = PlayerData.max_health
-	set_health(CURRENT_HEALTH)
+		print(MAX_HEALTH)
+		set_health(MAX_HEALTH)

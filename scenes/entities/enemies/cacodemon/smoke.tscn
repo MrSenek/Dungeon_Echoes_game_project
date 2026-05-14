@@ -41,6 +41,7 @@ light_mask = 2
 amount = 100
 texture = ExtResource("1_3j2f8")
 lifetime = 2.3299999999999996
+preprocess = 1.4
 speed_scale = 0.5
 randomness = 0.96
 fixed_fps = 60
@@ -54,6 +55,7 @@ collision_layer = 0
 shape = SubResource("CircleShape2D_3j2f8")
 
 [node name="damage_cooldown" type="Timer" parent="." unique_id=1499286652]
+wait_time = 0.1
 one_shot = true
 
 [node name="smoke_timer" type="Timer" parent="." unique_id=93243418]

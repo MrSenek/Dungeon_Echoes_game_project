@@ -15,6 +15,8 @@ var wave_queue: Array[PackedScene] = []
 var active_enemies: int = 0
 
 func _ready() -> void:
+	current_wave = 0
+	PlayerData.current_round = 0
 	start_new_wave()
 
 

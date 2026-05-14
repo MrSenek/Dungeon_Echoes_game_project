@@ -4,6 +4,8 @@ extends Area2D
 
 var direction: Vector2 = Vector2.RIGHT
 var SPEED = 300
+var smoke_damage: int
+
 var collided: bool = false
 func _physics_process(delta: float) -> void:
 	global_position += direction * SPEED * delta
@@ -13,6 +15,7 @@ func _process(delta: float) -> void:
 		collided = true
 		var toxic_cloud = gas.instantiate()
 		toxic_cloud.global_position = ray_cast_2d.get_collision_point()
+		toxic_cloud.damage *= smoke_damage
 		get_tree().current_scene.add_child(toxic_cloud)
 		await get_tree().create_timer(0.25).timeout
 		

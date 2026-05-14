@@ -6,7 +6,6 @@ var idle_timer := 0.0
 const IDLE_TIMER := 1.0
 
 
-
 func physics_update(delta: float):
 	if not character.is_on_floor():
 		character.velocity += character.get_gravity() * delta * character.speed_modifier

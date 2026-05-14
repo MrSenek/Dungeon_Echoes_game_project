@@ -10,8 +10,9 @@ func _ready() -> void:
 	
 
 func _process(delta: float) -> void:
-	label.text = str(Engine.get_frames_per_second())
-	label.text = str(PlayerData.current_round)
+	#label.text = str(Engine.get_frames_per_second())
+	#label.text = str(PlayerData.current_round)
+	label.text = str(PlayerData.player_coins)
 
 func _on_coin_collected(new_amount):
 	label.text = str(new_amount) # Aktualizujemy tekst, gdy przyjdzie sygnał

@@ -11,8 +11,12 @@ config_version=5
 [application]
 
 config/name="Zaliczenie"
-run/main_scene="uid://cnoidlupab5nw"
+run/main_scene="uid://hgeebqi4gvob"
 config/features=PackedStringArray("4.6", "Mobile")
+
+[audio]
+
+buses/default_bus_layout="uid://djfj2coxcm8ln"
 
 [autoload]
 

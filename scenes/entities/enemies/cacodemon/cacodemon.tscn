@@ -14,7 +14,8 @@
 
 [sub_resource type="Resource" id="Resource_xl650"]
 script = ExtResource("2_v3mbm")
-max_health = 500
+base_max_hp = 100
+spawn_cost = 70
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tmoiu"]

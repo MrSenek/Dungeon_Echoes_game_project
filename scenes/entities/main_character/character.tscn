@@ -13,13 +13,17 @@
 [ext_resource type="Script" uid="uid://d2mjccm3anqqf" path="res://scenes/entities/main_character/weapon_state_machine/weapon_state_machine.gd" id="8_2wsin"]
 [ext_resource type="Script" uid="uid://dlewp1catkqll" path="res://scenes/entities/main_character/recoil_state.gd" id="8_u6tu1"]
 [ext_resource type="Script" uid="uid://c2ojwy671pemo" path="res://scenes/entities/main_character/weapon_state_machine/fireball.gd" id="9_4ihrm"]
-[ext_resource type="Script" uid="uid://leqp3vfqvtpf" path="res://scenes/entities/main_character/dash_state.gd" id="10_4qou0"]
+[ext_resource type="Script" uid="uid://leqp3vfqvtpf" path="res://scenes/entities/main_character/state_machine/dash_state.gd" id="10_4qou0"]
 [ext_resource type="Script" uid="uid://bnosu3ecy2tmv" path="res://scenes/entities/main_character/weapon_state_machine/electro.gd" id="11_oaeto"]
 [ext_resource type="Script" uid="uid://bg7iyd3vrehkq" path="res://scenes/entities/main_character/weapon_state_machine/line_2d.gd" id="12_rll1i"]
 [ext_resource type="Script" uid="uid://8durwr0pt5aw" path="res://scenes/entities/universal/weapons/missile_state.gd" id="13_0lvym"]
+[ext_resource type="AudioStream" uid="uid://5y5g3ha3esmr" path="res://scenes/entities/main_character/state_machine/dash_sound.ogg" id="13_4ihrm"]
 [ext_resource type="PackedScene" uid="uid://c5cwnsbow8aui" path="res://scenes/entities/universal/weapons/missile.tscn" id="14_ey1xu"]
+[ext_resource type="Script" uid="uid://dijhikshuucq6" path="res://scenes/entities/main_character/death_state.gd" id="14_oaeto"]
 [ext_resource type="Script" uid="uid://dfehrq781ifia" path="res://scenes/entities/main_character/weapon_state_machine/gravity_grenade.gd" id="15_y7tf0"]
 [ext_resource type="PackedScene" uid="uid://bs6ethpaoximn" path="res://scenes/entities/universal/weapons/Gravity_Grenade/grenade.tscn" id="16_qq1ml"]
+[ext_resource type="AudioStream" uid="uid://bm4vxr75kauj5" path="res://scenes/entities/main_character/weapon_state_machine/electric_shock (mp3cut.net).mp3" id="18_84ou4"]
+[ext_resource type="Script" uid="uid://b3jtxqt8fjq8l" path="res://scenes/entities/main_character/no_weapon.gd" id="24_rll1i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qou0"]
 shader = ExtResource("3_utmtp")
@@ -124,6 +128,7 @@ material = SubResource("ShaderMaterial_4qou0")
 sprite_frames = SubResource("SpriteFrames_rll1i")
 animation = &"dash"
 autoplay = "default"
+frame_progress = 0.607123
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2083763825]
 visible = false
@@ -161,6 +166,17 @@ script = ExtResource("10_4qou0")
 wait_time = 0.2
 one_shot = true
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="state_machine/dash_state" unique_id=102051557]
+stream = ExtResource("13_4ihrm")
+volume_db = -11.352
+
+[node name="death_state" type="Node" parent="state_machine" unique_id=1238577950]
+script = ExtResource("14_oaeto")
+
+[node name="death_timer" type="Timer" parent="state_machine/death_state" unique_id=1034467694]
+wait_time = 0.5
+one_shot = true
+
 [node name="weapon_state_machine" type="Node2D" parent="." unique_id=2124445293 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("8_2wsin")
 initial_state = NodePath("fireball")
@@ -177,7 +193,7 @@ autoplay = "default"
 
 [node name="electro" type="Node2D" parent="weapon_state_machine" unique_id=1936269907]
 script = ExtResource("11_oaeto")
-damage = 45.0
+damage = 10.0
 
 [node name="lightning_line" type="Line2D" parent="weapon_state_machine/electro" unique_id=1745800343]
 visible = false
@@ -200,7 +216,10 @@ visible = false
 shape = SubResource("RectangleShape2D_jr2ie")
 
 [node name="timer_DOT" type="Timer" parent="weapon_state_machine/electro/Area2D" unique_id=173519699]
-wait_time = 0.00999999999999999
+wait_time = 0.1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="weapon_state_machine/electro" unique_id=1762196722]
+stream = ExtResource("18_84ou4")
 
 [node name="missile" type="Node2D" parent="weapon_state_machine" unique_id=458861615]
 script = ExtResource("13_0lvym")
@@ -210,9 +229,15 @@ missile = ExtResource("14_ey1xu")
 script = ExtResource("15_y7tf0")
 grav_grenade = ExtResource("16_qq1ml")
 
+[node name="no_weapon" type="Node" parent="weapon_state_machine" unique_id=869611904]
+script = ExtResource("24_rll1i")
+
 [connection signal="death" from="HP" to="." method="_on_hp_death"]
+[connection signal="death" from="HP" to="state_machine" method="_on_hp_death"]
+[connection signal="death" from="HP" to="weapon_state_machine" method="_on_hp_death"]
 [connection signal="timeout" from="state_machine/recoil_state/recoil" to="state_machine/recoil_state" method="_on_recoil_timeout"]
 [connection signal="timeout" from="state_machine/dash_state/dash_timer" to="state_machine/dash_state" method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="state_machine/death_state/death_timer" to="state_machine/death_state" method="_on_death_timer_timeout"]
 [connection signal="weapon_fired" from="weapon_state_machine/fireball" to="state_machine" method="_on_fireball_weapon_fired"]
 [connection signal="body_entered" from="weapon_state_machine/electro/Area2D" to="weapon_state_machine/electro" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="weapon_state_machine/electro/Area2D/timer_DOT" to="weapon_state_machine/electro" method="_on_timer_dot_timeout"]

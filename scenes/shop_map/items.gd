@@ -1,5 +1,6 @@
 extends Node2D
 @onready var coins: GPUParticles2D = $coins
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 
 @export var available_items: Array[ItemData] = []
@@ -38,6 +39,7 @@ func delete_items():
 
 
 func attempt_purchase(item):
+	print("attempt")
 	var price = item.price
 	if PlayerData.player_coins < price:
 		print("not enough money")
@@ -47,6 +49,7 @@ func attempt_purchase(item):
 	coins.emitting = true
 	PlayerData.player_coins -= price
 	give_item(item)
+	audio_stream_player.play()
 	delete_items()
 
 
@@ -75,7 +78,8 @@ func give_item(item):
 	if item.item_name == "Self Guiding Missile":
 		PlayerData.owned_weapons.append("Self Guiding Missile")
 	if item.item_name == "1,5x Damage":
-		PlayerData.attack = 1.5
+		PlayerData.attack *= 1.5
+		print(PlayerData.attack)
 
 
 

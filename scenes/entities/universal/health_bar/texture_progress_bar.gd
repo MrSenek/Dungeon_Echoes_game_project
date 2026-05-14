@@ -3,9 +3,7 @@ extends TextureProgressBar
 
 var start = 1
 
-func _on_node_health_changed(amount: Variant) -> void:
-	if start == 1:
-		max_value = amount
-		start = 0
-	value = amount
-	label.text = str(value)
+func _on_node_health_changed(current, max_hp):
+	max_value = max_hp
+	value = current
+	label.text = str(current)

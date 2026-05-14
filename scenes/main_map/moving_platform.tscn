@@ -58,9 +58,9 @@ collision_layer = 16
 collision_mask = 3
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="AnimatableBody2D" unique_id=1126609453]
-visible = false
+position = Vector2(0, 336)
 shape = SubResource("RectangleShape2D_cu0fs")
-target_position = Vector2(0, -15)
+target_position = Vector2(1, -341)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=1878205012]
 texture = SubResource("AtlasTexture_cu0fs")

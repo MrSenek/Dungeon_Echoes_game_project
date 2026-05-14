@@ -5,10 +5,10 @@ extends Node2D
 @onready var smoke_timer: Timer = $smoke_timer
 
 var bodies_list = []
-
+var damage = 20
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.has_method("change_speed"):
-		body.change_speed(0.75)
+		body.change_speed(0.5)
 	
 	if body.is_in_group("Player") and body.has_node("HP"):
 		if not bodies_list.has(body):
@@ -31,7 +31,7 @@ func _on_damage_cooldown_timeout() -> void:
 	# Zadajemy dmg każdemu z listy dokładnie RAZ
 	for b in bodies_list:
 		if is_instance_valid(b) and b.has_node("HP"):
-			b.get_node("HP").damage_taken(1)
+			b.get_node("HP").damage_taken(damage)
 	
 	# Timer restartuje się tylko jeśli ktoś nadal stoi w gazie
 	if not bodies_list.is_empty():

@@ -55,9 +55,11 @@ _data = {
 }
 
 [node name="ColorRect" type="ColorRect" unique_id=1346027126]
+process_mode = 3
 offset_right = 1932.0
 offset_bottom = 1088.0
 color = Color(0, 0, 0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1169226145]
+process_mode = 3
 libraries/ = SubResource("AnimationLibrary_d50lm")

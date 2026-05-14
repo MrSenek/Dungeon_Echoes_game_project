@@ -8,14 +8,14 @@ blend_mode = 1
 light_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_2lytu"]
-offsets = PackedFloat32Array(0, 0.36298078, 1)
-colors = PackedColorArray(1, 1, 0, 1, 1, 0.32941177, 0.3647059, 1, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0, 0.21875, 1)
+colors = PackedColorArray(1, 0.7647059, 0, 0.6392157, 1, 0.32941177, 0.23137255, 0.21568628, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_eln5l"]
 gradient = SubResource("Gradient_2lytu")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8663194, 0.16840278)
+fill_to = Vector2(0.8663194, 0.24131945)
 
 [sub_resource type="Gradient" id="Gradient_5cs1v"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -94,10 +94,10 @@ collision_mask = 3
 script = ExtResource("1_kumsy")
 
 [node name="glow_sprite" type="Sprite2D" parent="." unique_id=1207031689]
-modulate = Color(0.63529414, 0.63529414, 0.63529414, 0.105882354)
+modulate = Color(0.63529414, 0.63529414, 0.63529414, 1)
 texture_filter = 2
 material = SubResource("CanvasItemMaterial_5cs1v")
-scale = Vector2(3, 3)
+scale = Vector2(2.08, 2.08)
 texture = SubResource("GradientTexture2D_eln5l")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=375194232]

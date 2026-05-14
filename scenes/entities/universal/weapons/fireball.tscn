@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b0mfohjq0d8mr" path="res://scenes/entities/universal/weapons/fireball.gd" id="1_djvif"]
 [ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/test_map/light.png" id="2_v4vcj"]
 [ext_resource type="Texture2D" uid="uid://c7ajsclupq1lt" path="res://scenes/entities/universal/weapons/big_fireball1.png" id="3_djvif"]
+[ext_resource type="AudioStream" uid="uid://6qb8y4gcsgvp" path="res://scenes/entities/universal/weapons/fireball_shoot.ogg" id="4_v4vcj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v4vcj"]
 atlas = ExtResource("3_djvif")
@@ -75,5 +76,9 @@ frame_progress = 0.68463933
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1806236798]
 position = Vector2(6, -2)
 shape = SubResource("CircleShape2D_pkb82")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=2070095788]
+stream = ExtResource("4_v4vcj")
+volume_db = -5.821
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
