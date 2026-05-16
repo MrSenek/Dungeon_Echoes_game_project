@@ -5,7 +5,7 @@ extends Node2D
 @onready var smoke_timer: Timer = $smoke_timer
 
 var bodies_list = []
-var damage = 20
+@export var damage = 20
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.has_method("change_speed"):
 		body.change_speed(0.5)

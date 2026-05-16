@@ -6,8 +6,11 @@ var sending_time = 0.2
 var current_time = 0
 @export var explosion: PackedScene
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
+@export var damage: int = 75
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func _ready() -> void:
+	audio_stream_player_2d.play()
 	closest_enemy = find_enemy()
 	if closest_enemy == null:
 		queue_free()
@@ -73,5 +76,5 @@ func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group(shooter):
 		explode_self()
 		if body.has_node("HP"):
-			body.get_node("HP").damage_taken(100)
+			body.get_node("HP").damage_taken(damage)
 			queue_free.call_deferred()

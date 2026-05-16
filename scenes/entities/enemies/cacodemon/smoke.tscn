@@ -35,6 +35,7 @@ radius = 100.0
 
 [node name="Node2D" type="Node2D" unique_id=685887915]
 script = ExtResource("1_n43gj")
+damage = 4
 
 [node name="Smoke_Effect" type="GPUParticles2D" parent="." unique_id=1671940298]
 light_mask = 2

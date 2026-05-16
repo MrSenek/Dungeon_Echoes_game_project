@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://blt7cskki0gkb"]
 
 [ext_resource type="Script" uid="uid://b3pevtdlo2p3j" path="res://scenes/entities/universal/explosion.gd" id="1_1wm5j"]
+[ext_resource type="AudioStream" uid="uid://bm40bkwe4nkhs" path="res://scenes/entities/main_character/weapon_state_machine/zapsplat_science_fiction_hit_impact_25946.mp3" id="2_tw2hw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wvshy"]
 radius = 65.03076
@@ -45,6 +46,7 @@ turbulence_influence_max = 0.163
 collision_mask = 3
 monitoring = false
 script = ExtResource("1_1wm5j")
+explosion_damage = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=698956479]
 shape = SubResource("CircleShape2D_wvshy")
@@ -58,5 +60,9 @@ lifetime = 0.46
 explosiveness = 1.0
 randomness = 0.25
 process_material = SubResource("ParticleProcessMaterial_m3hux")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1938836228]
+stream = ExtResource("2_tw2hw")
+volume_db = -1.553
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

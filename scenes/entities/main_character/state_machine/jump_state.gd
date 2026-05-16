@@ -1,7 +1,7 @@
 extends State
 
 class_name jump_state
-const max_jumps : int= 200
+const max_jumps : int= 2
 var jumps : int= 0
 
 func enter(data = {}):

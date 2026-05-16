@@ -6,6 +6,7 @@ class_name electro
 @onready var timer_dot: Timer = $Area2D/timer_DOT
 @export var damage: float
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var electro_cooldown: Timer = $electro_cooldown
 
 
 var direction
@@ -28,7 +29,8 @@ func enter():
 
 
 func handle_input(event: InputEvent):
-	if Input.is_action_just_pressed("strzal"):
+	if Input.is_action_just_pressed("strzal") and electro_cooldown.is_stopped():
+		electro_cooldown.start()
 		attack()
 		
 func update(delta: float):

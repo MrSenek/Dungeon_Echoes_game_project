@@ -1,7 +1,7 @@
 extends Area2D
 const SPEED = 200
 var direction = 1
-var damage = 50
+@export var damage = 50
 const cooldown = 0.5
 var shooter = ""
 @onready var point_light_2d: PointLight2D = $PointLight2D

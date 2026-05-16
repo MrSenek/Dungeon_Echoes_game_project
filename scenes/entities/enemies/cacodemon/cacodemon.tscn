@@ -16,6 +16,7 @@
 script = ExtResource("2_v3mbm")
 base_max_hp = 100
 spawn_cost = 70
+min_wave = 5
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tmoiu"]

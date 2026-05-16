@@ -11,5 +11,5 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
-		Money.add_coin()
+		PlayerData.player_coins+=1
 		queue_free()

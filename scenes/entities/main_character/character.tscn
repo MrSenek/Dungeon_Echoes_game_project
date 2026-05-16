@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://dfehrq781ifia" path="res://scenes/entities/main_character/weapon_state_machine/gravity_grenade.gd" id="15_y7tf0"]
 [ext_resource type="PackedScene" uid="uid://bs6ethpaoximn" path="res://scenes/entities/universal/weapons/Gravity_Grenade/grenade.tscn" id="16_qq1ml"]
 [ext_resource type="AudioStream" uid="uid://bm4vxr75kauj5" path="res://scenes/entities/main_character/weapon_state_machine/electric_shock (mp3cut.net).mp3" id="18_84ou4"]
+[ext_resource type="AudioStream" uid="uid://3jtepdsw0o61" path="res://scenes/entities/main_character/weapon_state_machine/missile_sound.mp3" id="22_0lvym"]
 [ext_resource type="Script" uid="uid://b3jtxqt8fjq8l" path="res://scenes/entities/main_character/no_weapon.gd" id="24_rll1i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qou0"]
@@ -109,7 +110,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jr2ie"]
 size = Vector2(150, 20)
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1359714668]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1359714668 groups=["Player"]]
 z_index = 1
 script = ExtResource("1_w0rc6")
 
@@ -221,9 +222,20 @@ wait_time = 0.1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="weapon_state_machine/electro" unique_id=1762196722]
 stream = ExtResource("18_84ou4")
 
+[node name="electro_cooldown" type="Timer" parent="weapon_state_machine/electro" unique_id=1772682763]
+one_shot = true
+
 [node name="missile" type="Node2D" parent="weapon_state_machine" unique_id=458861615]
 script = ExtResource("13_0lvym")
 missile = ExtResource("14_ey1xu")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="weapon_state_machine/missile" unique_id=2002045826]
+stream = ExtResource("22_0lvym")
+volume_db = -8.703
+
+[node name="missile_cooldown" type="Timer" parent="weapon_state_machine/missile" unique_id=1408937099]
+wait_time = 5.0
+one_shot = true
 
 [node name="gravity_grenade" type="Node2D" parent="weapon_state_machine" unique_id=901435764]
 script = ExtResource("15_y7tf0")

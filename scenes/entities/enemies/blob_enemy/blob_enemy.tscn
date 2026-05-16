@@ -16,10 +16,11 @@
 [ext_resource type="Texture2D" uid="uid://dqta773kno5cq" path="res://scenes/entities/enemies/blob_enemy/star.png" id="12_8838m"]
 [ext_resource type="PackedScene" uid="uid://b2u5wxfry5dtj" path="res://scenes/entities/universal/health_bar/health.tscn" id="14_7f87r"]
 [ext_resource type="Script" uid="uid://dx7nkam1vq27w" path="res://scenes/entities/enemies/blob_enemy/death_state.gd" id="15_p3a5n"]
+[ext_resource type="PackedScene" uid="uid://bi5x701x451i4" path="res://scenes/entities/collectables/Moneta.tscn" id="16_o6uv7"]
 
 [sub_resource type="Resource" id="Resource_p3a5n"]
 script = ExtResource("2_ikka4")
-max_health = 500
+base_max_hp = 80
 spawn_cost = 40
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 
@@ -350,6 +351,7 @@ wait_time = 3.0
 
 [node name="death_state" type="Node2D" parent="blob_state_machine" unique_id=1167217659]
 script = ExtResource("15_p3a5n")
+coin = ExtResource("16_o6uv7")
 
 [node name="death_timer" type="Timer" parent="blob_state_machine/death_state" unique_id=1780953769]
 wait_time = 2.0
