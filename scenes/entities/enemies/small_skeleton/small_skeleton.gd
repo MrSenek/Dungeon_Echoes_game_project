@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var monetka : PackedScene = preload("res://scenes/entities/collectables/Moneta.tscn")
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @export var stats: Stats
+@onready var hit_flash_timer: Timer = $hit_flash_timer
 
 
 const SPEED = 75.0
@@ -89,6 +90,7 @@ func wandering():
 
  
 func _on_hp_death() -> void:
+
 	if is_dead:
 		return
 	else:

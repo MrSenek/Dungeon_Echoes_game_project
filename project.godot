@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Zaliczenie"
-run/main_scene="uid://hgeebqi4gvob"
+run/main_scene="uid://cnoidlupab5nw"
 config/features=PackedStringArray("4.6", "Mobile")
 
 [audio]

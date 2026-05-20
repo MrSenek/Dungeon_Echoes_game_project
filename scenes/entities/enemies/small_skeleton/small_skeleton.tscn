@@ -264,4 +264,6 @@ collision_mask = 16
 [node name="shoot_cooldown" type="Timer" parent="." unique_id=1822437431]
 one_shot = true
 
+[node name="hit_flash_timer" type="Timer" parent="." unique_id=474975081]
+
 [connection signal="death" from="HP" to="." method="_on_hp_death"]
