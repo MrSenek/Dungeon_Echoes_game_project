@@ -1,4 +1,5 @@
 extends RigidBody2D
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -12,4 +13,10 @@ func _ready() -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		PlayerData.player_coins+=1
-		queue_free()
+		audio_stream_player_2d.play()
+		set_collision_mask_value(1, false)
+		hide()
+
+
+func _on_audio_stream_player_2d_finished() -> void:
+	queue_free()

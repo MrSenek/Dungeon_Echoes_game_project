@@ -7,7 +7,7 @@ signal stats_changed
 		stats_changed.emit()
 @export var defence: int = 10
 @export var attack: float = 1
-var player_coins = 0
+var player_coins = 20
 var current_health = 10
 var owned_weapons = ["fireball"]
 var max_round = 0

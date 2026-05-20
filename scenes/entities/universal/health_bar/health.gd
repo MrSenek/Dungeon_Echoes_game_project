@@ -7,7 +7,7 @@ signal death()
 var MAX_HEALTH: int
 var CURRENT_HEALTH: int
 var can_take_damage: bool = true
-
+var original_color
 
 # Ta funkcja zostaje, wywołujemy ją zawsze przy zmianie HP
 func set_health(amount):
@@ -25,6 +25,7 @@ func damage_taken(amount):
 			else:
 				if get_parent().is_alive:
 					emit_signal("death")
+		
 		await get_tree().create_timer(0.2).timeout
 		can_take_damage = true
 

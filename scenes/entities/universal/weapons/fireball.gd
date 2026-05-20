@@ -8,6 +8,7 @@ var direction = 1
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var hitstop: Timer = $hitstop
+@export var explosion: PackedScene
 
 
 func _ready() -> void:
@@ -26,6 +27,9 @@ func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group(shooter):
 		if body.has_node("HP"):
 			body.get_node("HP").damage_taken(damage)
+			var explode = explosion.instantiate()
+			explode.global_position = global_position
+			get_tree().current_scene.add_child(explode)
 			Engine.time_scale = 0.1
 			hide()
 			hitstop.start()

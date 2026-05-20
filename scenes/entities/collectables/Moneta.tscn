@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cj4hi13rrdwdy" path="res://scenes/entities/collectables/moneta.gd" id="1_8l82t"]
 [ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/test_map/light.png" id="2_om81n"]
 [ext_resource type="Texture2D" uid="uid://bhs1uka88pfa2" path="res://scenes/entities/collectables/Monetka_002.png" id="3_om1h8"]
+[ext_resource type="AudioStream" uid="uid://bi5y5b8gmnjeq" path="res://scenes/entities/collectables/coin_pickup.mp3" id="4_6n6fw"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ttmor"]
 friction = 2.0
@@ -255,4 +256,8 @@ sprite_frames = SubResource("SpriteFrames_cnn2s")
 autoplay = "default"
 frame_progress = 0.02855262
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1419258934]
+stream = ExtResource("4_6n6fw")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]

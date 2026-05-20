@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dqnjo7sjj10ep"]
 
 [ext_resource type="Script" uid="uid://b0mfohjq0d8mr" path="res://scenes/entities/universal/weapons/fireball.gd" id="1_djvif"]
+[ext_resource type="PackedScene" uid="uid://blt7cskki0gkb" path="res://scenes/entities/universal/explosion.tscn" id="2_bcp2c"]
 [ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/test_map/light.png" id="2_v4vcj"]
 [ext_resource type="Texture2D" uid="uid://c7ajsclupq1lt" path="res://scenes/entities/universal/weapons/big_fireball1.png" id="3_djvif"]
 [ext_resource type="AudioStream" uid="uid://6qb8y4gcsgvp" path="res://scenes/entities/universal/weapons/fireball_shoot.ogg" id="4_v4vcj"]
@@ -55,6 +56,7 @@ radius = 11.0
 collision_mask = 3
 script = ExtResource("1_djvif")
 damage = 50
+explosion = ExtResource("2_bcp2c")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=375194232]
 position = Vector2(6, -2.0000014)

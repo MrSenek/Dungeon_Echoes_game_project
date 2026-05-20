@@ -320,6 +320,7 @@ autoplay = "default"
 frame_progress = 0.10893521
 
 [node name="alert_time" type="Timer" parent="blob_state_machine/alert_state" unique_id=2071485932]
+wait_time = 0.74
 
 [node name="charge_state" type="Node" parent="blob_state_machine" unique_id=1815287452]
 script = ExtResource("10_18fx8")
@@ -329,7 +330,7 @@ script = ExtResource("10_kd70p")
 electric_trail = ExtResource("11_8838m")
 
 [node name="attack_timer" type="Timer" parent="blob_state_machine/attack_state" unique_id=1861938348]
-wait_time = 0.6
+wait_time = 0.65
 
 [node name="RayCast2D" type="RayCast2D" parent="blob_state_machine/attack_state" unique_id=1845583313]
 target_position = Vector2(0, 70)
