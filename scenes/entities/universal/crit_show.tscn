@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://qny2dfqr7hvm"]
+
+[ext_resource type="Script" uid="uid://bucscifpn2sk0" path="res://scenes/entities/universal/crit_show.gd" id="1_u14dy"]
+[ext_resource type="FontFile" uid="uid://dbd7tkga4sx1u" path="res://scenes/shop_map/VCR_OSD_MONO_1.001.ttf" id="2_v5mc0"]
+
+[sub_resource type="FontVariation" id="FontVariation_jsb3c"]
+base_font = ExtResource("2_v5mc0")
+
+[sub_resource type="LabelSettings" id="LabelSettings_2gbl5"]
+font = SubResource("FontVariation_jsb3c")
+
+[node name="crit_show" type="Node2D" unique_id=263088739]
+z_index = 3
+scale = Vector2(1e-05, 1e-05)
+script = ExtResource("1_u14dy")
+
+[node name="Label" type="Label" parent="." unique_id=823965667]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "CRIT!"
+label_settings = SubResource("LabelSettings_2gbl5")

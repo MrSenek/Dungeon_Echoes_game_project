@@ -1,5 +1,6 @@
 extends Node
 signal stats_changed
+signal crit_happened
 
 @export var max_health: int = 100:
 	set(value):

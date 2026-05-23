@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://cup7pqcblmxya" path="res://scenes/test_map/Asset_Loch_001.png" id="2_0ebjn"]
 [ext_resource type="Texture2D" uid="uid://dx1l7hxbl320d" path="res://scenes/test_map/Pochodnia_001.png" id="3_ob46e"]
 [ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/test_map/light.png" id="4_5seab"]
-[ext_resource type="Texture2D" uid="uid://bjp683pm3761n" path="res://scenes/entities/main_character/1graczek.png" id="4_uqeha"]
 [ext_resource type="Texture2D" uid="uid://bsogwrjl2h1k6" path="res://scenes/entities/enemies/small_skeleton/Przeciwnik_001.png" id="6_4xg86"]
 [ext_resource type="Script" uid="uid://bvvy6k2ro3l8y" path="res://scenes/main_menu/character_menu.gd" id="7_4xg86"]
 [ext_resource type="Texture2D" uid="uid://cgjn0blcpep7r" path="res://scenes/entities/universal/weapons/fireball2.png" id="7_thkx5"]
@@ -431,7 +430,6 @@ script = ExtResource("7_4xg86")
 
 [node name="character" type="Sprite2D" parent="Node2D/RigidBody2D" unique_id=322777675]
 scale = Vector2(5, 5)
-texture = ExtResource("4_uqeha")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/RigidBody2D" unique_id=393442048]
 visible = false

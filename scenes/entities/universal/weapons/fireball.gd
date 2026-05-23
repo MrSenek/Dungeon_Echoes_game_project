@@ -9,6 +9,10 @@ var direction = 1
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var hitstop: Timer = $hitstop
 @export var explosion: PackedScene
+@export var crit_chance: float
+@export var crit_text: PackedScene
+
+
 
 
 func _ready() -> void:
@@ -26,11 +30,17 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group(shooter):
 		if body.has_node("HP"):
-			body.get_node("HP").damage_taken(damage)
+			if roll_crit():
+				PlayerData.crit_happened.emit()
+				show_crit_text()
+				body.get_node("HP").damage_taken(damage*1.5)
+				Engine.time_scale = 0.1
+			else:
+				body.get_node("HP").damage_taken(damage)
 			var explode = explosion.instantiate()
 			explode.global_position = global_position
 			get_tree().current_scene.add_child(explode)
-			Engine.time_scale = 0.1
+			
 			hide()
 			hitstop.start()
 
@@ -38,3 +48,11 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_hitstop_timeout() -> void:
 	Engine.time_scale = 1
 	queue_free()
+	
+func roll_crit() -> bool:
+	return randf() < crit_chance
+
+func show_crit_text():
+	var text = crit_text.instantiate()
+	text.global_position = global_position
+	get_tree().current_scene.add_child(text)

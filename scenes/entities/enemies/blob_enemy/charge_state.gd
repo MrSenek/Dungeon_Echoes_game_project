@@ -3,7 +3,6 @@ extends Enemy_State
 @onready var sprite_2d: AnimatedSprite2D = $"../../Sprite2D"
 
 func enter(data = {}):
-	print("enter charge")
 	sprite_2d.play("charge_anim")
 
 func exit():

@@ -9,10 +9,9 @@ var target_zoom := Vector2(10, 10)
 var zoom_speed := 2.0
 
 func enter(data = {}):
-	print("isded")
 	death_timer.start()
 	Engine.time_scale = 0.25
-	
+
 
 func exit():
 	Engine.time_scale = 1

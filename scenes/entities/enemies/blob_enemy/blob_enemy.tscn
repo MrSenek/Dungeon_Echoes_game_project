@@ -280,6 +280,7 @@ animation = &"new_animation"
 autoplay = "new_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1552319726]
+visible = false
 position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_5yxax")
 

@@ -20,6 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://casnfgtxmhu8k" path="res://scenes/main_map/Doot - E1M1.mp3" id="18_a0wp8"]
 [ext_resource type="PackedScene" uid="uid://bbud38hhcnb8l" path="res://scenes/entities/collectables/truskawka.tscn" id="19_vet2j"]
 [ext_resource type="Script" uid="uid://cgcld0873pnit" path="res://scenes/main_map/fall_death_detector.gd" id="20_livk0"]
+[ext_resource type="PackedScene" uid="uid://d12q2nq1tggh6" path="res://scenes/entities/universal/healing_totem/totem.tscn" id="21_cx1gv"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_uv10n"]
 vertices = PackedVector2Array(1476, 860, 156, 860, 260, 804, 284, 804, 172, 804, 1980.7891, 26.34375, 1968.1875, 1299.2188, 1476, 932, -14.53125, 59.679688, 884, 748, 796, 748, 796, 804, 756, 804, 756, 748, 156, 1108, 524, 1108, 524, 1172, 156, 1196, 876, 1172, 876, 1196, 156, 1212, 132, 1212, 132, 540, 172, 748, 76, 540, 76, 572, 44, 572, 44, 1268, 76, 1268, 76, 1284, -49.429688, 1322.75, 212, 1284, 212, 1268, 964, 1268, 964, 1100, 596, 1100, 596, 1036, 228, 1036, 228, 932, 884, 804, 668, 748, 260, 748, 668, 804, 628, 804, 628, 748, 540, 748, 540, 804, 484, 804, 484, 748, 396, 748, 396, 804, 372, 804, 372, 748, 284, 748)
@@ -670,9 +671,14 @@ offset_bottom = 2137.0
 
 [node name="fall_death_detector" type="Area2D" parent="." unique_id=1889381807]
 position = Vector2(867, 1760)
+collision_layer = 16
+collision_mask = 3
 script = ExtResource("20_livk0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="fall_death_detector" unique_id=734824579]
 shape = SubResource("WorldBoundaryShape2D_cx1gv")
+
+[node name="Totem" parent="." unique_id=1094523328 instance=ExtResource("21_cx1gv")]
+position = Vector2(494, 848)
 
 [connection signal="body_entered" from="fall_death_detector" to="fall_death_detector" method="_on_body_entered"]

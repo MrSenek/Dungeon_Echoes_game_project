@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://blt7cskki0gkb" path="res://scenes/entities/universal/explosion.tscn" id="2_bcp2c"]
 [ext_resource type="Texture2D" uid="uid://dbgwqua3ak60" path="res://scenes/test_map/light.png" id="2_v4vcj"]
 [ext_resource type="Texture2D" uid="uid://c7ajsclupq1lt" path="res://scenes/entities/universal/weapons/big_fireball1.png" id="3_djvif"]
+[ext_resource type="PackedScene" uid="uid://qny2dfqr7hvm" path="res://scenes/entities/universal/crit_show.tscn" id="3_iilmi"]
 [ext_resource type="AudioStream" uid="uid://6qb8y4gcsgvp" path="res://scenes/entities/universal/weapons/fireball_shoot.ogg" id="4_v4vcj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v4vcj"]
@@ -57,6 +58,8 @@ collision_mask = 3
 script = ExtResource("1_djvif")
 damage = 50
 explosion = ExtResource("2_bcp2c")
+crit_chance = 0.25
+crit_text = ExtResource("3_iilmi")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=375194232]
 position = Vector2(6, -2.0000014)

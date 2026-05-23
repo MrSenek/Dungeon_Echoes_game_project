@@ -9,6 +9,8 @@ var current_time = 0
 @export var damage: int = 75
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
+
+
 func _ready() -> void:
 	audio_stream_player_2d.play()
 	closest_enemy = find_enemy()

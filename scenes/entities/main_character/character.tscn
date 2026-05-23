@@ -25,6 +25,7 @@
 [ext_resource type="AudioStream" uid="uid://bm4vxr75kauj5" path="res://scenes/entities/main_character/weapon_state_machine/electric_shock (mp3cut.net).mp3" id="18_84ou4"]
 [ext_resource type="AudioStream" uid="uid://3jtepdsw0o61" path="res://scenes/entities/main_character/weapon_state_machine/missile_sound.mp3" id="22_0lvym"]
 [ext_resource type="Script" uid="uid://b3jtxqt8fjq8l" path="res://scenes/entities/main_character/no_weapon.gd" id="24_rll1i"]
+[ext_resource type="AudioStream" uid="uid://bicpj7dy1opd2" path="res://scenes/entities/main_character/heart_beat_sound.mp3" id="26_ey1xu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qou0"]
 shader = ExtResource("3_utmtp")
@@ -109,6 +110,17 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jr2ie"]
 size = Vector2(150, 20)
+
+[sub_resource type="Gradient" id="Gradient_0lvym"]
+offsets = PackedFloat32Array(0.37740386, 0.75721157)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ey1xu"]
+gradient = SubResource("Gradient_0lvym")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.47743055, 0.5017361)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1359714668 groups=["Player"]]
 z_index = 1
@@ -243,6 +255,18 @@ grav_grenade = ExtResource("16_qq1ml")
 
 [node name="no_weapon" type="Node" parent="weapon_state_machine" unique_id=869611904]
 script = ExtResource("24_rll1i")
+
+[node name="low_hp_indicator" type="Sprite2D" parent="." unique_id=26991885]
+visible = false
+modulate = Color(0.8901269, 0.20265529, 0, 1)
+z_index = 2
+position = Vector2(4.5, 8.499998)
+scale = Vector2(2.550781, 1.4726563)
+texture = SubResource("GradientTexture2D_ey1xu")
+
+[node name="heart_beat" type="AudioStreamPlayer" parent="." unique_id=633093001]
+stream = ExtResource("26_ey1xu")
+volume_db = 9.521
 
 [connection signal="death" from="HP" to="." method="_on_hp_death"]
 [connection signal="death" from="HP" to="state_machine" method="_on_hp_death"]

@@ -88,7 +88,7 @@ func wandering():
 
 
 
- 
+
 func _on_hp_death() -> void:
 
 	if is_dead:
