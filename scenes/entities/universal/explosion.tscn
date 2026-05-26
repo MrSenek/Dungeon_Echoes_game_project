@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://bm40bkwe4nkhs" path="res://scenes/entities/main_character/weapon_state_machine/zapsplat_science_fiction_hit_impact_25946.mp3" id="2_tw2hw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wvshy"]
-radius = 65.03076
+radius = 39.0
 
 [sub_resource type="Gradient" id="Gradient_tw2hw"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)

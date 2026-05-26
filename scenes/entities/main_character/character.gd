@@ -4,6 +4,8 @@ extends CharacterBody2D
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var low_hp_indicator: Sprite2D = $low_hp_indicator
 @onready var heart_beat: AudioStreamPlayer = $heart_beat
+@onready var hud = $HUD
+@onready var weapon_state_machine: Weapon_State_Machine = $weapon_state_machine
 
 
 
@@ -23,7 +25,7 @@ func _ready() -> void:
 	SPAWN_POINT = global_position
 	self.add_to_group("Player")
 	dir = sprite_2d.flip_h
-	
+	weapon_state_machine.weapon_cooldown_started.connect(hud.show_cooldown)
 
 func _process(delta: float) -> void:
 	if Input.get_axis("left","right") != 0:

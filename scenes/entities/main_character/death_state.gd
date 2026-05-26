@@ -21,5 +21,4 @@ func update(delta: float):
 
 
 func _on_death_timer_timeout() -> void:
-	print("death")
 	character.get_parent().reset_scene()

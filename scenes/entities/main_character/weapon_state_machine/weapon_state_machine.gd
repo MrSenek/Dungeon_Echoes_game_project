@@ -6,7 +6,7 @@ class_name Weapon_State_Machine
 
 var current_state : Weapon_State
 var states: Dictionary = {}
-
+signal weapon_cooldown_started(weapon_name: String, duration: float)
 
 func _ready() -> void:
 	
@@ -17,6 +17,8 @@ func _ready() -> void:
 		child.character = get_parent()
 		if child.character.has_node("StateMachine"):
 			child.state_machine = child.character.get_node("StateMachine")
+		if child.has_signal("cooldown_started"):
+			child.cooldown_started.connect(_on_weapon_cooldown_started)
 		
 	
 	#Start with initial state
@@ -55,8 +57,8 @@ func change_state(new_state_name: String) -> void:
 		current_state.enter()
 
 
-	
-
-
 func _on_hp_death() -> void:
 	change_state("no_weapona")
+
+func _on_weapon_cooldown_started(weapon_name: String, duration: float) -> void:
+	weapon_cooldown_started.emit(weapon_name, duration)

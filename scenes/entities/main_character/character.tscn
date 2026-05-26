@@ -209,7 +209,7 @@ autoplay = "default"
 
 [node name="electro" type="Node2D" parent="weapon_state_machine" unique_id=1936269907]
 script = ExtResource("11_oaeto")
-damage = 10.0
+damage = 20.0
 
 [node name="lightning_line" type="Line2D" parent="weapon_state_machine/electro" unique_id=1745800343]
 visible = false
@@ -237,7 +237,7 @@ wait_time = 0.1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="weapon_state_machine/electro" unique_id=1762196722]
 stream = ExtResource("18_84ou4")
 
-[node name="electro_cooldown" type="Timer" parent="weapon_state_machine/electro" unique_id=1772682763]
+[node name="weapon_cooldown" type="Timer" parent="weapon_state_machine/electro" unique_id=1772682763]
 one_shot = true
 
 [node name="missile" type="Node2D" parent="weapon_state_machine" unique_id=458861615]
@@ -271,7 +271,7 @@ texture = SubResource("GradientTexture2D_ey1xu")
 stream = ExtResource("26_ey1xu")
 volume_db = 9.521
 
-[node name="CanvasLayer" parent="." unique_id=1419749404 instance=ExtResource("27_y7tf0")]
+[node name="HUD" parent="." unique_id=1419749404 instance=ExtResource("27_y7tf0")]
 
 [connection signal="death" from="HP" to="." method="_on_hp_death"]
 [connection signal="death" from="HP" to="state_machine" method="_on_hp_death"]

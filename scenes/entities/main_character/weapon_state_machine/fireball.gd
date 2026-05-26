@@ -6,7 +6,7 @@ class_name fireball
 @onready var weapon_cooldown: Timer = $weapon_cooldown
 
 signal weapon_fired(recoil_strength)
-
+signal cooldown_started(weapon_name: String, duration: float)
 
 func enter():
 	if not is_node_ready():
@@ -43,7 +43,7 @@ func handle_input(event: InputEvent) -> void:
 func shoot() -> void:
 	# Prevent rapid firing by starting the cooldown immediately
 	can_shoot = false
-	
+	cooldown_started.emit(name, weapon_cooldown.wait_time)
 	# Emit signal to trigger player recoil
 	weapon_fired.emit(300)
 	

@@ -6,8 +6,9 @@ class_name electro
 @onready var timer_dot: Timer = $Area2D/timer_DOT
 @export var damage: float
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
-@onready var electro_cooldown: Timer = $electro_cooldown
+@onready var weapon_cooldown: Timer = $weapon_cooldown
 
+signal cooldown_started(weapon_name: String, duration: float)
 
 var direction
 var last_dir = 1
@@ -29,8 +30,8 @@ func enter():
 
 
 func handle_input(event: InputEvent):
-	if Input.is_action_just_pressed("strzal") and electro_cooldown.is_stopped():
-		electro_cooldown.start()
+	if Input.is_action_just_pressed("strzal") and weapon_cooldown.is_stopped():
+		weapon_cooldown.start()
 		attack()
 		
 func update(delta: float):
@@ -47,6 +48,7 @@ func update(delta: float):
 func attack():
 	audio_stream_player.play()
 	collision.monitoring = true
+	cooldown_started.emit(name, weapon_cooldown.wait_time)
 	timer_dot.start()
 	var target_pos = Vector2(150*last_dir,0)
 	lightning_line.show()

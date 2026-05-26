@@ -4,8 +4,9 @@
 [ext_resource type="Script" uid="uid://dh8q87xym0br8" path="res://scenes/entities/main_character/hud.gd" id="1_emb67"]
 [ext_resource type="PackedScene" uid="uid://cvmoh8xq2psvh" path="res://scenes/entities/main_character/weapon_state_machine/cooldown_bar/cooldown_bar.tscn" id="3_x8uxp"]
 
-[node name="CanvasLayer" type="CanvasLayer" unique_id=1419749404]
+[node name="HUD" type="CanvasLayer" unique_id=1419749404]
 script = ExtResource("1_emb67")
+cooldown_bar_scene = ExtResource("3_x8uxp")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=371335218]
 texture_filter = 2
@@ -27,15 +28,8 @@ texture = ExtResource("1_28scb")
 layout_mode = 2
 text = "0"
 
-[node name="cooldown_bar" parent="." unique_id=433581974 instance=ExtResource("3_x8uxp")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 20.0
-offset_top = 935.0
-offset_right = 20.0
-offset_bottom = 935.0
-grow_horizontal = 1
-grow_vertical = 1
-size_flags_horizontal = 0
-size_flags_vertical = 4
+[node name="cooldown_container" type="HBoxContainer" parent="." unique_id=1077353684]
+offset_left = 38.0
+offset_top = 916.0
+offset_right = 78.0
+offset_bottom = 956.0

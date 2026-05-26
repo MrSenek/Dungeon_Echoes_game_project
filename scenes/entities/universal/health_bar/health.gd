@@ -52,7 +52,6 @@ func update_stats():
 		MAX_HEALTH = get_parent().stats.get_scaled_max_hp(PlayerData.current_round)
 	else:
 		MAX_HEALTH = PlayerData.max_health
-		print(MAX_HEALTH)
 		set_health(MAX_HEALTH)
 
 func flash(token: int):
