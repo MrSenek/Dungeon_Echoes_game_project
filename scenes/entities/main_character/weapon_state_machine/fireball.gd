@@ -3,6 +3,8 @@ class_name fireball
 
 @onready var bullet_scena : PackedScene = preload("res://scenes/entities/universal/weapons/fireball.tscn")
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
+@onready var weapon_cooldown: Timer = $weapon_cooldown
+
 signal weapon_fired(recoil_strength)
 
 
@@ -55,14 +57,17 @@ func shoot() -> void:
 	projectile.global_position = character.global_position
 	projectile.direction = last_dir
 	projectile.shooter = "Player"
-	
+
 	# Apply player's attack stats to projectile damage
 	if "damage" in projectile:
 		projectile.damage *= PlayerData.attack
-	
+
 	# Add the projectile to the main scene tree so it moves independently of the player
 	get_tree().current_scene.add_child(projectile)
-	
-	# Handle the cooldown period using a scene tree timer
-	await get_tree().create_timer(cooldown_duration).timeout
+
+	weapon_cooldown.start(cooldown_duration)
+
+
+
+func _on_weapon_cooldown_timeout() -> void:
 	can_shoot = true

@@ -26,6 +26,7 @@
 [ext_resource type="AudioStream" uid="uid://3jtepdsw0o61" path="res://scenes/entities/main_character/weapon_state_machine/missile_sound.mp3" id="22_0lvym"]
 [ext_resource type="Script" uid="uid://b3jtxqt8fjq8l" path="res://scenes/entities/main_character/no_weapon.gd" id="24_rll1i"]
 [ext_resource type="AudioStream" uid="uid://bicpj7dy1opd2" path="res://scenes/entities/main_character/heart_beat_sound.mp3" id="26_ey1xu"]
+[ext_resource type="PackedScene" uid="uid://obi64alvyh1l" path="res://scenes/entities/main_character/HUD.tscn" id="27_y7tf0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qou0"]
 shader = ExtResource("3_utmtp")
@@ -204,6 +205,8 @@ scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_84ou4")
 autoplay = "default"
 
+[node name="weapon_cooldown" type="Timer" parent="weapon_state_machine/fireball" unique_id=23619746]
+
 [node name="electro" type="Node2D" parent="weapon_state_machine" unique_id=1936269907]
 script = ExtResource("11_oaeto")
 damage = 10.0
@@ -268,6 +271,8 @@ texture = SubResource("GradientTexture2D_ey1xu")
 stream = ExtResource("26_ey1xu")
 volume_db = 9.521
 
+[node name="CanvasLayer" parent="." unique_id=1419749404 instance=ExtResource("27_y7tf0")]
+
 [connection signal="death" from="HP" to="." method="_on_hp_death"]
 [connection signal="death" from="HP" to="state_machine" method="_on_hp_death"]
 [connection signal="death" from="HP" to="weapon_state_machine" method="_on_hp_death"]
@@ -275,5 +280,6 @@ volume_db = 9.521
 [connection signal="timeout" from="state_machine/dash_state/dash_timer" to="state_machine/dash_state" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="state_machine/death_state/death_timer" to="state_machine/death_state" method="_on_death_timer_timeout"]
 [connection signal="weapon_fired" from="weapon_state_machine/fireball" to="state_machine" method="_on_fireball_weapon_fired"]
+[connection signal="timeout" from="weapon_state_machine/fireball/weapon_cooldown" to="weapon_state_machine/fireball" method="_on_weapon_cooldown_timeout"]
 [connection signal="body_entered" from="weapon_state_machine/electro/Area2D" to="weapon_state_machine/electro" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="weapon_state_machine/electro/Area2D/timer_DOT" to="weapon_state_machine/electro" method="_on_timer_dot_timeout"]

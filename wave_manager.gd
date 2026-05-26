@@ -21,6 +21,12 @@ func _ready() -> void:
 
 
 func start_new_wave():
+	if not is_inside_tree():
+		return
+
+	if spawn_timer == null or not spawn_timer.is_inside_tree():
+		return
+
 	PlayerData.current_round += 1
 	current_wave += 1
 	var budget = calc_budget()
@@ -58,9 +64,13 @@ func spawn_random(scene: PackedScene):
 
 
 func _on_enemy_removed():
+	if not is_inside_tree():
+		return
+
 	active_enemies -= 1
+
 	if active_enemies <= 0:
-		start_new_wave()
+		call_deferred("start_new_wave")
 
 
 func _on_spawn_timer_timeout() -> void:

@@ -33,16 +33,21 @@ func _on_body_entered(body: Node2D) -> void:
 			if roll_crit():
 				PlayerData.crit_happened.emit()
 				show_crit_text()
-				body.get_node("HP").damage_taken(damage*1.5)
+				body.get_node("HP").damage_taken(damage * 1.5)
 				Engine.time_scale = 0.1
 			else:
 				body.get_node("HP").damage_taken(damage)
-			var explode = explosion.instantiate()
-			explode.global_position = global_position
-			get_tree().current_scene.add_child(explode)
-			
-			hide()
-			hitstop.start()
+
+			call_deferred("hit_enemy")
+
+func hit_enemy() -> void:
+	var explode = explosion.instantiate()
+	explode.global_position = global_position
+	get_tree().current_scene.add_child(explode)
+
+	hide()
+	collision_shape_2d.set_deferred("disabled", true)
+	hitstop.start()
 
 
 func _on_hitstop_timeout() -> void:

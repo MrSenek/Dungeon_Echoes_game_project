@@ -60,7 +60,8 @@ func attack():
 
 
 func _on_timer_dot_timeout() -> void:
-	var targets = collision.get_overlapping_bodies()
-	for body in targets:
-		if body.has_node("HP"):
-			body.get_node("HP").damage_taken(damage*PlayerData.attack)
+	if collision.monitoring:
+		var targets = collision.get_overlapping_bodies()
+		for body in targets:
+			if body.has_node("HP"):
+				body.get_node("HP").damage_taken(damage*PlayerData.attack)

@@ -16,7 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://c3klkmtufbied" path="res://scenes/main_map/pause_menu.tscn" id="8_xxxwv"]
 [ext_resource type="PackedScene" uid="uid://buk84ifep15dt" path="res://scenes/main_map/moving_platform.tscn" id="11_tiae8"]
 [ext_resource type="PackedScene" uid="uid://dvyi3w87od8d6" path="res://scenes/main_menu/fade_anim.tscn" id="12_c1xxo"]
-[ext_resource type="PackedScene" uid="uid://obi64alvyh1l" path="res://scenes/entities/main_character/HUD.tscn" id="15_eweho"]
 [ext_resource type="AudioStream" uid="uid://casnfgtxmhu8k" path="res://scenes/main_map/Doot - E1M1.mp3" id="18_a0wp8"]
 [ext_resource type="PackedScene" uid="uid://bbud38hhcnb8l" path="res://scenes/entities/collectables/truskawka.tscn" id="19_vet2j"]
 [ext_resource type="Script" uid="uid://cgcld0873pnit" path="res://scenes/main_map/fall_death_detector.gd" id="20_livk0"]
@@ -646,8 +645,6 @@ lifetime = 5.0
 randomness = 0.3
 visibility_rect = Rect2(-200, -100, 1500, 800)
 process_material = SubResource("ParticleProcessMaterial_tiae8")
-
-[node name="CanvasLayer" parent="." unique_id=1419749404 instance=ExtResource("15_eweho")]
 
 [node name="background_music" type="AudioStreamPlayer" parent="." unique_id=931156380]
 stream = ExtResource("18_a0wp8")
