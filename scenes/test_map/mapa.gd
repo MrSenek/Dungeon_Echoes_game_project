@@ -6,3 +6,11 @@ extends Node2D
 func _ready() -> void:
 	fade_transition.show()
 	fade_animation.play("fade_out")
+
+
+func reset_scene():
+	fade_transition.show()
+	fade_animation.speed_scale = 4
+	fade_animation.play("fade_in")
+	await get_tree().create_timer(0.5).timeout
+	get_tree().reload_current_scene()

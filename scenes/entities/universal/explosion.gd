@@ -10,7 +10,6 @@ func _ready() -> void:
 	await get_tree().physics_frame
 	var bodies = get_overlapping_bodies()
 	for body in bodies:
-		print(body)
 		if body.has_node("HP"):
 			body.get_node("HP").damage_taken(explosion_damage)
 	get_tree().create_timer(1.0).timeout.connect(queue_free)

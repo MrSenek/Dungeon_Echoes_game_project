@@ -9,9 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://obi64alvyh1l" path="res://scenes/entities/main_character/HUD.tscn" id="5_87tx7"]
 [ext_resource type="PackedScene" uid="uid://cvojmf8b58cdf" path="res://scenes/entities/enemies/spawnpoint.tscn" id="6_pc0c0"]
 [ext_resource type="PackedScene" uid="uid://dvyi3w87od8d6" path="res://scenes/main_menu/fade_anim.tscn" id="12_bahuv"]
+[ext_resource type="PackedScene" uid="uid://de8pw76yonyve" path="res://scenes/entities/enemies/slime/slime.tscn" id="12_hsqfn"]
 [ext_resource type="PackedScene" uid="uid://c3klkmtufbied" path="res://scenes/main_map/pause_menu.tscn" id="14_k1go4"]
 [ext_resource type="PackedScene" uid="uid://d12q2nq1tggh6" path="res://scenes/entities/universal/healing_totem/totem.tscn" id="23_aas22"]
-[ext_resource type="PackedScene" uid="uid://ccqqdic6y5t3x" path="res://scenes/entities/enemies/cacodemon/cacodemon.tscn" id="23_m1s8n"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_xvy7v"]
 vertices = PackedVector2Array(1071.3906, 65.53125, 1078.5781, 598.2578, 942.0078, 398.0078, 942.0078, 321.9922, 43.90625, 83.49219, 657.9922, 321.9922, 46.007813, 129.99219, 46.007813, 607.6719, 46.007813, 510.0078, 462.0078, 510.0078, 43.75, 129.99219, 657.9922, 398.0078, 654.0078, 417.9922, 446.0078, 398.0078, 446.0078, 321.9922, 193.99219, 321.9922, 46.007813, 433.9922, 193.99219, 398.0078, 401.9922, 433.9922, 401.9922, 417.9922, 462.0078, 494.0078, 593.9922, 494.0078, 593.9922, 510.0078, 894.0078, 510.0078, 894.0078, 433.9922, 654.0078, 433.9922)
@@ -322,9 +322,6 @@ environment = SubResource("Environment_efsqn")
 [node name="Totem" parent="." unique_id=1094523328 instance=ExtResource("23_aas22")]
 position = Vector2(277, 433)
 
-[node name="CharacterBody2D" parent="." unique_id=2124554108 instance=ExtResource("23_m1s8n")]
-position = Vector2(538, 394)
-
 [node name="fade_transition" parent="." unique_id=1346027126 instance=ExtResource("12_bahuv")]
 visible = false
 z_index = 2
@@ -335,3 +332,6 @@ offset_bottom = 932.0
 mouse_filter = 1
 
 [node name="PauseMenu" parent="." unique_id=1191515484 instance=ExtResource("14_k1go4")]
+
+[node name="slime" parent="." unique_id=530769785 instance=ExtResource("12_hsqfn")]
+position = Vector2(206, 449)

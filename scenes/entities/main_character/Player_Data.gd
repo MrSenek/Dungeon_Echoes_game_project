@@ -10,7 +10,7 @@ signal crit_happened
 @export var attack: float = 1
 var player_coins = 20
 var current_health = 10
-var owned_weapons = ["fireball"]
+var owned_weapons = ["fireball", "Self Guiding Missile"]
 var max_round = 0
 var current_round = 0
 
