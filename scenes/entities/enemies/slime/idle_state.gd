@@ -5,6 +5,7 @@ extends Enemy_State
 
 
 func enter(data = {}):
+	print("idle")
 	character.velocity.x = 0
 	wait_timer.start()
 	animated_sprite_2d.play("idle")
@@ -17,7 +18,7 @@ func physics_update(delta: float):
 		character.velocity += character.get_gravity() * delta
 	
 		
-	character.move_and_slide()
+	character.apply_movement_with_external_force()
 
 
 func _on_wait_timer_timeout() -> void:

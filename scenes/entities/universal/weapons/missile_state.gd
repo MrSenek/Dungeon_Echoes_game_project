@@ -12,6 +12,7 @@ func handle_input(event: InputEvent):
 		missile_cooldown.start()
 		cooldown_started.emit(name, missile_cooldown.wait_time)
 		var missile_launch = missile.instantiate()
+		missile_launch.damage *= PlayerData.attack
 		missile_launch.global_position = character.global_position
 		get_tree().current_scene.add_child(missile_launch)
 		missile_launch.shooter = "Player"

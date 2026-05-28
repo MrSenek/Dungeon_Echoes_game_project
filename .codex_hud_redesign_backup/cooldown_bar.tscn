@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cvmoh8xq2psvh"]
+
+[ext_resource type="Script" uid="uid://wlkjqaugbg3l" path="res://scenes/entities/main_character/weapon_state_machine/cooldown_bar/cooldown_bar.gd" id="1_1lwg4"]
+[ext_resource type="Texture2D" uid="uid://bp514amkej4tc" path="res://scenes/entities/main_character/weapon_state_machine/cooldown_bar/progress-bar-frame.png" id="1_442hb"]
+[ext_resource type="Texture2D" uid="uid://bdki1675mlkt5" path="res://scenes/entities/main_character/weapon_state_machine/cooldown_bar/progress-bar-circle.png" id="2_1lwg4"]
+
+[node name="cooldown_bar" type="Control" unique_id=433581974]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1lwg4")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=943158668]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+value = 36.0
+fill_mode = 4
+texture_under = ExtResource("2_1lwg4")
+texture_over = ExtResource("1_442hb")
+texture_progress = ExtResource("2_1lwg4")
+tint_under = Color(0.74138474, 0.7413847, 0.74138457, 0.039215688)
+tint_progress = Color(0, 0.5019608, 1, 1)

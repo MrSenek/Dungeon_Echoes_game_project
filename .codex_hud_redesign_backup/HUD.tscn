@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://obi64alvyh1l"]
+
+[ext_resource type="Texture2D" uid="uid://khy3cwgqyr1c" path="res://scenes/entities/collectables/monetka.png" id="1_28scb"]
+[ext_resource type="Script" uid="uid://dh8q87xym0br8" path="res://scenes/entities/main_character/hud.gd" id="1_emb67"]
+[ext_resource type="PackedScene" uid="uid://cvmoh8xq2psvh" path="res://scenes/entities/main_character/weapon_state_machine/cooldown_bar/cooldown_bar.tscn" id="3_x8uxp"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1419749404]
+script = ExtResource("1_emb67")
+cooldown_bar_scene = ExtResource("3_x8uxp")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=371335218]
+texture_filter = 2
+offset_left = 34.0
+offset_top = 33.0
+offset_right = 44.0
+offset_bottom = 56.0
+scale = Vector2(3, 3)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=546915997]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/HBoxContainer" unique_id=1195224240]
+position = Vector2(-3.3333335, -3.3333335)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_28scb")
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer" unique_id=877114513]
+layout_mode = 2
+text = "0"
+
+[node name="cooldown_container" type="HBoxContainer" parent="." unique_id=1077353684]
+offset_left = 38.0
+offset_top = 916.0
+offset_right = 78.0
+offset_bottom = 956.0

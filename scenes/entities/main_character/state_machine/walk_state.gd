@@ -3,8 +3,20 @@ extends State
 class_name walk_state
 
 var idle_timer := 0.0
-const IDLE_TIMER := 1.0
+const IDLE_TIMER := 0.08
+@onready var dash_cooldown: Timer = $"../dash_state/dash_cooldown"
+@onready var sprite_2d: AnimatedSprite2D = $"../../Sprite2D"
+@onready var audio_stream_player: AudioStreamPlayer = get_node_or_null("AudioStreamPlayer")
 
+func enter(data = {}):
+	if audio_stream_player:
+		audio_stream_player.play()
+	idle_timer = IDLE_TIMER
+	sprite_2d.play("run")
+
+func exit():
+	if audio_stream_player:
+		audio_stream_player.stop()
 
 func physics_update(delta: float):
 	if not character.is_on_floor():
@@ -38,5 +50,5 @@ func handle_input(event: InputEvent):
 	
 	if event.is_action_pressed("ui_accept"):
 		state_machine.change_state("jump_state")
-	if event.is_action_pressed("shift"):
+	if event.is_action_pressed("shift") and dash_cooldown.is_stopped():
 		state_machine.change_state("dash_state")

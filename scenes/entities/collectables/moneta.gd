@@ -20,3 +20,7 @@ func _on_body_entered(body: Node) -> void:
 
 func _on_audio_stream_player_2d_finished() -> void:
 	queue_free()
+
+
+func _on_lifetime_timeout() -> void:
+	queue_free()

@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://dgn2kunfkn1aj" path="res://scenes/entities/enemies/cacodemon/caco_search_state.gd" id="8_xl650"]
 [ext_resource type="Script" uid="uid://chto8p0kluuar" path="res://scenes/entities/enemies/cacodemon/caco_attack_state.gd" id="9_d1pmh"]
 [ext_resource type="PackedScene" uid="uid://sgnwusqvhes6" path="res://scenes/entities/enemies/cacodemon/toxic_attack.tscn" id="10_14qig"]
+[ext_resource type="Script" path="res://scenes/entities/enemies/cacodemon/caco_death_state.gd" id="11_death"]
+[ext_resource type="PackedScene" uid="uid://bi5x701x451i4" path="res://scenes/entities/collectables/Moneta.tscn" id="12_coin"]
 
 [sub_resource type="Resource" id="Resource_xl650"]
 script = ExtResource("2_v3mbm")
@@ -202,6 +204,14 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
+[node name="death_state" type="Node" parent="Enemy_State_Machine" unique_id=1761523829]
+script = ExtResource("11_death")
+coin_scene = ExtResource("12_coin")
+
+[node name="death_timer" type="Timer" parent="Enemy_State_Machine/death_state" unique_id=1475412513]
+wait_time = 0.45
+one_shot = true
+
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=972677104]
 path_desired_distance = 41.9
 target_desired_distance = 50.0
@@ -211,4 +221,5 @@ avoidance_enabled = true
 position = Vector2(-1, -30)
 
 [connection signal="body_entered" from="detection/Seeing_Range" to="Enemy_State_Machine/caco_idle_state" method="_on_area_2d_body_entered"]
-[connection signal="death" from="HP" to="." method="_on_node_death"]
+[connection signal="timeout" from="Enemy_State_Machine/death_state/death_timer" to="Enemy_State_Machine/death_state" method="_on_death_timer_timeout"]
+[connection signal="death" from="HP" to="Enemy_State_Machine" method="_on_hp_death"]

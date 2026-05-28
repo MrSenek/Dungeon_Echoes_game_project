@@ -8,6 +8,7 @@ var dir:int
 @export var wander_speed:int = 30
 
 func enter(data = {}):
+	print("wander")
 	dir = character.dir
 	animated_sprite_2d.play("walk")
 	
@@ -20,7 +21,7 @@ func physics_update(delta: float) -> void:
 	if !floor_detection.is_colliding():
 		turn_around()
 	
-	character.move_and_slide()
+	character.apply_movement_with_external_force()
 
 func turn_around():
 	animated_sprite_2d.flip_h = not animated_sprite_2d.flip_h

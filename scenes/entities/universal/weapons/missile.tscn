@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c4i3y4thhgyf3" path="res://scenes/entities/universal/weapons/missile.gd" id="1_8mhxp"]
 [ext_resource type="PackedScene" uid="uid://blt7cskki0gkb" path="res://scenes/entities/universal/explosion.tscn" id="2_ratl6"]
 [ext_resource type="AudioStream" uid="uid://3jtepdsw0o61" path="res://scenes/entities/main_character/weapon_state_machine/missile_sound.mp3" id="3_euuab"]
+[ext_resource type="PackedScene" uid="uid://qny2dfqr7hvm" path="res://scenes/entities/universal/crit_show.tscn" id="4_8mhxp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_euuab"]
 radius = 7.017834
@@ -42,7 +43,8 @@ color_ramp = SubResource("GradientTexture1D_euuab")
 collision_mask = 19
 script = ExtResource("1_8mhxp")
 explosion = ExtResource("2_ratl6")
-crit_chance = 0.25
+crit_chance = 0.7
+crit_text = ExtResource("4_8mhxp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=377268841]
 position = Vector2(0, -0.5)
@@ -67,4 +69,8 @@ process_material = SubResource("ParticleProcessMaterial_kteia")
 stream = ExtResource("3_euuab")
 volume_db = -8.184
 
+[node name="hitstop" type="Timer" parent="." unique_id=2004964873]
+wait_time = 0.14
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="hitstop" to="." method="_on_hitstop_timeout"]

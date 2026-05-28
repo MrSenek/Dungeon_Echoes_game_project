@@ -3,16 +3,36 @@ extends CharacterBody2D
 
 @onready var direct_detection: RayCast2D = $player_detection/direct_detection
 @export var stats: Stats
-
+@export var DMG: float = 15
 
 var is_alive: bool = true
 var dir: int = -1
+var external_force := Vector2.ZERO
+var gravity_pull_velocity := Vector2.ZERO
 
 var player_dir: int
 var player: CharacterBody2D = null
 var player_detected: bool = false
 var player_in_range: bool = false
 var player_in_attack_range:bool = false
+
+func _ready() -> void:
+	DMG *= stats.get_scaled_attack(PlayerData.current_round)
+
+
+func add_external_force(force: Vector2) -> void:
+	if is_alive:
+		external_force += force
+
+
+func apply_movement_with_external_force(max_speed := 300.0) -> void:
+	gravity_pull_velocity += external_force
+	external_force = Vector2.ZERO
+	gravity_pull_velocity = gravity_pull_velocity.limit_length(250)
+	velocity += gravity_pull_velocity
+	velocity = velocity.limit_length(max_speed)
+	move_and_slide()
+	gravity_pull_velocity = gravity_pull_velocity.move_toward(Vector2.ZERO, 900 * get_physics_process_delta_time())
 
 func _process(delta: float) -> void:
 	if player and player_detected:
@@ -38,6 +58,3 @@ func _on_detection_range_body_exited(body: Node2D) -> void:
 		player = null
 		player_detected = false
 		player_in_range = false
-
-func _on_hp_death() -> void:
-	queue_free()

@@ -8,10 +8,15 @@ var current_time = 0
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
 @export var damage: int = 75
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var hitstop: Timer = $hitstop
+@export var crit_chance: float
+@export var crit_text: PackedScene
 
 
 
 func _ready() -> void:
+	hitstop.ignore_time_scale = true
 	audio_stream_player_2d.play()
 	closest_enemy = find_enemy()
 	if closest_enemy == null:
@@ -47,6 +52,15 @@ func explode_self():
 	get_tree().current_scene.add_child.call_deferred(explode)
 	queue_free()
 
+func hit_enemy() -> void:
+	var explode = explosion.instantiate()
+	explode.global_position = global_position
+	get_tree().current_scene.add_child(explode)
+
+	hide()
+	collision_shape_2d.set_deferred("disabled", true)
+	hitstop.start()
+
 
 func find_enemy():
 	var enemies = get_tree().get_nodes_in_group("enemy")
@@ -76,7 +90,32 @@ func chase_enemy(delta: float):
 
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group(shooter):
-		explode_self()
 		if body.has_node("HP"):
-			body.get_node("HP").damage_taken(damage)
-			queue_free.call_deferred()
+			if roll_crit():
+				PlayerData.crit_happened.emit()
+				show_crit_text()
+				body.get_node("HP").damage_taken(damage * 1.5)
+				Engine.time_scale = 0.1
+			else:
+				body.get_node("HP").damage_taken(damage)
+
+			call_deferred("hit_enemy")
+		else:
+			explode_self()
+
+func _on_hitstop_timeout() -> void:
+	Engine.time_scale = 1
+	queue_free()
+
+
+func _exit_tree() -> void:
+	if Engine.time_scale == 0.1:
+		Engine.time_scale = 1
+
+func roll_crit() -> bool:
+	return randf() < crit_chance
+
+func show_crit_text():
+	var text = crit_text.instantiate()
+	text.global_position = global_position
+	get_tree().current_scene.add_child(text)

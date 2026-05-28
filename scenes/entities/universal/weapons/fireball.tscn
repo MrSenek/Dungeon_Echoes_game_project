@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c7ajsclupq1lt" path="res://scenes/entities/universal/weapons/big_fireball1.png" id="3_djvif"]
 [ext_resource type="PackedScene" uid="uid://qny2dfqr7hvm" path="res://scenes/entities/universal/crit_show.tscn" id="3_iilmi"]
 [ext_resource type="AudioStream" uid="uid://6qb8y4gcsgvp" path="res://scenes/entities/universal/weapons/fireball_shoot.ogg" id="4_v4vcj"]
+[ext_resource type="Texture2D" uid="uid://vsbol8c3yjn3" path="res://scenes/entities/main_character/weapon_state_machine/67.png" id="6_5tfue"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v4vcj"]
 atlas = ExtResource("3_djvif")
@@ -26,6 +27,14 @@ region = Rect2(96, 0, 32, 15)
 [sub_resource type="AtlasTexture" id="AtlasTexture_je5xq"]
 atlas = ExtResource("3_djvif")
 region = Rect2(128, 0, 32, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stipc"]
+atlas = ExtResource("6_5tfue")
+region = Rect2(0, 0, 64, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxb77"]
+atlas = ExtResource("6_5tfue")
+region = Rect2(0, 52, 64, 52)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_stipc"]
 animations = [{
@@ -48,6 +57,17 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stipc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxb77")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pkb82"]
@@ -76,7 +96,7 @@ texture_filter = 1
 position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_stipc")
 autoplay = "default"
-frame_progress = 0.68463933
+frame_progress = 0.501486
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1806236798]
 position = Vector2(6, -2)
@@ -87,7 +107,7 @@ stream = ExtResource("4_v4vcj")
 volume_db = -5.821
 
 [node name="hitstop" type="Timer" parent="." unique_id=1575229239]
-wait_time = 0.04
+wait_time = 0.12
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="hitstop" to="." method="_on_hitstop_timeout"]

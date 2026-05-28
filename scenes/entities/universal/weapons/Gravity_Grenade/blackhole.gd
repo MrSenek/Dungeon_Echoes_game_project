@@ -14,7 +14,7 @@ func _ready() -> void:
 	queue_free()
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	for body in get_overlapping_bodies():
 		if body.is_in_group("enemy") and body.has_method("add_external_force"):
 
@@ -25,7 +25,7 @@ func _physics_process(delta):
 				continue
 
 			var strength = pull_strength / max(dist, 50)
-			var force = dir.normalized() * strength * delta
+			var force = dir.normalized() * strength
 
 			body.add_external_force(force)
 

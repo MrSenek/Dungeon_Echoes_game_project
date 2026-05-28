@@ -1,6 +1,7 @@
 extends State
 @onready var dash_timer: Timer = $dash_timer
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var dash_cooldown: Timer = $dash_cooldown
 
 
 const GHOST = preload("uid://cdo3m08l7wcjj")
@@ -11,6 +12,7 @@ var strength: int = 500
 var dir
 
 func enter(data = {}):
+	dash_cooldown.start()
 	audio_stream_player.play()
 	character.sprite_2d.play("dash")
 	character.velocity.y = 0

@@ -9,10 +9,12 @@
 [ext_resource type="Script" uid="uid://bycpujo3e4v4r" path="res://scenes/entities/enemies/slime/wander_state.gd" id="5_nnw2d"]
 [ext_resource type="Script" uid="uid://23n04hd6pnkq" path="res://scenes/entities/enemies/slime/chase_state.gd" id="7_1sn8x"]
 [ext_resource type="Script" uid="uid://c2cakr13mhkh4" path="res://scenes/entities/enemies/slime/attack_state.gd" id="8_bj07i"]
+[ext_resource type="Script" uid="uid://bcy0v3e6t44tf" path="res://scenes/entities/enemies/slime/death_state.gd" id="9_00218"]
+[ext_resource type="PackedScene" uid="uid://bi5x701x451i4" path="res://scenes/entities/collectables/Moneta.tscn" id="10_2tqvs"]
 
 [sub_resource type="Resource" id="Resource_slime_stats"]
 script = ExtResource("4_stats")
-base_max_hp = 25
+base_max_hp = 35
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2xo21"]
@@ -136,7 +138,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"death",
-"speed": 8.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -194,7 +196,7 @@ animations = [{
 size = Vector2(32, 34)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a3x4k"]
-radius = 137.0146
+radius = 213.08449
 
 [node name="slime" type="CharacterBody2D" unique_id=530769785 groups=["enemy"]]
 collision_layer = 2
@@ -204,8 +206,10 @@ stats = SubResource("Resource_slime_stats")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1259969182]
 sprite_frames = SubResource("SpriteFrames_tfmds")
-animation = &"attack"
+animation = &"death"
 autoplay = "idle"
+frame = 3
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=850031334]
 visible = false
@@ -220,7 +224,6 @@ initial_state = NodePath("idle_state")
 script = ExtResource("3_qkvj1")
 
 [node name="wait_timer" type="Timer" parent="enemy_state_machine/idle_state" unique_id=1847901237]
-wait_time = 5.0
 one_shot = true
 
 [node name="wander_state" type="Node2D" parent="enemy_state_machine" unique_id=2111692311]
@@ -237,16 +240,22 @@ script = ExtResource("7_1sn8x")
 [node name="attack_state" type="Node2D" parent="enemy_state_machine" unique_id=1396902809]
 script = ExtResource("8_bj07i")
 
+[node name="death_state" type="Node" parent="enemy_state_machine" unique_id=1269588791]
+script = ExtResource("9_00218")
+coin_scene = ExtResource("10_2tqvs")
+
+[node name="Timer" type="Timer" parent="enemy_state_machine/death_state" unique_id=1540455213]
+wait_time = 3.0
+one_shot = true
+
 [node name="HP" parent="." unique_id=1180813858 instance=ExtResource("3_om87s")]
 position = Vector2(0, -5)
 
 [node name="player_detection" type="Node2D" parent="." unique_id=1689289340]
-visible = false
 
 [node name="detection_range" type="Area2D" parent="player_detection" unique_id=1389581841]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_detection/detection_range" unique_id=1326028692]
-visible = false
 shape = SubResource("CircleShape2D_a3x4k")
 
 [node name="direct_detection" type="RayCast2D" parent="player_detection" unique_id=542728871]
@@ -255,6 +264,7 @@ collision_mask = 17
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="enemy_state_machine/attack_state" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="enemy_state_machine/idle_state/wait_timer" to="enemy_state_machine/idle_state" method="_on_wait_timer_timeout"]
-[connection signal="death" from="HP" to="." method="_on_hp_death"]
+[connection signal="timeout" from="enemy_state_machine/death_state/Timer" to="enemy_state_machine/death_state" method="_on_timer_timeout"]
+[connection signal="death" from="HP" to="enemy_state_machine" method="_on_hp_death"]
 [connection signal="body_entered" from="player_detection/detection_range" to="." method="_on_detection_range_body_entered"]
 [connection signal="body_exited" from="player_detection/detection_range" to="." method="_on_detection_range_body_exited"]

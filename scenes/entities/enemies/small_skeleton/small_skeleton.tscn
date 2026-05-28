@@ -8,7 +8,8 @@
 
 [sub_resource type="Resource" id="Resource_iu7pn"]
 script = ExtResource("2_iu7pn")
-spawn_cost = 15
+spawn_cost = 20
+min_wave = 2
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2hibj"]

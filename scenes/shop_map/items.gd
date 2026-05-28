@@ -54,17 +54,21 @@ func attempt_purchase(item):
 
 
 func randomize_items():
+	var text
 	var items_list = available_items.duplicate()
 	item1 = items_list.pick_random()
-	get_node("Item1/Node2D/Label").text = item1.item_name
+	text = item1.item_name + "\n" + str(item1.price)
+	get_node("Item1/Node2D/Label").text = text
 	items_list.erase(item1)
 	
 	item2 = items_list.pick_random()
-	get_node("Item2/Node2D/Label").text = item2.item_name
+	text = item2.item_name + "\n" + str(item2.price)
+	get_node("Item2/Node2D/Label").text = text
 	items_list.erase(item2)
 	
 	item3 = items_list.pick_random()
-	get_node("Item3/Node2D/Label").text = item3.item_name
+	text = item3.item_name + "\n" + str(item3.price)
+	get_node("Item3/Node2D/Label").text = text
 	items_list.erase(item3)
 	
 

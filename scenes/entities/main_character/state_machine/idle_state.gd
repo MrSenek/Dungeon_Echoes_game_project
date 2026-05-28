@@ -1,8 +1,10 @@
 extends State
 
 class_name idle_state
+@onready var sprite_2d: AnimatedSprite2D = $"../../Sprite2D"
 
 func enter(data = {}):
+	sprite_2d.play("default")
 	character.velocity.x = 0
 
 

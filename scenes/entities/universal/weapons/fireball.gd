@@ -16,6 +16,7 @@ var direction = 1
 
 
 func _ready() -> void:
+	hitstop.ignore_time_scale = true
 	get_tree().create_timer(5.0).timeout.connect(queue_free)
 	if direction < 0:
 		sprite_2d.flip_h = true
@@ -53,6 +54,11 @@ func hit_enemy() -> void:
 func _on_hitstop_timeout() -> void:
 	Engine.time_scale = 1
 	queue_free()
+
+
+func _exit_tree() -> void:
+	if Engine.time_scale == 0.1:
+		Engine.time_scale = 1
 	
 func roll_crit() -> bool:
 	return randf() < crit_chance

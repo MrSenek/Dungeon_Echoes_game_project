@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dg6jvdwsudyew" path="res://scenes/entities/enemies/small_skeleton/small_skeleton.tscn" id="5_w18rk"]
 [ext_resource type="Texture2D" uid="uid://dx1l7hxbl320d" path="res://scenes/test_map/Pochodnia_001.png" id="5_xxxwv"]
 [ext_resource type="Texture2D" uid="uid://2o17l75frosh" path="res://scenes/test_map/okno.png" id="6_3m5r4"]
+[ext_resource type="PackedScene" uid="uid://de8pw76yonyve" path="res://scenes/entities/enemies/slime/slime.tscn" id="6_cx1gv"]
 [ext_resource type="Script" uid="uid://xn8b7ys8pibj" path="res://scenes/main_map/tile_map_layer.gd" id="6_eweho"]
 [ext_resource type="PackedScene" uid="uid://bo38sj65xoql2" path="res://scenes/shop_map/items.tscn" id="7_3m5r4"]
 [ext_resource type="PackedScene" uid="uid://hom108itpagh" path="res://scenes/main_map/torch_light.tscn" id="7_eweho"]
@@ -20,6 +21,9 @@
 [ext_resource type="PackedScene" uid="uid://bbud38hhcnb8l" path="res://scenes/entities/collectables/truskawka.tscn" id="19_vet2j"]
 [ext_resource type="Script" uid="uid://cgcld0873pnit" path="res://scenes/main_map/fall_death_detector.gd" id="20_livk0"]
 [ext_resource type="PackedScene" uid="uid://d12q2nq1tggh6" path="res://scenes/entities/universal/healing_totem/totem.tscn" id="21_cx1gv"]
+[ext_resource type="FontFile" uid="uid://dbd7tkga4sx1u" path="res://scenes/shop_map/VCR_OSD_MONO_1.001.ttf" id="22_fahcc"]
+[ext_resource type="Script" uid="uid://fjo2u77qywm3" path="res://scenes/tutorial/tutorial_ui.gd" id="23_tutorial_ui"]
+[ext_resource type="Script" uid="uid://ebjvdlh7bdff" path="res://scenes/tutorial/tutorial_manager.gd" id="24_tutorial_manager"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_uv10n"]
 vertices = PackedVector2Array(1476, 860, 156, 860, 260, 804, 284, 804, 172, 804, 1980.7891, 26.34375, 1968.1875, 1299.2188, 1476, 932, -14.53125, 59.679688, 884, 748, 796, 748, 796, 804, 756, 804, 756, 748, 156, 1108, 524, 1108, 524, 1172, 156, 1196, 876, 1172, 876, 1196, 156, 1212, 132, 1212, 132, 540, 172, 748, 76, 540, 76, 572, 44, 572, 44, 1268, 76, 1268, 76, 1284, -49.429688, 1322.75, 212, 1284, 212, 1268, 964, 1268, 964, 1100, 596, 1100, 596, 1036, 228, 1036, 228, 932, 884, 804, 668, 748, 260, 748, 668, 804, 628, 804, 628, 748, 540, 748, 540, 804, 484, 804, 484, 748, 396, 748, 396, 804, 372, 804, 372, 748, 284, 748)
@@ -553,6 +557,14 @@ _data = {
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_cx1gv"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_fahcc"]
+font = ExtResource("22_fahcc")
+font_size = 26
+
+[sub_resource type="LabelSettings" id="LabelSettings_o0y6g"]
+font = ExtResource("22_fahcc")
+font_size = 26
+
 [node name="main_map" type="Node2D" unique_id=934601880]
 script = ExtResource("1_cve46")
 
@@ -561,7 +573,7 @@ position = Vector2(248, 842)
 color = Color(0.7179642, 0.7179641, 0.71796435, 1)
 
 [node name="WaveManager" parent="." unique_id=1653306634 node_paths=PackedStringArray("spawn_points") instance=ExtResource("4_1orr3")]
-enemy_scenes = Array[PackedScene]([ExtResource("5_ip2l2"), ExtResource("4_gpv4w"), ExtResource("5_w18rk")])
+enemy_scenes = Array[PackedScene]([ExtResource("5_ip2l2"), ExtResource("4_gpv4w"), ExtResource("5_w18rk"), ExtResource("6_cx1gv")])
 spawn_points = [NodePath("../spawn_points/spawn_point"), NodePath("../spawn_points/spawn_point2"), NodePath("../spawn_points/spawn_point3")]
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=2028480731]
@@ -613,7 +625,7 @@ z_index = 1
 position = Vector2(349, 1195)
 
 [node name="CharacterBody2D" parent="." unique_id=1359714668 instance=ExtResource("2_w8mnr")]
-position = Vector2(854, 1189)
+position = Vector2(832, 1187)
 collision_mask = 16
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=743917297]
@@ -677,5 +689,52 @@ shape = SubResource("WorldBoundaryShape2D_cx1gv")
 
 [node name="Totem" parent="." unique_id=1094523328 instance=ExtResource("21_cx1gv")]
 position = Vector2(494, 848)
+
+[node name="tutorial" type="Node" parent="." unique_id=1434202740]
+
+[node name="tutorial_ui" type="CanvasLayer" parent="tutorial" unique_id=976419110]
+layer = 20
+script = ExtResource("23_tutorial_ui")
+
+[node name="hint_panel" type="PanelContainer" parent="tutorial/tutorial_ui" unique_id=1523252385]
+anchors_preset = -1
+anchor_left = 0.23
+anchor_top = 0.674
+anchor_right = 0.77
+anchor_bottom = 0.674
+offset_top = -96.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="tutorial/tutorial_ui/hint_panel" unique_id=356204649]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="tutorial/tutorial_ui/hint_panel/MarginContainer" unique_id=28046254]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Icon_Label" type="Label" parent="tutorial/tutorial_ui/hint_panel/MarginContainer/HBoxContainer" unique_id=1806573687]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+text = "!"
+label_settings = SubResource("LabelSettings_fahcc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hint_Label" type="Label" parent="tutorial/tutorial_ui/hint_panel/MarginContainer/HBoxContainer" unique_id=693836962]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+label_settings = SubResource("LabelSettings_o0y6g")
+vertical_alignment = 1
+
+[node name="tutorial_manager" type="Node" parent="tutorial" unique_id=441830154]
+script = ExtResource("24_tutorial_manager")
 
 [connection signal="body_entered" from="fall_death_detector" to="fall_death_detector" method="_on_body_entered"]

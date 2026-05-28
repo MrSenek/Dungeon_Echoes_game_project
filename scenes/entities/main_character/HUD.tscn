@@ -2,34 +2,272 @@
 
 [ext_resource type="Texture2D" uid="uid://khy3cwgqyr1c" path="res://scenes/entities/collectables/monetka.png" id="1_28scb"]
 [ext_resource type="Script" uid="uid://dh8q87xym0br8" path="res://scenes/entities/main_character/hud.gd" id="1_emb67"]
-[ext_resource type="PackedScene" uid="uid://cvmoh8xq2psvh" path="res://scenes/entities/main_character/weapon_state_machine/cooldown_bar/cooldown_bar.tscn" id="3_x8uxp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(0.035, 0.032, 0.028, 0.74)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.82, 0.58, 0.25, 0.62)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+content_margin_left = 8.0
+content_margin_top = 7.0
+content_margin_right = 8.0
+content_margin_bottom = 7.0
+bg_color = Color(0.025, 0.024, 0.022, 0.82)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.42, 0.35, 0.75)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cooldown_bg"]
+bg_color = Color(0.12, 0.12, 0.12, 0.78)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cooldown_fill"]
+bg_color = Color(0.1, 0.58, 0.95, 0.92)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="HUD" type="CanvasLayer" unique_id=1419749404]
 script = ExtResource("1_emb67")
-cooldown_bar_scene = ExtResource("3_x8uxp")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=371335218]
-texture_filter = 2
-offset_left = 34.0
-offset_top = 33.0
-offset_right = 44.0
-offset_bottom = 56.0
-scale = Vector2(3, 3)
+[node name="Root" type="Control" parent="." unique_id=1588029601]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=546915997]
+[node name="TopRightStats" type="HBoxContainer" parent="Root" unique_id=975461984]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -254.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 72.0
+grow_horizontal = 0
+theme_override_constants/separation = 8
+
+[node name="RoundPanel" type="PanelContainer" parent="Root/TopRightStats" unique_id=1205122107]
+custom_minimum_size = Vector2(112, 0)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/HBoxContainer" unique_id=1195224240]
-position = Vector2(-3.3333335, -3.3333335)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_28scb")
-
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer" unique_id=877114513]
+[node name="RoundBox" type="VBoxContainer" parent="Root/TopRightStats/RoundPanel" unique_id=1375330141]
 layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="RoundTitle" type="Label" parent="Root/TopRightStats/RoundPanel/RoundBox" unique_id=546957591]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.69, 0.62, 1)
+theme_override_font_sizes/font_size = 11
+text = "RUNDA"
+horizontal_alignment = 1
+
+[node name="RoundValue" type="Label" parent="Root/TopRightStats/RoundPanel/RoundBox" unique_id=253064881]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.75, 1)
+theme_override_font_sizes/font_size = 20
 text = "0"
+horizontal_alignment = 1
 
-[node name="cooldown_container" type="HBoxContainer" parent="." unique_id=1077353684]
-offset_left = 38.0
-offset_top = 916.0
-offset_right = 78.0
-offset_bottom = 956.0
+[node name="CoinPanel" type="PanelContainer" parent="Root/TopRightStats" unique_id=2118204494]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="CoinBox" type="HBoxContainer" parent="Root/TopRightStats/CoinPanel" unique_id=1026803094]
+layout_mode = 2
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="CoinIcon" type="TextureRect" parent="Root/TopRightStats/CoinPanel/CoinBox" unique_id=785681288]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("1_28scb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CoinsValue" type="Label" parent="Root/TopRightStats/CoinPanel/CoinBox" unique_id=82560273]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.75, 1)
+theme_override_font_sizes/font_size = 20
+text = "0"
+vertical_alignment = 1
+
+[node name="BottomWeaponBar" type="HBoxContainer" parent="Root" unique_id=293817818]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -226.0
+offset_top = -96.0
+offset_right = 226.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="FireballSlot" type="PanelContainer" parent="Root/BottomWeaponBar" unique_id=1361248328]
+custom_minimum_size = Vector2(106, 68)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotBox" type="VBoxContainer" parent="Root/BottomWeaponBar/FireballSlot" unique_id=491332406]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Header" type="HBoxContainer" parent="Root/BottomWeaponBar/FireballSlot/SlotBox" unique_id=153055288]
+layout_mode = 2
+
+[node name="Key" type="Label" parent="Root/BottomWeaponBar/FireballSlot/SlotBox/Header" unique_id=430425708]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.55, 1)
+theme_override_font_sizes/font_size = 16
+text = "1"
+
+[node name="Name" type="Label" parent="Root/BottomWeaponBar/FireballSlot/SlotBox/Header" unique_id=2108376811]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.86, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "FIRE"
+vertical_alignment = 1
+
+[node name="CooldownBar" type="ProgressBar" parent="Root/BottomWeaponBar/FireballSlot/SlotBox" unique_id=1638906118]
+visible = false
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_cooldown_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cooldown_fill")
+show_percentage = false
+
+[node name="ElectroSlot" type="PanelContainer" parent="Root/BottomWeaponBar" unique_id=1239482598]
+custom_minimum_size = Vector2(106, 68)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotBox" type="VBoxContainer" parent="Root/BottomWeaponBar/ElectroSlot" unique_id=1018578876]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Header" type="HBoxContainer" parent="Root/BottomWeaponBar/ElectroSlot/SlotBox" unique_id=491210224]
+layout_mode = 2
+
+[node name="Key" type="Label" parent="Root/BottomWeaponBar/ElectroSlot/SlotBox/Header" unique_id=1934927202]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.55, 1)
+theme_override_font_sizes/font_size = 16
+text = "2"
+
+[node name="Name" type="Label" parent="Root/BottomWeaponBar/ElectroSlot/SlotBox/Header" unique_id=1452736972]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.86, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "VOLT"
+vertical_alignment = 1
+
+[node name="CooldownBar" type="ProgressBar" parent="Root/BottomWeaponBar/ElectroSlot/SlotBox" unique_id=1602238711]
+visible = false
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_cooldown_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cooldown_fill")
+show_percentage = false
+
+[node name="MissileSlot" type="PanelContainer" parent="Root/BottomWeaponBar" unique_id=100043471]
+custom_minimum_size = Vector2(106, 68)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotBox" type="VBoxContainer" parent="Root/BottomWeaponBar/MissileSlot" unique_id=1332831181]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Header" type="HBoxContainer" parent="Root/BottomWeaponBar/MissileSlot/SlotBox" unique_id=1074025282]
+layout_mode = 2
+
+[node name="Key" type="Label" parent="Root/BottomWeaponBar/MissileSlot/SlotBox/Header" unique_id=614511510]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.55, 1)
+theme_override_font_sizes/font_size = 16
+text = "3"
+
+[node name="Name" type="Label" parent="Root/BottomWeaponBar/MissileSlot/SlotBox/Header" unique_id=1722956709]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.86, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "MISSILE"
+vertical_alignment = 1
+
+[node name="CooldownBar" type="ProgressBar" parent="Root/BottomWeaponBar/MissileSlot/SlotBox" unique_id=1979448149]
+visible = false
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_cooldown_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cooldown_fill")
+show_percentage = false
+
+[node name="GrenadeSlot" type="PanelContainer" parent="Root/BottomWeaponBar" unique_id=922814504]
+custom_minimum_size = Vector2(106, 68)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SlotBox" type="VBoxContainer" parent="Root/BottomWeaponBar/GrenadeSlot" unique_id=1610383891]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Header" type="HBoxContainer" parent="Root/BottomWeaponBar/GrenadeSlot/SlotBox" unique_id=1160768398]
+layout_mode = 2
+
+[node name="Key" type="Label" parent="Root/BottomWeaponBar/GrenadeSlot/SlotBox/Header" unique_id=1593260030]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.55, 1)
+theme_override_font_sizes/font_size = 16
+text = "4"
+
+[node name="Name" type="Label" parent="Root/BottomWeaponBar/GrenadeSlot/SlotBox/Header" unique_id=2104662960]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.86, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "GRAV"
+vertical_alignment = 1
+
+[node name="CooldownBar" type="ProgressBar" parent="Root/BottomWeaponBar/GrenadeSlot/SlotBox" unique_id=1159523026]
+visible = false
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_cooldown_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cooldown_fill")
+show_percentage = false

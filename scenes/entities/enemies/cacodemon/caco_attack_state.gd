@@ -38,6 +38,6 @@ func shoot():
 	attack.global_position = character.global_position
 	attack.direction = direction
 	attack.rotation = direction.angle()
-	attack.smoke_damage = character.stats.base_attack
+	attack.smoke_damage = character.stats.get_scaled_attack(PlayerData.current_round)
 	get_tree().current_scene.add_child(attack)
 	shoot_cooldown.start()

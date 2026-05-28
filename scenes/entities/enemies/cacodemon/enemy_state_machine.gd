@@ -38,4 +38,6 @@ func change_state(new_state_name: String) -> void:
 
 
 func _on_hp_death() -> void:
+	if current_state and current_state.name == "death_state":
+		return
 	change_state("death_state")

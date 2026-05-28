@@ -9,8 +9,8 @@ class_name Stats
 @export var min_wave: int = 1
 
 #wave scaling
-@export var health_scaling: int = 10
-@export var attack_scaling: float = 0.5
+@export var health_scaling: int = 5
+@export var attack_scaling: float = 0.2
 
 
 func get_scaled_max_hp(round: int) -> int:

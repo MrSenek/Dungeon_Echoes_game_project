@@ -9,7 +9,7 @@ extends CharacterBody2D
 
 
 
-const SPEED = 300.0
+const SPEED = 250.0
 const JUMP_VELOCITY = -400.0
 
 var SPAWN_POINT
@@ -24,8 +24,13 @@ func _ready() -> void:
 	PlayerData.crit_happened.connect(on_crit)
 	SPAWN_POINT = global_position
 	self.add_to_group("Player")
+	camera_2d.enabled = true
+	camera_2d.make_current()
 	dir = sprite_2d.flip_h
 	weapon_state_machine.weapon_cooldown_started.connect(hud.show_cooldown)
+	weapon_state_machine.weapon_selected.connect(hud.set_selected_weapon)
+	if weapon_state_machine.current_state:
+		hud.set_selected_weapon(weapon_state_machine.current_state.name)
 
 func _process(delta: float) -> void:
 	if Input.get_axis("left","right") != 0:

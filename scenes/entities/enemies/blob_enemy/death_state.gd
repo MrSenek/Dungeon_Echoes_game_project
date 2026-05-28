@@ -1,7 +1,9 @@
 extends Enemy_State
 @onready var sprite_2d: AnimatedSprite2D = $"../../Sprite2D"
 @onready var death_timer: Timer = $death_timer
-@export var coin: PackedScene
+@export var coin_scene: PackedScene
+@export var coins_to_drop: int = 3
+
 
 func enter(data = {}):
 	character.set_collision_layer_value(2, false)
@@ -12,7 +14,11 @@ func enter(data = {}):
 
 
 func _on_death_timer_timeout() -> void:
-	var moneta = coin.instantiate()
-	moneta.global_position = character.global_position
-	get_tree().current_scene.add_child(moneta)
+	for i in coins_to_drop:
+		var coin = coin_scene.instantiate()
+		coin.global_position = character.global_position + Vector2(
+			randf_range(-20, 20),
+			randf_range(-12, 12)
+		)
+		get_tree().current_scene.add_child(coin)
 	character.queue_free()

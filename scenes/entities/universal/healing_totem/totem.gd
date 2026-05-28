@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 	var pulse = sin(Time.get_ticks_msec() * 0.01) * 2
 	line_2d.width = 6 + pulse
 	if healing_tick.is_stopped():
-		target["node"].get_node("HP").damage_taken(-1)
+		target["node"].get_node("HP").damage_taken(-5)
 		healing_tick.start()
 	
 

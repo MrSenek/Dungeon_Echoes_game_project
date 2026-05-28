@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://hjl2ni4t2pgv"
+path="res://.godot/imported/dragon-studio-high-heels-clicking-on-a-hard-floor-515263 (mp3cut.net) (1).mp3-a18933d6e33208f3f99951bfedbfad99.mp3str"
+
+[deps]
+
+source_file="res://scenes/entities/main_character/state_machine/dragon-studio-high-heels-clicking-on-a-hard-floor-515263 (mp3cut.net) (1).mp3"
+dest_files=["res://.godot/imported/dragon-studio-high-heels-clicking-on-a-hard-floor-515263 (mp3cut.net) (1).mp3-a18933d6e33208f3f99951bfedbfad99.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

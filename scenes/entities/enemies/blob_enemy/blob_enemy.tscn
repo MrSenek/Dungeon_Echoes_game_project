@@ -22,6 +22,7 @@
 script = ExtResource("2_ikka4")
 base_max_hp = 80
 spawn_cost = 40
+min_wave = 3
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6nayp"]
@@ -353,7 +354,7 @@ wait_time = 3.0
 
 [node name="death_state" type="Node2D" parent="blob_state_machine" unique_id=1167217659]
 script = ExtResource("15_p3a5n")
-coin = ExtResource("16_o6uv7")
+coin_scene = ExtResource("16_o6uv7")
 
 [node name="death_timer" type="Timer" parent="blob_state_machine/death_state" unique_id=1780953769]
 wait_time = 2.0

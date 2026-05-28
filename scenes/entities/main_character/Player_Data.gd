@@ -10,9 +10,10 @@ signal crit_happened
 @export var attack: float = 1
 var player_coins = 20
 var current_health = 10
-var owned_weapons = ["fireball", "Self Guiding Missile"]
+var owned_weapons = ["fireball","Gravity Grenade"]
 var max_round = 0
 var current_round = 0
+var tutorial_seen_this_session = false
 
 
 const SAVE_PATH = "user://player_data.json"

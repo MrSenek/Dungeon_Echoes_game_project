@@ -7,6 +7,7 @@ class_name Weapon_State_Machine
 var current_state : Weapon_State
 var states: Dictionary = {}
 signal weapon_cooldown_started(weapon_name: String, duration: float)
+signal weapon_selected(weapon_name: String)
 
 func _ready() -> void:
 	
@@ -55,10 +56,11 @@ func change_state(new_state_name: String) -> void:
 
 	if current_state:
 		current_state.enter()
+		weapon_selected.emit(current_state.name)
 
 
 func _on_hp_death() -> void:
-	change_state("no_weapona")
+	change_state("no_weapons")
 
 func _on_weapon_cooldown_started(weapon_name: String, duration: float) -> void:
 	weapon_cooldown_started.emit(weapon_name, duration)

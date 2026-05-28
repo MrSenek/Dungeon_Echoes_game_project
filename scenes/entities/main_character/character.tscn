@@ -9,11 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://cccskynyp23eo" path="res://scenes/entities/main_character/player_sprite.png" id="4_utmtp"]
 [ext_resource type="Script" uid="uid://ca6ho6sa8d3gm" path="res://scenes/entities/main_character/state_machine/idle_state.gd" id="5_utmtp"]
 [ext_resource type="Script" uid="uid://b4kowvrx5twy3" path="res://scenes/entities/main_character/state_machine/walk_state.gd" id="6_4qou0"]
+[ext_resource type="Texture2D" uid="uid://brby3kea5llqi" path="res://scenes/entities/main_character/walk_sprite.png" id="7_qq1ml"]
 [ext_resource type="Script" uid="uid://cx15e8u3vincn" path="res://scenes/entities/main_character/state_machine/jump_state.gd" id="7_rvm66"]
 [ext_resource type="Script" uid="uid://d2mjccm3anqqf" path="res://scenes/entities/main_character/weapon_state_machine/weapon_state_machine.gd" id="8_2wsin"]
 [ext_resource type="Script" uid="uid://dlewp1catkqll" path="res://scenes/entities/main_character/recoil_state.gd" id="8_u6tu1"]
 [ext_resource type="Script" uid="uid://c2ojwy671pemo" path="res://scenes/entities/main_character/weapon_state_machine/fireball.gd" id="9_4ihrm"]
 [ext_resource type="Script" uid="uid://leqp3vfqvtpf" path="res://scenes/entities/main_character/state_machine/dash_state.gd" id="10_4qou0"]
+[ext_resource type="AudioStream" uid="uid://hjl2ni4t2pgv" path="res://scenes/entities/main_character/state_machine/dragon-studio-high-heels-clicking-on-a-hard-floor-515263 (mp3cut.net) (1).mp3" id="11_jr2ie"]
 [ext_resource type="Script" uid="uid://bnosu3ecy2tmv" path="res://scenes/entities/main_character/weapon_state_machine/electro.gd" id="11_oaeto"]
 [ext_resource type="Script" uid="uid://bg7iyd3vrehkq" path="res://scenes/entities/main_character/weapon_state_machine/line_2d.gd" id="12_rll1i"]
 [ext_resource type="Script" uid="uid://8durwr0pt5aw" path="res://scenes/entities/universal/weapons/missile_state.gd" id="13_0lvym"]
@@ -41,6 +43,14 @@ region = Rect2(0, 0, 21, 39)
 atlas = ExtResource("4_utmtp")
 region = Rect2(0, 0, 21, 36)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qq1ml"]
+atlas = ExtResource("7_qq1ml")
+region = Rect2(0, 0, 21, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jr2ie"]
+atlas = ExtResource("7_qq1ml")
+region = Rect2(21, 0, 21, 36)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_rll1i"]
 animations = [{
 "frames": [{
@@ -58,6 +68,17 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qq1ml")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jr2ie")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n7fvo"]
@@ -140,9 +161,9 @@ position = Vector2(0, -11)
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1123078486]
 material = SubResource("ShaderMaterial_4qou0")
 sprite_frames = SubResource("SpriteFrames_rll1i")
-animation = &"dash"
+animation = &"run"
 autoplay = "default"
-frame_progress = 0.607123
+frame_progress = 0.73145473
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2083763825]
 visible = false
@@ -164,6 +185,10 @@ script = ExtResource("5_utmtp")
 [node name="walk_state" type="Node" parent="state_machine" unique_id=407278144]
 script = ExtResource("6_4qou0")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="state_machine/walk_state" unique_id=459124686]
+stream = ExtResource("11_jr2ie")
+volume_db = -9.887
+
 [node name="jump_state" type="Node" parent="state_machine" unique_id=924189215]
 script = ExtResource("7_rvm66")
 
@@ -183,6 +208,10 @@ one_shot = true
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="state_machine/dash_state" unique_id=102051557]
 stream = ExtResource("13_4ihrm")
 volume_db = -11.352
+
+[node name="dash_cooldown" type="Timer" parent="state_machine/dash_state" unique_id=1222196330]
+wait_time = 0.6
+one_shot = true
 
 [node name="death_state" type="Node" parent="state_machine" unique_id=1238577950]
 script = ExtResource("14_oaeto")
@@ -212,10 +241,9 @@ script = ExtResource("11_oaeto")
 damage = 20.0
 
 [node name="lightning_line" type="Line2D" parent="weapon_state_machine/electro" unique_id=1745800343]
-visible = false
 modulate = Color(2.342, 2.342, 2.342, 1)
 z_index = -1
-points = PackedVector2Array(12, 0, 144, 0)
+points = PackedVector2Array(0, 0, 150, 0)
 width = 2.0
 default_color = Color(0.4543986, 1.1364014, 1.1364014, 1)
 begin_cap_mode = 2
@@ -223,12 +251,11 @@ end_cap_mode = 2
 script = ExtResource("12_rll1i")
 
 [node name="Area2D" type="Area2D" parent="weapon_state_machine/electro" unique_id=393503879]
-position = Vector2(86, 0)
 collision_mask = 18
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="weapon_state_machine/electro/Area2D" unique_id=1218208969]
-visible = false
+position = Vector2(75, 0)
 shape = SubResource("RectangleShape2D_jr2ie")
 
 [node name="timer_DOT" type="Timer" parent="weapon_state_machine/electro/Area2D" unique_id=173519699]
@@ -256,6 +283,9 @@ one_shot = true
 script = ExtResource("15_y7tf0")
 grav_grenade = ExtResource("16_qq1ml")
 
+[node name="weapon_cooldown" type="Timer" parent="weapon_state_machine/gravity_grenade" unique_id=2060659922]
+wait_time = 7.0
+
 [node name="no_weapon" type="Node" parent="weapon_state_machine" unique_id=869611904]
 script = ExtResource("24_rll1i")
 
@@ -281,5 +311,5 @@ volume_db = 9.521
 [connection signal="timeout" from="state_machine/death_state/death_timer" to="state_machine/death_state" method="_on_death_timer_timeout"]
 [connection signal="weapon_fired" from="weapon_state_machine/fireball" to="state_machine" method="_on_fireball_weapon_fired"]
 [connection signal="timeout" from="weapon_state_machine/fireball/weapon_cooldown" to="weapon_state_machine/fireball" method="_on_weapon_cooldown_timeout"]
-[connection signal="body_entered" from="weapon_state_machine/electro/Area2D" to="weapon_state_machine/electro" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="weapon_state_machine/electro/Area2D/timer_DOT" to="weapon_state_machine/electro" method="_on_timer_dot_timeout"]
+[connection signal="timeout" from="weapon_state_machine/gravity_grenade/weapon_cooldown" to="weapon_state_machine/gravity_grenade" method="_on_weapon_cooldown_timeout"]

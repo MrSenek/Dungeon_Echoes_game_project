@@ -35,7 +35,7 @@ func start_new_wave():
 
 
 func calc_budget() -> int:
-	return current_wave * 100
+	return 40 + current_wave * 35
 
 func fill_queue(budget):
 	wave_queue.clear()
@@ -69,7 +69,7 @@ func _on_enemy_removed():
 
 	active_enemies -= 1
 
-	if active_enemies <= 0:
+	if active_enemies <= 0 and not wave_queue:
 		call_deferred("start_new_wave")
 
 
