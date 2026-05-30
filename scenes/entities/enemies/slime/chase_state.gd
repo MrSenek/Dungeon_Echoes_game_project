@@ -8,7 +8,6 @@ extends Enemy_State
 @export var attack_start_range: float = 72.0
 
 func enter(data = {}):
-	print("chase")
 	animated_sprite_2d.play("walk")
 	animated_sprite_2d.speed_scale = 1.5
 

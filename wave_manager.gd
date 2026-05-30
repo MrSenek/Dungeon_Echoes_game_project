@@ -28,6 +28,8 @@ func start_new_wave():
 		return
 
 	PlayerData.current_round += 1
+	if PlayerData.max_round <= PlayerData.current_round:
+		PlayerData.max_round = PlayerData.current_round
 	current_wave += 1
 	var budget = calc_budget()
 	fill_queue(budget)

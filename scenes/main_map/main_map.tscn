@@ -24,6 +24,7 @@
 [ext_resource type="FontFile" uid="uid://dbd7tkga4sx1u" path="res://scenes/shop_map/VCR_OSD_MONO_1.001.ttf" id="22_fahcc"]
 [ext_resource type="Script" uid="uid://fjo2u77qywm3" path="res://scenes/tutorial/tutorial_ui.gd" id="23_tutorial_ui"]
 [ext_resource type="Script" uid="uid://ebjvdlh7bdff" path="res://scenes/tutorial/tutorial_manager.gd" id="24_tutorial_manager"]
+[ext_resource type="PackedScene" path="res://scenes/main_map/death_screen.tscn" id="25_death_screen"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_uv10n"]
 vertices = PackedVector2Array(1476, 860, 156, 860, 260, 804, 284, 804, 172, 804, 1980.7891, 26.34375, 1968.1875, 1299.2188, 1476, 932, -14.53125, 59.679688, 884, 748, 796, 748, 796, 804, 756, 804, 756, 748, 156, 1108, 524, 1108, 524, 1172, 156, 1196, 876, 1172, 876, 1196, 156, 1212, 132, 1212, 132, 540, 172, 748, 76, 540, 76, 572, 44, 572, 44, 1268, 76, 1268, 76, 1284, -49.429688, 1322.75, 212, 1284, 212, 1268, 964, 1268, 964, 1100, 596, 1100, 596, 1036, 228, 1036, 228, 932, 884, 804, 668, 748, 260, 748, 668, 804, 628, 804, 628, 748, 540, 748, 540, 804, 484, 804, 484, 748, 396, 748, 396, 804, 372, 804, 372, 748, 284, 748)
@@ -644,6 +645,8 @@ position = Vector2(303, 15)
 position = Vector2(559, 15)
 
 [node name="PauseMenu" parent="." unique_id=1191515484 instance=ExtResource("8_xxxwv")]
+
+[node name="DeathScreen" parent="." instance=ExtResource("25_death_screen")]
 
 [node name="moving_platform" parent="." unique_id=556522239 instance=ExtResource("11_tiae8")]
 position = Vector2(143, 1223)

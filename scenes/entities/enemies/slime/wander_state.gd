@@ -8,7 +8,6 @@ var dir:int
 @export var wander_speed:int = 30
 
 func enter(data = {}):
-	print("wander")
 	dir = character.dir
 	animated_sprite_2d.play("walk")
 	

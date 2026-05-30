@@ -2,6 +2,8 @@ extends CanvasLayer
 
 @onready var round_value: Label = $Root/TopRightStats/RoundPanel/RoundBox/RoundValue
 @onready var coins_value: Label = $Root/TopRightStats/CoinPanel/CoinBox/CoinsValue
+@onready var max_round_value: Label = $Root/TopRightStats/MaxRoundPanel/MaxRoundBox/MaxRoundValue
+
 @onready var weapon_slots := {
 	"fireball": {
 		"slot": $Root/BottomWeaponBar/FireballSlot,
@@ -24,6 +26,7 @@ extends CanvasLayer
 		"key": $Root/BottomWeaponBar/GrenadeSlot/SlotBox/Header/Key,
 	},
 }
+
 
 var cooldowns: Dictionary = {}
 var selected_weapon_id := "fireball"
@@ -54,7 +57,7 @@ func _process(delta: float) -> void:
 
 
 func _on_coin_collected(new_amount):
-	coins_value.text = str(new_amount)
+	coins_value.text = str(int(new_amount))
 
 
 func show_cooldown(weapon_name: String, duration: float) -> void:
@@ -82,7 +85,8 @@ func set_selected_weapon(weapon_name: String) -> void:
 
 func _update_stats() -> void:
 	round_value.text = str(PlayerData.current_round)
-	coins_value.text = str(PlayerData.player_coins)
+	coins_value.text = str(int(PlayerData.player_coins))
+	max_round_value.text = str(int(PlayerData.max_round))
 
 
 func _update_weapon_slots() -> void:

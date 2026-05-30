@@ -10,7 +10,6 @@ extends Enemy_State
 var attacked: bool = false
 
 func enter(data = {}):
-	print("attack")
 	attacked = false
 	character.velocity.x = character.dir * lunge_speed
 	animated_sprite_2d.play("attack")

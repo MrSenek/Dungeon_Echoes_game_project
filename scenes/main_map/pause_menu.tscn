@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://dtuedx0b1856k" path="res://scenes/main_map/buttons/resume_normal.png" id="6_f83ur"]
 [ext_resource type="Texture2D" uid="uid://bpf3h5kpdd0ma" path="res://scenes/main_map/buttons/resume_click.png" id="7_2b2vc"]
 [ext_resource type="Texture2D" uid="uid://cwejwjsxefx68" path="res://scenes/main_map/buttons/resume_hover.png" id="8_hk6y1"]
+[ext_resource type="AudioStream" uid="uid://cy4b8smm0mpcw" path="res://scenes/main_menu/mixkit-typewriter-soft-click-1125 (mp3cut.net).mp3" id="9_8wwok"]
+[ext_resource type="AudioStream" uid="uid://dw0l5es1ekf5f" path="res://scenes/main_menu/tunetank.com_button-aprrove-click.mp3" id="10_f83ur"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_omo8h"]
 shader = ExtResource("2_tlxfd")
@@ -65,5 +67,13 @@ texture_normal = ExtResource("3_h871e")
 texture_pressed = ExtResource("4_tacrc")
 texture_hover = ExtResource("5_8wwok")
 
+[node name="button_hover" type="AudioStreamPlayer" parent="." unique_id=688646197]
+stream = ExtResource("9_8wwok")
+
+[node name="button_click" type="AudioStreamPlayer" parent="." unique_id=85478481]
+stream = ExtResource("10_f83ur")
+
+[connection signal="mouse_entered" from="Control/MarginContainer/VBoxContainer/resume" to="." method="_on_resume_mouse_entered"]
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/resume" to="." method="_on_resume_pressed"]
+[connection signal="mouse_entered" from="Control/MarginContainer/VBoxContainer/exit&save" to="." method="_on_exitsave_mouse_entered"]
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/exit&save" to="." method="_on_exitsave_pressed"]

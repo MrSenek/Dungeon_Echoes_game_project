@@ -19,7 +19,7 @@ metadata/_snap_enabled = true
 [sub_resource type="CircleShape2D" id="CircleShape2D_ijs7q"]
 
 [node name="Node2D" type="RigidBody2D" unique_id=931716227]
-collision_layer = 4
+collision_layer = 0
 collision_mask = 16
 mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_hdx7j")

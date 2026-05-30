@@ -21,4 +21,8 @@ func update(delta: float):
 
 
 func _on_death_timer_timeout() -> void:
-	character.get_parent().reset_scene()
+	var map = character.get_parent()
+	if map.has_method("show_death_screen"):
+		map.show_death_screen()
+	else:
+		map.reset_scene()

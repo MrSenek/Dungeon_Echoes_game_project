@@ -3,39 +3,39 @@ extends Node
 @onready var tutorial_ui = $"../tutorial_ui"
 
 var current_step := 0
-var tutorial_active := true
+var tutorial_active := false
 var last_step_time := 0.0
 
 var steps := [
 	{
 		"text": "A/D - ruch    SPACJA - skok    SHIFT - dash",
-		"actions": ["left", "right", "up", "shift"],
+		"actions": ["left", "right", "ui_accept", "shift"],
 		"minimum_time": 1.0,
-		"fallback_time": 6.0
+		"fallback_time": 7.0
 	},
 	{
 		"text": "LPM albo E - atak. Trzymaj dystans i celuj w przeciwnikow.",
 		"actions": ["strzal"],
 		"minimum_time": 0.6,
-		"fallback_time": 7.0
+		"fallback_time": 8.0
 	},
 	{
 		"text": "Zbieraj monety po walce. Wydasz je na bronie i ulepszenia.",
 		"actions": [],
-		"minimum_time": 4.0,
-		"fallback_time": 4.0
+		"minimum_time": 5.0,
+		"fallback_time": 5.0
 	},
 	{
-		"text": "F - interakcja ze sklepem,lub winda.",
+		"text": "F - interakcja ze sklepem, lub winda.",
 		"actions": ["interaction"],
 		"minimum_time": 1.0,
-		"fallback_time": 8.0
+		"fallback_time": 9.0
 	},
 	{
 		"text": "1-4 - zmiana broni po kupieniu nowych ulepszen.",
 		"actions": ["Weapon 1", "Weapon 2", "Weapon 3", "Weapon 4"],
 		"minimum_time": 1.0,
-		"fallback_time": 6.0
+		"fallback_time": 7.0
 	}
 ]
 

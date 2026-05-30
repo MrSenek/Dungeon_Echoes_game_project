@@ -5,7 +5,6 @@ extends Enemy_State
 
 
 func enter(data = {}):
-	print("idle")
 	character.velocity.x = 0
 	wait_timer.start()
 	animated_sprite_2d.play("idle")

@@ -19,8 +19,6 @@ var item1
 var item2
 var item3
 
-var player_coins = PlayerData.player_coins
-
 func _ready() -> void:
 	randomize_items()
 
@@ -76,14 +74,19 @@ func give_item(item):
 	if item.item_name == "+10HP":
 		PlayerData.max_health+=10
 	if item.item_name == "Electric Weapon":
-		PlayerData.owned_weapons.append("Electric Weapon")
+		add_weapon_once("Electric Weapon")
 	if item.item_name == "Gravity Grenade":
-		PlayerData.owned_weapons.append("Gravity Grenade")
+		add_weapon_once("Gravity Grenade")
 	if item.item_name == "Self Guiding Missile":
-		PlayerData.owned_weapons.append("Self Guiding Missile")
+		add_weapon_once("Self Guiding Missile")
 	if item.item_name == "1,5x Damage":
 		PlayerData.attack *= 1.5
 		print(PlayerData.attack)
+
+
+func add_weapon_once(weapon_name: String) -> void:
+	if weapon_name not in PlayerData.owned_weapons:
+		PlayerData.owned_weapons.append(weapon_name)
 
 
 

@@ -73,6 +73,29 @@ offset_bottom = 72.0
 grow_horizontal = 0
 theme_override_constants/separation = 8
 
+[node name="MaxRoundPanel" type="PanelContainer" parent="Root/TopRightStats" unique_id=1467866792]
+custom_minimum_size = Vector2(112, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MaxRoundBox" type="VBoxContainer" parent="Root/TopRightStats/MaxRoundPanel" unique_id=1393181843]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="MaxRoundTitle" type="Label" parent="Root/TopRightStats/MaxRoundPanel/MaxRoundBox" unique_id=1198865766]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.69, 0.62, 1)
+theme_override_font_sizes/font_size = 11
+text = "MAKSYMALNA RUNDA"
+horizontal_alignment = 1
+
+[node name="MaxRoundValue" type="Label" parent="Root/TopRightStats/MaxRoundPanel/MaxRoundBox" unique_id=1106613766]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.75, 1)
+theme_override_font_sizes/font_size = 20
+text = "0"
+horizontal_alignment = 1
+
 [node name="RoundPanel" type="PanelContainer" parent="Root/TopRightStats" unique_id=1205122107]
 custom_minimum_size = Vector2(112, 0)
 layout_mode = 2

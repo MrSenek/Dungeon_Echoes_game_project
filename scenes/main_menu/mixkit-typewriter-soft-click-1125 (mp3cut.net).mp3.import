@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cy4b8smm0mpcw"
+path="res://.godot/imported/mixkit-typewriter-soft-click-1125 (mp3cut.net).mp3-778163d368c375a5ad57a57d8927421f.mp3str"
+
+[deps]
+
+source_file="res://scenes/main_menu/mixkit-typewriter-soft-click-1125 (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/mixkit-typewriter-soft-click-1125 (mp3cut.net).mp3-778163d368c375a5ad57a57d8927421f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
