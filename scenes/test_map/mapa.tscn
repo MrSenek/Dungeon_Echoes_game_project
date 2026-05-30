@@ -334,7 +334,7 @@ mouse_filter = 1
 
 [node name="PauseMenu" parent="." unique_id=1191515484 instance=ExtResource("14_k1go4")]
 
-[node name="DeathScreen" parent="." instance=ExtResource("24_death_screen")]
+[node name="DeathScreen" parent="." unique_id=334462184 instance=ExtResource("24_death_screen")]
 
 [node name="slime" parent="." unique_id=530769785 instance=ExtResource("12_hsqfn")]
 position = Vector2(206, 449)

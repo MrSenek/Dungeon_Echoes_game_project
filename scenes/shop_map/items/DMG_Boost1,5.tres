@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b5fm50faqh8m6"]
 
 [ext_resource type="Script" uid="uid://cb8abpm52h0m1" path="res://scenes/shop_map/item_data.gd" id="1_pqg2g"]
+[ext_resource type="Texture2D" uid="uid://7qn5pif6mhwl" path="res://scenes/shop_map/items/Dmgboosticon.png" id="2_ctjvg"]
 
 [resource]
 script = ExtResource("1_pqg2g")
 item_name = "1,5x Damage"
 price = 30
+texture = ExtResource("2_ctjvg")
 metadata/_custom_type_script = "uid://cb8abpm52h0m1"

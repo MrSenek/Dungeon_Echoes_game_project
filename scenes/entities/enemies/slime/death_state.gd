@@ -4,7 +4,6 @@ extends Enemy_State
 @export var coin_scene: PackedScene
 
 func enter(data = {}):
-	print("death")
 	character.is_alive = false
 	character.velocity = Vector2.ZERO
 	character.set_collision_layer_value(2, false)

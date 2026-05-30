@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var round_value: Label = $Root/TopRightStats/RoundPanel/RoundBox/RoundValue
 @onready var coins_value: Label = $Root/TopRightStats/CoinPanel/CoinBox/CoinsValue
 @onready var max_round_value: Label = $Root/TopRightStats/MaxRoundPanel/MaxRoundBox/MaxRoundValue
+@onready var root: Control = $Root
 
 @onready var weapon_slots := {
 	"fireball": {
@@ -29,6 +30,8 @@ extends CanvasLayer
 
 
 var cooldowns: Dictionary = {}
+var combo_label: Label
+var combo_tween: Tween
 var selected_weapon_id := "fireball"
 var slot_styles: Dictionary = {}
 var selected_slot_styles: Dictionary = {}
@@ -45,6 +48,8 @@ var weapon_aliases := {
 
 func _ready() -> void:
 	Money.coin_collected.connect(_on_coin_collected)
+	PlayerData.combo_changed.connect(_on_combo_changed)
+	_create_combo_label()
 	_prepare_slot_styles()
 	_update_stats()
 	_update_weapon_slots()
@@ -58,6 +63,26 @@ func _process(delta: float) -> void:
 
 func _on_coin_collected(new_amount):
 	coins_value.text = str(int(new_amount))
+
+
+func _on_combo_changed(combo_count: int, damage_multiplier: float, speed_multiplier: float) -> void:
+	if not combo_label:
+		return
+	if combo_count <= 0:
+		combo_label.visible = false
+		return
+
+	combo_label.text = "COMBO x%s  DMG %.0f%%  SPD %.0f%%" % [
+		combo_count,
+		damage_multiplier * 100.0,
+		speed_multiplier * 100.0,
+	]
+	combo_label.visible = true
+	combo_label.scale = Vector2(1.18, 1.18)
+	if combo_tween:
+		combo_tween.kill()
+	combo_tween = create_tween()
+	combo_tween.tween_property(combo_label, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 func show_cooldown(weapon_name: String, duration: float) -> void:
@@ -151,3 +176,16 @@ func _prepare_slot_styles() -> void:
 			selected_flat.border_color = Color(0.35, 0.95, 1.0, 0.95)
 			selected_flat.bg_color = Color(0.04, 0.09, 0.095, 0.9)
 		selected_slot_styles[weapon_id] = selected_style
+
+
+func _create_combo_label() -> void:
+	combo_label = Label.new()
+	combo_label.name = "ComboLabel"
+	combo_label.visible = false
+	combo_label.position = Vector2(24, 24)
+	combo_label.add_theme_color_override("font_color", Color(0.45, 0.95, 1.0, 1.0))
+	combo_label.add_theme_color_override("font_shadow_color", Color(0.02, 0.02, 0.02, 0.9))
+	combo_label.add_theme_constant_override("shadow_offset_x", 2)
+	combo_label.add_theme_constant_override("shadow_offset_y", 2)
+	combo_label.add_theme_font_size_override("font_size", 22)
+	root.add_child(combo_label)

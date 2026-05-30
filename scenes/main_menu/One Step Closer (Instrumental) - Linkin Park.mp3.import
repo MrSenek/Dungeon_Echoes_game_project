@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ba6taj01lqnpy"
+path="res://.godot/imported/One Step Closer (Instrumental) - Linkin Park.mp3-d3ce7b6e825230e5eb316709bb0abdec.mp3str"
+
+[deps]
+
+source_file="res://scenes/main_menu/One Step Closer (Instrumental) - Linkin Park.mp3"
+dest_files=["res://.godot/imported/One Step Closer (Instrumental) - Linkin Park.mp3-d3ce7b6e825230e5eb316709bb0abdec.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

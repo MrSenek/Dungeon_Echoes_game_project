@@ -3,11 +3,13 @@ extends Node2D
 @onready var fade_animation: AnimationPlayer = $fade_transition/AnimationPlayer
 @onready var music_animation: AnimationPlayer = $background_music/music_animation
 @onready var death_screen: CanvasLayer = $DeathScreen
+@onready var background_music: AudioStreamPlayer = $background_music
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	music_animation.play("music_fade_in")
+	background_music.play()
 	Engine.time_scale = 1.0
 	fade_transition.show()
 	fade_animation.play("fade_out")

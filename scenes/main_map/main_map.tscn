@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://c3klkmtufbied" path="res://scenes/main_map/pause_menu.tscn" id="8_xxxwv"]
 [ext_resource type="PackedScene" uid="uid://buk84ifep15dt" path="res://scenes/main_map/moving_platform.tscn" id="11_tiae8"]
 [ext_resource type="PackedScene" uid="uid://dvyi3w87od8d6" path="res://scenes/main_menu/fade_anim.tscn" id="12_c1xxo"]
-[ext_resource type="AudioStream" uid="uid://casnfgtxmhu8k" path="res://scenes/main_map/Doot - E1M1.mp3" id="18_a0wp8"]
+[ext_resource type="AudioStream" uid="uid://bcpcea0c3vmod" path="res://scenes/main_map/coldrain - Revolution instrumental.mp3" id="18_mmj7n"]
 [ext_resource type="PackedScene" uid="uid://bbud38hhcnb8l" path="res://scenes/entities/collectables/truskawka.tscn" id="19_vet2j"]
 [ext_resource type="Script" uid="uid://cgcld0873pnit" path="res://scenes/main_map/fall_death_detector.gd" id="20_livk0"]
 [ext_resource type="PackedScene" uid="uid://d12q2nq1tggh6" path="res://scenes/entities/universal/healing_totem/totem.tscn" id="21_cx1gv"]
@@ -646,7 +646,7 @@ position = Vector2(559, 15)
 
 [node name="PauseMenu" parent="." unique_id=1191515484 instance=ExtResource("8_xxxwv")]
 
-[node name="DeathScreen" parent="." instance=ExtResource("25_death_screen")]
+[node name="DeathScreen" parent="." unique_id=29516112 instance=ExtResource("25_death_screen")]
 
 [node name="moving_platform" parent="." unique_id=556522239 instance=ExtResource("11_tiae8")]
 position = Vector2(143, 1223)
@@ -662,9 +662,8 @@ visibility_rect = Rect2(-200, -100, 1500, 800)
 process_material = SubResource("ParticleProcessMaterial_tiae8")
 
 [node name="background_music" type="AudioStreamPlayer" parent="." unique_id=931156380]
-stream = ExtResource("18_a0wp8")
+stream = ExtResource("18_mmj7n")
 volume_db = -26.733
-autoplay = true
 parameters/looping = false
 
 [node name="music_animation" type="AnimationPlayer" parent="background_music" unique_id=2024206475]

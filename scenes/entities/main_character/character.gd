@@ -15,6 +15,8 @@ const JUMP_VELOCITY = -400.0
 var SPAWN_POINT
 var dir
 var speed_modifier: float = 1.0
+var external_speed_modifier: float = 1.0
+var combo_speed_modifier: float = 1.0
 var is_alive: bool = true
 var trauma = 0.0
 var max_shake = 8.0
@@ -22,6 +24,7 @@ var low_hp_active := false
 
 func _ready() -> void:
 	PlayerData.crit_happened.connect(on_crit)
+	PlayerData.combo_changed.connect(_on_combo_changed)
 	SPAWN_POINT = global_position
 	self.add_to_group("Player")
 	camera_2d.enabled = true
@@ -55,11 +58,22 @@ func _process(delta: float) -> void:
 
 
 func change_speed(new: float):
-	speed_modifier = new
+	external_speed_modifier = new
+	_update_speed_modifier()
+
+
+func _on_combo_changed(_combo_count: int, _damage_multiplier: float, speed_multiplier: float) -> void:
+	combo_speed_modifier = speed_multiplier
+	_update_speed_modifier()
+
+
+func _update_speed_modifier() -> void:
+	speed_modifier = external_speed_modifier * combo_speed_modifier
 
 
 func _on_hp_death() -> void:
 	is_alive = false
+	PlayerData.reset_combo()
 	
 func update_camera_shake(delta):
 	# trauma powoli maleje

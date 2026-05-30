@@ -60,7 +60,7 @@ func shoot() -> void:
 
 	# Apply player's attack stats to projectile damage
 	if "damage" in projectile:
-		projectile.damage *= PlayerData.attack
+		projectile.damage *= PlayerData.get_attack_multiplier()
 
 	# Add the projectile to the main scene tree so it moves independently of the player
 	get_tree().current_scene.add_child(projectile)

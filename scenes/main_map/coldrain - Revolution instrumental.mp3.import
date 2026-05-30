@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bcpcea0c3vmod"
+path="res://.godot/imported/coldrain - Revolution instrumental.mp3-e7559ee92f2db8f6b4e7a097cf296551.mp3str"
+
+[deps]
+
+source_file="res://scenes/main_map/coldrain - Revolution instrumental.mp3"
+dest_files=["res://.godot/imported/coldrain - Revolution instrumental.mp3-e7559ee92f2db8f6b4e7a097cf296551.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

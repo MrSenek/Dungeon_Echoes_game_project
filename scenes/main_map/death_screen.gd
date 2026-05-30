@@ -7,10 +7,13 @@ extends CanvasLayer
 @onready var quit_button: Button = $Root/Panel/MarginContainer/VBoxContainer/ButtonRow/QuitButton
 
 var show_tween: Tween
+var selected_button: Button
 
 func _ready() -> void:
 	hide()
 	root.modulate.a = 0.0
+	_setup_button_selection(restart_button)
+	_setup_button_selection(quit_button)
 
 
 func show_death_screen() -> void:
@@ -42,7 +45,7 @@ func show_death_screen() -> void:
 func _finish_show() -> void:
 	restart_button.disabled = false
 	quit_button.disabled = false
-	restart_button.grab_focus()
+	_select_button(null)
 
 
 func _on_restart_button_pressed() -> void:
@@ -53,4 +56,44 @@ func _on_restart_button_pressed() -> void:
 
 func _on_quit_button_pressed() -> void:
 	Engine.time_scale = 1
+	PlayerData.save_game()
 	get_tree().quit()
+
+
+func _setup_button_selection(button: Button) -> void:
+	button.focus_mode = Control.FOCUS_CLICK
+	button.mouse_entered.connect(_select_button.bind(button))
+	button.mouse_exited.connect(_clear_button_if_selected.bind(button))
+	button.pivot_offset = button.size * 0.5
+
+
+func _select_button(button: Button = null) -> void:
+	if selected_button and selected_button != button:
+		_set_button_selected(selected_button, false)
+
+	selected_button = button
+	if not selected_button:
+		restart_button.release_focus()
+		quit_button.release_focus()
+		return
+
+	selected_button.grab_focus()
+	_set_button_selected(selected_button, true)
+
+
+func _clear_button_if_selected(button: Button) -> void:
+	if selected_button != button:
+		return
+
+	_set_button_selected(button, false)
+	selected_button = null
+	button.release_focus()
+
+
+func _set_button_selected(button: Button, selected: bool) -> void:
+	if selected:
+		button.scale = Vector2(1.04, 1.04)
+		button.modulate = Color(1.16, 1.06, 0.88, 1.0)
+	else:
+		button.scale = Vector2.ONE
+		button.modulate = Color.WHITE

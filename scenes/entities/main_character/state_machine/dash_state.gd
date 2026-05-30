@@ -9,7 +9,11 @@ const GHOST = preload("uid://cdo3m08l7wcjj")
 
 
 var strength: int = 500
+var dash_damage: float = 28.0
+var dash_hit_radius: float = 34.0
+var dash_knockback: float = 360.0
 var dir
+var hit_enemies: Array[Node] = []
 
 func enter(data = {}):
 	dash_cooldown.start()
@@ -18,6 +22,7 @@ func enter(data = {}):
 	character.velocity.y = 0
 	dash_timer.start()
 	dir = character.dir
+	hit_enemies.clear()
 	character.set_collision_layer_value(1,false)
 	var tween = create_tween()
 	tween.tween_property(character.sprite_2d, "scale", Vector2(1.4, 0.6), 0.05).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
@@ -36,6 +41,7 @@ func physics_update(delta: float):
 	if abs(character.velocity.x) > 100:
 		spawn_ghost()
 	character.velocity.x = dir*strength
+	_hit_dash_targets()
 	character.move_and_slide()
 
 
@@ -57,3 +63,17 @@ func spawn_ghost():
 	ghost.flip_h = character.sprite_2d.flip_h
 	ghost.scale = character.sprite_2d.scale
 	get_tree().current_scene.add_child(ghost)
+
+
+func _hit_dash_targets() -> void:
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		if not is_instance_valid(enemy) or enemy in hit_enemies:
+			continue
+		if character.global_position.distance_to(enemy.global_position) > dash_hit_radius:
+			continue
+		if enemy.has_node("HP"):
+			hit_enemies.append(enemy)
+			enemy.get_node("HP").damage_taken(dash_damage * PlayerData.get_attack_multiplier())
+			if enemy.has_method("add_external_force"):
+				enemy.add_external_force(Vector2(dir * dash_knockback, -80.0))
+			character.add_trauma(0.25)

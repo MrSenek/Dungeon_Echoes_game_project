@@ -3,7 +3,10 @@ extends Node
 @export_group("Wave Manager")
 @export var enemy_scenes: Array[PackedScene]
 @export var spawn_points: Array[Node2D]
-@export var time_between_scenes: float = 5.0
+@export var time_between_scenes: float = 2.0
+@export var min_spawn_interval: float = 0.75
+@export var burst_chance: float = 0.25
+@export var max_burst_size: int = 3
 @onready var spawn_timer: Timer = $spawn_timer
 
 
@@ -13,10 +16,13 @@ extends Node
 var current_wave: int = 0
 var wave_queue: Array[PackedScene] = []
 var active_enemies: int = 0
+var base_spawn_interval: float = 2.0
 
 func _ready() -> void:
+	base_spawn_interval = min(time_between_scenes, spawn_timer.wait_time)
 	current_wave = 0
 	PlayerData.current_round = 0
+	PlayerData.reset_combo()
 	start_new_wave()
 
 
@@ -33,11 +39,16 @@ func start_new_wave():
 	current_wave += 1
 	var budget = calc_budget()
 	fill_queue(budget)
+	spawn_timer.wait_time = calc_spawn_interval()
 	spawn_timer.start()
 
 
 func calc_budget() -> int:
 	return 40 + current_wave * 35
+
+
+func calc_spawn_interval() -> float:
+	return max(min_spawn_interval, base_spawn_interval - current_wave * 0.08)
 
 func fill_queue(budget):
 	wave_queue.clear()
@@ -62,7 +73,13 @@ func spawn_random(scene: PackedScene):
 	enemy.tree_exited.connect(_on_enemy_removed)
 	enemy.global_position = sp.global_position
 	get_parent().add_child(enemy)
+	if enemy.has_node("HP"):
+		enemy.get_node("HP").death.connect(_on_enemy_killed)
 	active_enemies+=1
+
+
+func _on_enemy_killed() -> void:
+	PlayerData.register_enemy_kill()
 
 
 func _on_enemy_removed():
@@ -77,7 +94,13 @@ func _on_enemy_removed():
 
 func _on_spawn_timer_timeout() -> void:
 	if wave_queue.size() > 0:
-		var scene_to_spawn = wave_queue.pop_back()
-		spawn_random(scene_to_spawn)
+		var burst_size := 1
+		if current_wave >= 3 and randf() < burst_chance:
+			burst_size = min(max_burst_size, 1 + int(current_wave / 4))
+		for i in range(burst_size):
+			if wave_queue.is_empty():
+				break
+			var scene_to_spawn = wave_queue.pop_back()
+			spawn_random(scene_to_spawn)
 	else:
 		spawn_timer.stop()

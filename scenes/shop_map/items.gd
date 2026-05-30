@@ -37,10 +37,8 @@ func delete_items():
 
 
 func attempt_purchase(item):
-	print("attempt")
 	var price = item.price
 	if PlayerData.player_coins < price:
-		print("not enough money")
 		return
 	coins.global_position = get_tree().get_nodes_in_group("Player")[0].global_position
 	coins.amount = price
@@ -57,6 +55,7 @@ func randomize_items():
 	item1 = items_list.pick_random()
 	text = item1.item_name + "\n" + str(item1.price)
 	get_node("Item1/Node2D/Label").text = text
+	#get_node("Item1/Sprite2D").texture = item1.texture
 	items_list.erase(item1)
 	
 	item2 = items_list.pick_random()

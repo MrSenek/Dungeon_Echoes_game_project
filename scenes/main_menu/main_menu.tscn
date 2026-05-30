@@ -30,6 +30,7 @@
 [ext_resource type="Script" uid="uid://bikvcpt55qmfg" path="res://scenes/main_menu/menu_choice_button.gd" id="28_qel0l"]
 [ext_resource type="AudioStream" uid="uid://cy4b8smm0mpcw" path="res://scenes/main_menu/mixkit-typewriter-soft-click-1125 (mp3cut.net).mp3" id="29_jnwll"]
 [ext_resource type="AudioStream" uid="uid://dw0l5es1ekf5f" path="res://scenes/main_menu/tunetank.com_button-aprrove-click.mp3" id="30_chxta"]
+[ext_resource type="AudioStream" uid="uid://ba6taj01lqnpy" path="res://scenes/main_menu/One Step Closer (Instrumental) - Linkin Park.mp3" id="31_unaco"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i7nm7"]
 texture = ExtResource("2_0ebjn")
@@ -740,6 +741,11 @@ stream = ExtResource("29_jnwll")
 
 [node name="button_click" type="AudioStreamPlayer" parent="." unique_id=549082814]
 stream = ExtResource("30_chxta")
+
+[node name="music menu" type="AudioStreamPlayer" parent="." unique_id=979245238]
+stream = ExtResource("31_unaco")
+volume_db = -41.582
+autoplay = true
 
 [connection signal="mouse_entered" from="button manager/start" to="." method="_on_start_mouse_entered"]
 [connection signal="pressed" from="button manager/start" to="." method="_on_start_pressed"]

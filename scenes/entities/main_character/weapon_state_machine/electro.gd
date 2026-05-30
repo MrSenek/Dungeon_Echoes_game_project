@@ -109,7 +109,7 @@ func _damage_overlapping_targets() -> void:
 	var targets = collision.get_overlapping_bodies()
 	for body in targets:
 		if body.has_node("HP"):
-			body.get_node("HP").damage_taken(damage * PlayerData.attack)
+			body.get_node("HP").damage_taken(damage * PlayerData.get_attack_multiplier())
 
 
 func _update_attack_direction() -> void:
