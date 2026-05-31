@@ -1,107 +1,108 @@
 # Dungeon Echoes
 
-**Dungeon Echoes** to dwuwymiarowa gra akcji tworzona w Godot Engine. Gracz walczy z kolejnymi falami przeciwnikow, zbiera monety, kupuje ulepszenia w sklepie i rozwija zestaw broni, probujac przetrwac jak najdluzej.
+**Dungeon Echoes** is a 2D action game made in Godot Engine. The player fights through enemy waves, collects coins, buys upgrades in the shop, unlocks new weapons, and tries to survive for as long as possible.
 
-Projekt powstal jako gra zaliczeniowa i laczy elementy platformowki, arenowego survivalu oraz prostego roguelite'owego progresu.
+The project was created as a school/university assignment and combines elements of a platformer, arena survival game, and lightweight roguelite-style progression.
 
-## Spis tresci
+## Table of Contents
 
-- [Opis gry](#opis-gry)
-- [Najwazniejsze funkcje](#najwazniejsze-funkcje)
-- [Sterowanie](#sterowanie)
-- [Wymagania](#wymagania)
-- [Uruchomienie projektu](#uruchomienie-projektu)
-- [Eksport gry](#eksport-gry)
-- [Struktura projektu](#struktura-projektu)
-- [Status projektu](#status-projektu)
-- [Autorzy i zasoby](#autorzy-i-zasoby)
+- [Game Overview](#game-overview)
+- [Main Features](#main-features)
+- [Controls](#controls)
+- [Requirements](#requirements)
+- [Running the Project](#running-the-project)
+- [Exporting the Game](#exporting-the-game)
+- [Project Structure](#project-structure)
+- [Project Status](#project-status)
+- [Authors and Assets](#authors-and-assets)
+- [License](#license)
 
-## Opis gry
+## Game Overview
 
-W grze sterujesz bohaterem poruszajacym sie po mrocznej arenie. Twoim zadaniem jest odpieranie coraz trudniejszych fal przeciwnikow. Pokonani wrogowie moga zostawiac monety, ktore pozwalaja kupowac nowe bronie oraz ulepszenia statystyk w sklepie.
+In **Dungeon Echoes**, you control a hero fighting inside a dark arena. Your goal is to survive increasingly difficult waves of enemies. Defeated enemies can drop coins, which can be spent on new weapons and stat upgrades in the shop.
 
-Rozgrywka opiera sie na szybkim ruchu, dashu, zmianie broni i utrzymywaniu combosa. Im sprawniej eliminujesz przeciwnikow, tym wieksze premie do obrazen i szybkosci mozesz uzyskac.
+The gameplay focuses on fast movement, dashing, weapon switching, and keeping up a combo streak. The better you perform in combat, the stronger your temporary damage and speed bonuses become.
 
-## Najwazniejsze funkcje
+## Main Features
 
-- System fal przeciwnikow z rosnacym poziomem trudnosci.
-- Kilka typow przeciwnikow, m.in. slime, skeleton, blob enemy, cacodemon oraz boss.
-- Bohater z ruchem, skokiem, dashem, stanami animacji i reakcja na niski poziom zdrowia.
-- System broni:
+- Enemy wave system with increasing difficulty.
+- Multiple enemy types, including slime, skeleton, blob enemy, cacodemon, and boss enemies.
+- Player character with movement, jumping, dash, animation states, and low-health feedback.
+- Weapon system with:
   - fireball,
   - electric weapon,
-  - self guiding missile,
+  - self-guiding missile,
   - gravity grenade.
-- Sklep z losowanymi przedmiotami i ulepszeniami.
-- System monet oraz zapisu postepu gracza.
-- Combo z progami `FLOW`, `HOT STREAK`, `RAMPAGE` i `OVERDRIVE`.
-- Menu glowne z opcja nowej gry, kontynuacji oraz ustawieniami glosnosci.
-- Menu pauzy z mozliwoscia zapisania gry przed wyjsciem.
-- Krotki tutorial wprowadzajacy w podstawowe sterowanie.
-- Efekty dzwiekowe, muzyka, czasteczki, kamera shake i wizualne efekty trafien.
+- Shop with randomized items and upgrades.
+- Coin system and saved player progress.
+- Combo system with `FLOW`, `HOT STREAK`, `RAMPAGE`, and `OVERDRIVE` milestones.
+- Main menu with new game, continue, and audio settings.
+- Pause menu with save-and-exit functionality.
+- Short tutorial introducing the basic controls.
+- Sound effects, music, particles, camera shake, and hit feedback.
 
-## Sterowanie
+## Controls
 
-| Akcja | Klawisz / przycisk |
+| Action | Key / Button |
 | --- | --- |
-| Ruch w lewo | `A` |
-| Ruch w prawo | `D` |
-| Skok | `Spacja` |
+| Move left | `A` |
+| Move right | `D` |
+| Jump | `Space` |
 | Dash | `Shift` |
-| Atak | `E` lub lewy przycisk myszy |
-| Interakcja | `F` |
-| Bron 1 | `1` |
-| Bron 2 | `2` |
-| Bron 3 | `3` |
-| Bron 4 | `4` |
-| Pauza | `Esc` |
+| Attack | `E` or left mouse button |
+| Interact | `F` |
+| Weapon 1 | `1` |
+| Weapon 2 | `2` |
+| Weapon 3 | `3` |
+| Weapon 4 | `4` |
+| Pause | `Esc` |
 
-## Wymagania
+## Requirements
 
-- Godot Engine `4.6` lub nowszy zgodny z projektem.
-- System Windows, Linux lub macOS do uruchomienia w edytorze Godot.
-- Do eksportu na Windows wymagane sa standardowe szablony eksportu Godot.
+- Godot Engine `4.6` or a compatible newer version.
+- Windows, Linux, or macOS for running the project in the Godot editor.
+- Godot export templates are required for exporting the game.
 
-Projekt ma przygotowany preset eksportu dla **Windows Desktop**.
+The project includes a ready export preset for **Windows Desktop**.
 
-## Uruchomienie projektu
+## Running the Project
 
-1. Sklonuj repozytorium:
+1. Clone the repository:
 
    ```bash
-   git clone <adres-repozytorium>
+   git clone <repository-url>
    ```
 
-2. Otworz Godot Engine.
+2. Open Godot Engine.
 
-3. Wybierz opcje importu projektu i wskaz plik:
+3. Import the project by selecting:
 
    ```text
    project.godot
    ```
 
-4. Po zaimportowaniu projektu uruchom scene startowa przyciskiem **Play**.
+4. After importing the project, press **Play** in the Godot editor.
 
-Glowna scena projektu jest ustawiona w konfiguracji Godota, wiec gra powinna wystartowac od menu glownego.
+The main scene is already configured in the Godot project settings, so the game should start from the main menu.
 
-## Eksport gry
+## Exporting the Game
 
-W projekcie znajduje sie preset eksportu:
+The project contains an export preset with the following settings:
 
-- nazwa: `Dungeon Echoes`
-- platforma: `Windows Desktop`
-- format: `x86_64`
-- PCK osadzony w pliku wykonywalnym
+- name: `Dungeon Echoes`
+- platform: `Windows Desktop`
+- architecture: `x86_64`
+- embedded PCK file
 
-Aby wyeksportowac gre:
+To export the game:
 
-1. Otworz projekt w Godot.
-2. Przejdz do **Project > Export**.
-3. Wybierz preset `Dungeon Echoes`.
-4. Ustaw docelowa lokalizacje pliku `.exe`.
-5. Kliknij **Export Project**.
+1. Open the project in Godot.
+2. Go to **Project > Export**.
+3. Select the `Dungeon Echoes` preset.
+4. Choose the output location for the `.exe` file.
+5. Click **Export Project**.
 
-## Struktura projektu
+## Project Structure
 
 ```text
 .
@@ -122,42 +123,42 @@ Aby wyeksportowac gre:
 +-- tools
 ```
 
-Najwazniejsze katalogi:
+Key directories:
 
-- `scenes/main_menu` - menu glowne, przyciski, ustawienia audio i przejscia scen.
-- `scenes/main_map` - glowna mapa, pauza, platformy, zarzadzanie arena.
-- `scenes/shop_map` - sklep, przedmioty, ulepszenia i zakup broni.
-- `scenes/entities/main_character` - postac gracza, HUD, dane gracza, ruch i system broni.
-- `scenes/entities/enemies` - przeciwnicy oraz ich stany zachowania.
-- `scenes/entities/collectables` - monety, przedmioty do zbierania i dropy zdrowia.
-- `scenes/entities/universal` - wspolne elementy, np. paski zdrowia, eksplozje i efekty.
-- `scenes/tutorial` - prosty tutorial sterowania.
+- `scenes/main_menu` - main menu, buttons, audio settings, and scene transitions.
+- `scenes/main_map` - main arena, pause menu, platforms, and map logic.
+- `scenes/shop_map` - shop, items, upgrades, and weapon purchases.
+- `scenes/entities/main_character` - player character, HUD, player data, movement, and weapon system.
+- `scenes/entities/enemies` - enemies and their behavior states.
+- `scenes/entities/collectables` - coins, collectibles, and health drops.
+- `scenes/entities/universal` - shared elements such as health bars, explosions, and visual effects.
+- `scenes/tutorial` - basic control tutorial.
 
-## Status projektu
+## Project Status
 
-Projekt jest grywalnym prototypem / projektem zaliczeniowym. Zawiera podstawowa petle rozgrywki:
+The project is a playable prototype / assignment project. It includes the core gameplay loop:
 
-1. start z menu glownego,
-2. walka na mapie,
-3. zbieranie monet,
-4. zakupy w sklepie,
-5. zapis i kontynuacja postepu.
+1. starting from the main menu,
+2. fighting on the arena map,
+3. collecting coins,
+4. buying shop upgrades,
+5. saving and continuing progress.
 
-Mozliwe kierunki dalszego rozwoju:
+Possible future improvements:
 
-- dopracowanie balansu fal przeciwnikow,
-- dodanie wiekszej liczby map,
-- rozbudowanie walk bossow,
-- dodanie ekranu ustawien sterowania,
-- uporzadkowanie licencji zasobow audio i grafik,
-- przygotowanie buildow do pobrania w GitHub Releases.
+- improve enemy wave balance,
+- add more maps,
+- expand boss fights,
+- add a controls settings screen,
+- organize audio and graphics licensing,
+- prepare downloadable builds through GitHub Releases.
 
-## Autorzy i zasoby
+## Authors and Assets
 
-Projekt zostal przygotowany jako praca zaliczeniowa w Godot Engine.
+This project was created in Godot Engine as an assignment project.
 
-Repozytorium zawiera pliki graficzne, dzwiekowe, fonty oraz muzyke uzywane w projekcie. Przed publiczna dystrybucja gry poza kontekstem edukacyjnym warto zweryfikowac licencje wszystkich zasobow zewnetrznych.
+The repository contains graphics, audio files, fonts, and music used in the game. Before distributing the game publicly outside an educational context, all third-party asset licenses should be reviewed.
 
-## Licencja
+## License
 
-Brak okreslonej licencji w repozytorium. Domyslnie oznacza to, ze prawa do kodu i zasobow pozostaja przy autorach projektu.
+No license file is currently included in the repository. By default, this means that all rights to the code and assets remain with the project authors.
