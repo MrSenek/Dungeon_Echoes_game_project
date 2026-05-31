@@ -258,7 +258,8 @@ frame_progress = 0.02855262
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1419258934]
 stream = ExtResource("4_6n6fw")
-volume_db = -7.761
+volume_db = -15.91
+bus = &"SFX"
 
 [node name="lifetime" type="Timer" parent="." unique_id=1754169692]
 wait_time = 15.0

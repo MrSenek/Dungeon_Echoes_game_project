@@ -43,7 +43,6 @@ func handle_input(event: InputEvent) -> void:
 func shoot() -> void:
 	# Prevent rapid firing by starting the cooldown immediately
 	can_shoot = false
-	cooldown_started.emit(name, weapon_cooldown.wait_time)
 	# Emit signal to trigger player recoil
 	weapon_fired.emit(300)
 	
@@ -51,7 +50,8 @@ func shoot() -> void:
 	var projectile = bullet_scena.instantiate()
 	
 	# Get cooldown duration from the projectile (fallback to 0.5s if not defined)
-	var cooldown_duration = projectile.cooldown if "cooldown" in projectile else 0.5
+	var cooldown_duration = (projectile.cooldown if "cooldown" in projectile else 0.5) * PlayerData.get_cooldown_multiplier()
+	cooldown_started.emit(name, cooldown_duration)
 	
 	# Set projectile's initial properties
 	projectile.global_position = character.global_position

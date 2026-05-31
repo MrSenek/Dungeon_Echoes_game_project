@@ -11,14 +11,13 @@
 [ext_resource type="Script" uid="uid://dgn2kunfkn1aj" path="res://scenes/entities/enemies/cacodemon/caco_search_state.gd" id="8_xl650"]
 [ext_resource type="Script" uid="uid://chto8p0kluuar" path="res://scenes/entities/enemies/cacodemon/caco_attack_state.gd" id="9_d1pmh"]
 [ext_resource type="PackedScene" uid="uid://sgnwusqvhes6" path="res://scenes/entities/enemies/cacodemon/toxic_attack.tscn" id="10_14qig"]
-[ext_resource type="Script" path="res://scenes/entities/enemies/cacodemon/caco_death_state.gd" id="11_death"]
+[ext_resource type="Script" uid="uid://ck2st23yqm40l" path="res://scenes/entities/enemies/cacodemon/caco_death_state.gd" id="11_death"]
 [ext_resource type="PackedScene" uid="uid://bi5x701x451i4" path="res://scenes/entities/collectables/Moneta.tscn" id="12_coin"]
 
 [sub_resource type="Resource" id="Resource_xl650"]
 script = ExtResource("2_v3mbm")
 base_max_hp = 100
 spawn_cost = 70
-min_wave = 5
 metadata/_custom_type_script = "uid://5weskl28l2ye"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tmoiu"]
@@ -141,7 +140,7 @@ radius = 236.05296
 [sub_resource type="CircleShape2D" id="CircleShape2D_d1pmh"]
 radius = 100.005
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=2124554108 groups=["enemy"]]
+[node name="CharacterBody2D2" type="CharacterBody2D" unique_id=2124554108 groups=["enemy"]]
 collision_layer = 2
 collision_mask = 20
 script = ExtResource("1_c6qjd")
@@ -207,6 +206,7 @@ one_shot = true
 [node name="death_state" type="Node" parent="Enemy_State_Machine" unique_id=1761523829]
 script = ExtResource("11_death")
 coin_scene = ExtResource("12_coin")
+health_drop_chance = 0.3
 
 [node name="death_timer" type="Timer" parent="Enemy_State_Machine/death_state" unique_id=1475412513]
 wait_time = 0.45
@@ -220,6 +220,5 @@ avoidance_enabled = true
 [node name="HP" parent="." unique_id=1180813858 instance=ExtResource("7_dyh6v")]
 position = Vector2(-1, -30)
 
-[connection signal="body_entered" from="detection/Seeing_Range" to="Enemy_State_Machine/caco_idle_state" method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="Enemy_State_Machine/death_state/death_timer" to="Enemy_State_Machine/death_state" method="_on_death_timer_timeout"]
 [connection signal="death" from="HP" to="Enemy_State_Machine" method="_on_hp_death"]

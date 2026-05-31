@@ -11,12 +11,17 @@ class_name caco_chase_state
 var last_loc : Vector2
 
 func enter(data = {}):
+	last_loc = character.global_position
 	update_last_position()
 
 func physics_update(delta: float):
 	update_last_position()
 	chase()
 	character.move_and_slide()
+	if character.is_outside_return_radius() and not is_player_visible():
+		character.velocity = Vector2.ZERO
+		enemy_state_machine.change_state("caco_idle_state")
+		return
 	if nav_agent.is_target_reached() and not is_player_visible():
 		character.velocity = Vector2.ZERO
 		enemy_state_machine.change_state("caco_search_state")
@@ -37,15 +42,16 @@ func update(delta: float):
 
 func update_last_position():
 	if ray_cast_2d.is_colliding():
-		last_loc = ray_cast_2d.get_collision_point()
+		var collider: Node2D = ray_cast_2d.get_collider() as Node2D
+		if collider and collider.is_in_group("Player"):
+			last_loc = collider.global_position
 		
 
 func is_player_visible():
 	if ray_cast_2d.is_colliding():
-		if ray_cast_2d.get_collider().is_in_group("Player"):
-			return true
-		else:
-			return false
+		var collider: Node = ray_cast_2d.get_collider() as Node
+		return collider != null and collider.is_in_group("Player")
+	return false
 		
 func chase():
 	nav_agent.target_position = last_loc

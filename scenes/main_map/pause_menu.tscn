@@ -69,9 +69,11 @@ texture_hover = ExtResource("5_8wwok")
 
 [node name="button_hover" type="AudioStreamPlayer" parent="." unique_id=688646197]
 stream = ExtResource("9_8wwok")
+bus = &"SFX"
 
 [node name="button_click" type="AudioStreamPlayer" parent="." unique_id=85478481]
 stream = ExtResource("10_f83ur")
+bus = &"SFX"
 
 [connection signal="mouse_entered" from="Control/MarginContainer/VBoxContainer/resume" to="." method="_on_resume_mouse_entered"]
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/resume" to="." method="_on_resume_pressed"]

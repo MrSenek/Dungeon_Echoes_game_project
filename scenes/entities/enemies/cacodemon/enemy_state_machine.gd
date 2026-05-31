@@ -4,7 +4,7 @@ class_name EnemyStateMachine
 
 @export var initial_state: State
 var current_state: State
-var states: Dictionary
+var states: Dictionary = {}
 
 func _ready() -> void:
 	
@@ -28,6 +28,9 @@ func _physics_process(delta: float) -> void:
 		
 	
 func change_state(new_state_name: String) -> void:
+	if current_state and current_state.name.to_lower() == new_state_name.to_lower():
+		return
+
 	if current_state:
 		current_state.exit()
 		

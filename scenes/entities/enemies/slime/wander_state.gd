@@ -16,6 +16,8 @@ func update(delta: float):
 		enemy_state_machine.change_state("chase_state")
 
 func physics_update(delta: float) -> void:
+	if not character.is_on_floor():
+		character.velocity += character.get_gravity() * delta
 	character.velocity.x = dir*wander_speed
 	if !floor_detection.is_colliding():
 		turn_around()

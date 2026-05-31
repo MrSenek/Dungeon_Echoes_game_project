@@ -76,6 +76,7 @@ radius = 11.0
 [node name="Area2D" type="Area2D" unique_id=1299283888]
 collision_mask = 3
 script = ExtResource("1_djvif")
+SPEED = 360
 damage = 50
 explosion = ExtResource("2_bcp2c")
 crit_chance = 0.25
@@ -105,6 +106,7 @@ shape = SubResource("CircleShape2D_pkb82")
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=2070095788]
 stream = ExtResource("4_v4vcj")
 volume_db = -5.821
+bus = &"SFX"
 
 [node name="hitstop" type="Timer" parent="." unique_id=1575229239]
 wait_time = 0.12

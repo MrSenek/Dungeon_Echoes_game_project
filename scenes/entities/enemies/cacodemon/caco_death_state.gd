@@ -1,10 +1,12 @@
 extends Enemy_State
+const HealthDropper = preload("res://scenes/entities/collectables/health_dropper.gd")
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $"../../AnimatedSprite2D"
 @onready var death_timer: Timer = $death_timer
 
 @export var coin_scene: PackedScene
 @export var coins_to_drop: int = 5
+@export_range(0.0, 1.0, 0.01) var health_drop_chance: float = 0.18
 
 var death_started: bool = false
 
@@ -31,6 +33,7 @@ func enter(data = {}) -> void:
 
 func _on_death_timer_timeout() -> void:
 	_drop_coins()
+	HealthDropper.try_drop(character.global_position, health_drop_chance)
 	character.queue_free()
 
 

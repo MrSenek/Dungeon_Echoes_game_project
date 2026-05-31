@@ -231,6 +231,7 @@ collision_layer = 2
 collision_mask = 16
 script = ExtResource("1_pu7ca")
 stats = SubResource("Resource_iu7pn")
+health_drop_chance = 0.2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1303381202]
 sprite_frames = SubResource("SpriteFrames_eq5g2")

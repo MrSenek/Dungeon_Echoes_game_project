@@ -13,10 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://d2v3o641qar0a" path="res://scenes/main_menu/Start_1_normal.png" id="12_0m3cs"]
 [ext_resource type="Texture2D" uid="uid://m4a5el1rnypu" path="res://scenes/main_menu/Start_2_Klik.png" id="13_i7nm7"]
 [ext_resource type="Texture2D" uid="uid://bpc632c6kl3dk" path="res://scenes/main_menu/Start_2_Najechanie.png" id="14_tfctf"]
-[ext_resource type="Texture2D" uid="uid://jaofm3dpa4hg" path="res://scenes/main_menu/Test_arena_1_normal.png" id="15_n7xlh"]
-[ext_resource type="Texture2D" uid="uid://d2cequ8aite7l" path="res://scenes/main_menu/Test_arena_1_Klik.png" id="16_0xlsr"]
 [ext_resource type="Texture2D" uid="uid://cccskynyp23eo" path="res://scenes/entities/main_character/player_sprite.png" id="16_i7nm7"]
-[ext_resource type="Texture2D" uid="uid://2hpy04sq808p" path="res://scenes/main_menu/Test_Arena_2_Najechanie.png" id="17_0oicw"]
 [ext_resource type="Texture2D" uid="uid://dxxvmfmwx4a5a" path="res://scenes/main_menu/Quit_1_normal.png" id="18_83tid"]
 [ext_resource type="Texture2D" uid="uid://bxt2xbtv54xh6" path="res://scenes/main_menu/Quit_art_2_Klik.png" id="19_t0qut"]
 [ext_resource type="Texture2D" uid="uid://cq27y36r4vi4o" path="res://scenes/main_menu/Quit_2_Najechanie.png" id="20_g8sw0"]
@@ -138,6 +135,24 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 17
 shadow_color = Color(0, 0, 0, 0.24705882)
 shadow_offset = Vector2(12.875, 11.03)
+
+[sub_resource type="LabelSettings" id="LabelSettings_audio_title"]
+font = ExtResource("11_lqpn7")
+font_size = 42
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_audio_label"]
+font = ExtResource("11_lqpn7")
+font_size = 26
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_offset = Vector2(2, 2)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_thkx5"]
 bounce = 5.0
@@ -288,7 +303,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("button manager/test arena:position")
+tracks/0/path = NodePath("button manager/audio_settings:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -406,6 +421,33 @@ tracks/9/keys = {
 "values": [Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_tfctf"]
+resource_name = "button_audio_settings"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("button manager/start:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -30), Vector2(0, 400)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("button manager/quit:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1229, 0), Vector2(1229, -30), Vector2(1229, 400)]
+}
+
 [sub_resource type="Animation" id="Animation_n7xlh"]
 resource_name = "button_quit"
 tracks/0/type = "value"
@@ -423,7 +465,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("button manager/test arena:position")
+tracks/1/path = NodePath("button manager/audio_settings:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -438,7 +480,7 @@ resource_name = "button_start"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("button manager/test arena:position")
+tracks/0/path = NodePath("button manager/audio_settings:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -472,40 +514,13 @@ tracks/2/keys = {
 "values": [Vector2(0, 0), Vector2(0, -25), Vector2(0, 410)]
 }
 
-[sub_resource type="Animation" id="Animation_tfctf"]
-resource_name = "button_test_arena"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("button manager/start:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -30), Vector2(0, 400)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("button manager/quit:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1229, 0), Vector2(1229, -30), Vector2(1229, 400)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i7nm7"]
 _data = {
 &"New_continue_enter": SubResource("Animation_unaco"),
 &"RESET": SubResource("Animation_i7nm7"),
+&"button_audio_settings": SubResource("Animation_tfctf"),
 &"button_quit": SubResource("Animation_n7xlh"),
-&"button_start": SubResource("Animation_0m3cs"),
-&"button_test_arena": SubResource("Animation_tfctf")
+&"button_start": SubResource("Animation_0m3cs")
 }
 
 [node name="Main menu" type="Node2D" unique_id=838459584]
@@ -582,7 +597,7 @@ texture_normal = ExtResource("12_0m3cs")
 texture_pressed = ExtResource("13_i7nm7")
 texture_hover = ExtResource("14_tfctf")
 
-[node name="test arena" type="TextureButton" parent="button manager" unique_id=25524466]
+[node name="audio_settings" type="Control" parent="button manager" unique_id=25524466]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -595,9 +610,80 @@ offset_right = 265.0
 offset_bottom = 89.00012
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("15_n7xlh")
-texture_pressed = ExtResource("16_0xlsr")
-texture_hover = ExtResource("17_0oicw")
+
+[node name="AudioBackdrop" type="ColorRect" parent="button manager/audio_settings" unique_id=1835892144]
+layout_mode = 0
+offset_left = -18.0
+offset_top = -20.0
+offset_right = 548.0
+offset_bottom = 198.0
+mouse_filter = 2
+color = Color(0.030000001, 0.025, 0.022, 0.72)
+
+[node name="Title" type="Label" parent="button manager/audio_settings" unique_id=1770476057]
+layout_mode = 0
+offset_top = -2.0
+offset_right = 530.0
+offset_bottom = 48.0
+text = "DZWIEK"
+label_settings = SubResource("LabelSettings_audio_title")
+horizontal_alignment = 1
+
+[node name="MusicLabel" type="Label" parent="button manager/audio_settings" unique_id=2078656936]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 61.0
+offset_right = 145.0
+offset_bottom = 99.0
+text = "MUZYKA"
+label_settings = SubResource("LabelSettings_audio_label")
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="button manager/audio_settings" unique_id=1391651999]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 68.0
+offset_right = 415.0
+offset_bottom = 84.0
+value = 100.0
+
+[node name="MusicValue" type="Label" parent="button manager/audio_settings" unique_id=1077070305]
+layout_mode = 0
+offset_left = 435.0
+offset_top = 61.0
+offset_right = 530.0
+offset_bottom = 99.0
+text = "100%"
+label_settings = SubResource("LabelSettings_audio_label")
+vertical_alignment = 1
+
+[node name="SfxLabel" type="Label" parent="button manager/audio_settings" unique_id=1128858938]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 122.0
+offset_right = 145.0
+offset_bottom = 160.0
+text = "EFEKTY"
+label_settings = SubResource("LabelSettings_audio_label")
+vertical_alignment = 1
+
+[node name="SfxSlider" type="HSlider" parent="button manager/audio_settings" unique_id=1720175908]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 129.0
+offset_right = 415.0
+offset_bottom = 145.0
+value = 100.0
+
+[node name="SfxValue" type="Label" parent="button manager/audio_settings" unique_id=904178638]
+layout_mode = 0
+offset_left = 435.0
+offset_top = 122.0
+offset_right = 530.0
+offset_bottom = 160.0
+text = "100%"
+label_settings = SubResource("LabelSettings_audio_label")
+vertical_alignment = 1
 
 [node name="quit" type="TextureButton" parent="button manager" unique_id=315980968]
 layout_mode = 1
@@ -744,13 +830,12 @@ stream = ExtResource("30_chxta")
 
 [node name="music menu" type="AudioStreamPlayer" parent="." unique_id=979245238]
 stream = ExtResource("31_unaco")
-volume_db = -41.582
+volume_db = -24.371
 autoplay = true
+parameters/looping = true
 
 [connection signal="mouse_entered" from="button manager/start" to="." method="_on_start_mouse_entered"]
 [connection signal="pressed" from="button manager/start" to="." method="_on_start_pressed"]
-[connection signal="mouse_entered" from="button manager/test arena" to="." method="_on_test_arena_mouse_entered"]
-[connection signal="pressed" from="button manager/test arena" to="." method="_on_test_arena_pressed"]
 [connection signal="mouse_entered" from="button manager/quit" to="." method="_on_quit_mouse_entered"]
 [connection signal="pressed" from="button manager/quit" to="." method="_on_quit_pressed"]
 [connection signal="mouse_entered" from="new_continue_manager/continue" to="." method="_on_continue_mouse_entered"]

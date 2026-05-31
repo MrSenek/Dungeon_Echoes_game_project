@@ -26,6 +26,8 @@ func update(delta: float):
 				character.player.get_node("HP").damage_taken(character.DMG)
 
 func physics_update(delta: float):
+	if not character.is_on_floor():
+		character.velocity += character.get_gravity() * delta
 	character.velocity.x = move_toward(character.velocity.x, 0, 260 * delta)
 	character.apply_movement_with_external_force()
 

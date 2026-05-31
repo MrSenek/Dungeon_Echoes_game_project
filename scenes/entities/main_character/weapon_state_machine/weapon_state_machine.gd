@@ -60,7 +60,7 @@ func change_state(new_state_name: String) -> void:
 
 
 func _on_hp_death() -> void:
-	change_state("no_weapons")
+	change_state("no_weapon")
 
 func _on_weapon_cooldown_started(weapon_name: String, duration: float) -> void:
 	weapon_cooldown_started.emit(weapon_name, duration)

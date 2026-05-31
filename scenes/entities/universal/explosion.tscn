@@ -66,5 +66,6 @@ process_material = SubResource("ParticleProcessMaterial_m3hux")
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1938836228]
 stream = ExtResource("2_tw2hw")
 volume_db = -1.553
+bus = &"SFX"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

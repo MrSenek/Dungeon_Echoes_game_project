@@ -72,8 +72,15 @@ func _hit_dash_targets() -> void:
 		if character.global_position.distance_to(enemy.global_position) > dash_hit_radius:
 			continue
 		if enemy.has_node("HP"):
+			var hp = enemy.get_node("HP")
+			if hp.is_dead or hp.CURRENT_HEALTH <= 0:
+				continue
+
 			hit_enemies.append(enemy)
-			enemy.get_node("HP").damage_taken(dash_damage * PlayerData.get_attack_multiplier())
+			var final_damage = dash_damage * PlayerData.dash_damage_multiplier * PlayerData.get_attack_multiplier()
+			if hp.CURRENT_HEALTH - final_damage <= 0:
+				enemy.set_meta("combo_source", "dash")
+			hp.damage_taken(final_damage)
 			if enemy.has_method("add_external_force"):
 				enemy.add_external_force(Vector2(dir * dash_knockback, -80.0))
 			character.add_trauma(0.25)

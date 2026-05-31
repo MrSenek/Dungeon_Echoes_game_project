@@ -10,6 +10,7 @@ var visible_tween: Tween
 
 func _ready() -> void:
 	layer = 20
+	visible = true
 	hint_panel.visible = false
 	hint_panel.modulate.a = 0.0
 	_setup_style()
@@ -23,6 +24,7 @@ func show_hint(text: String, duration: float = 0.0) -> void:
 
 	hint_label.text = text
 	icon_label.text = "!"
+	visible = true
 	hint_panel.visible = true
 
 	visible_tween = create_tween()

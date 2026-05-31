@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_pqg2g")
 item_name = "1,5x Damage"
-price = 30
+price = 85
 texture = ExtResource("2_ctjvg")
+type = "Stat"
 metadata/_custom_type_script = "uid://cb8abpm52h0m1"

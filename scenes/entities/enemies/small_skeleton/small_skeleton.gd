@@ -1,4 +1,6 @@
 extends CharacterBody2D
+const HealthDropper = preload("res://scenes/entities/collectables/health_dropper.gd")
+
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
 @onready var timer: Timer = $Timer
 @onready var dziura: RayCast2D = $RayCast2D2
@@ -7,6 +9,7 @@ extends CharacterBody2D
 @onready var monetka : PackedScene = preload("res://scenes/entities/collectables/Moneta.tscn")
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @export var stats: Stats
+@export_range(0.0, 1.0, 0.01) var health_drop_chance: float = 0.12
 @onready var hit_flash_timer: Timer = $hit_flash_timer
 
 
@@ -102,4 +105,5 @@ func _on_hp_death() -> void:
 		var moneta = monetka.instantiate()
 		moneta.global_position = global_position
 		get_tree().current_scene.add_child(moneta)
+		HealthDropper.try_drop(global_position, health_drop_chance)
 		queue_free()

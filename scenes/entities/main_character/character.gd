@@ -25,6 +25,10 @@ var low_hp_active := false
 func _ready() -> void:
 	PlayerData.crit_happened.connect(on_crit)
 	PlayerData.combo_changed.connect(_on_combo_changed)
+	PlayerData.stats_changed.connect(_on_stats_changed)
+	PlayerData.combo_milestone_reached.connect(_on_combo_milestone_reached)
+	PlayerData.combo_kill_registered.connect(_on_combo_kill_registered)
+	PlayerData.overdrive_changed.connect(_on_overdrive_changed)
 	SPAWN_POINT = global_position
 	self.add_to_group("Player")
 	camera_2d.enabled = true
@@ -34,6 +38,7 @@ func _ready() -> void:
 	weapon_state_machine.weapon_selected.connect(hud.set_selected_weapon)
 	if weapon_state_machine.current_state:
 		hud.set_selected_weapon(weapon_state_machine.current_state.name)
+	_update_speed_modifier()
 
 func _process(delta: float) -> void:
 	if Input.get_axis("left","right") != 0:
@@ -68,7 +73,11 @@ func _on_combo_changed(_combo_count: int, _damage_multiplier: float, speed_multi
 
 
 func _update_speed_modifier() -> void:
-	speed_modifier = external_speed_modifier * combo_speed_modifier
+	speed_modifier = external_speed_modifier * combo_speed_modifier * PlayerData.movement_speed_multiplier
+
+
+func _on_stats_changed() -> void:
+	_update_speed_modifier()
 
 
 func _on_hp_death() -> void:
@@ -92,6 +101,32 @@ func add_trauma(amount):
 	trauma = min(trauma + amount, 1.0)
 func on_crit():
 	add_trauma(0.7)
+
+
+func _on_combo_milestone_reached(combo_count: int, _milestone_name: String) -> void:
+	if combo_count >= 9:
+		add_trauma(0.45)
+	else:
+		add_trauma(0.25)
+
+
+func _on_combo_kill_registered(source: String, combo_count: int) -> void:
+	var dash_cooldown := get_node_or_null("state_machine/dash_state/dash_cooldown") as Timer
+	if dash_cooldown and not dash_cooldown.is_stopped() and combo_count >= 6:
+		var refund := 0.6 if source == "dash" else 0.25
+		var new_time := dash_cooldown.time_left * (1.0 - refund)
+		if new_time <= 0.08:
+			dash_cooldown.stop()
+		else:
+			dash_cooldown.start(new_time)
+	if source == "dash":
+		add_trauma(0.35)
+
+
+func _on_overdrive_changed(active: bool) -> void:
+	max_shake = 11.0 if active else 8.0
+	if active:
+		add_trauma(0.8)
 
 var low_hp_tween: Tween
 

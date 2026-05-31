@@ -74,12 +74,16 @@ func spawn_random(scene: PackedScene):
 	enemy.global_position = sp.global_position
 	get_parent().add_child(enemy)
 	if enemy.has_node("HP"):
-		enemy.get_node("HP").death.connect(_on_enemy_killed)
+		enemy.get_node("HP").death.connect(_on_enemy_killed.bind(enemy))
 	active_enemies+=1
 
 
-func _on_enemy_killed() -> void:
-	PlayerData.register_enemy_kill()
+func _on_enemy_killed(enemy: Node = null) -> void:
+	var source := "weapon"
+	if enemy and enemy.has_meta("combo_source"):
+		source = str(enemy.get_meta("combo_source"))
+		enemy.remove_meta("combo_source")
+	PlayerData.register_enemy_kill(source)
 
 
 func _on_enemy_removed():

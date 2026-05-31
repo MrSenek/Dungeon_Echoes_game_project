@@ -29,6 +29,8 @@ func update(delta: float):
 		enemy_state_machine.change_state("attack_state")
 
 func physics_update(delta: float):
+	if not character.is_on_floor():
+		character.velocity += character.get_gravity() * delta
 	if not character.player_in_range:
 		enemy_state_machine.change_state("wander_state")
 		return

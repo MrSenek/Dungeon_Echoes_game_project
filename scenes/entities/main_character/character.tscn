@@ -173,7 +173,6 @@ shape = SubResource("RectangleShape2D_n7fvo")
 zoom = Vector2(3.5, 3.5)
 process_callback = 0
 position_smoothing_enabled = true
-position_smoothing_speed = 7.0
 
 [node name="state_machine" type="Node" parent="." unique_id=2102662878 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_u6tu1")
@@ -235,6 +234,7 @@ sprite_frames = SubResource("SpriteFrames_84ou4")
 autoplay = "default"
 
 [node name="weapon_cooldown" type="Timer" parent="weapon_state_machine/fireball" unique_id=23619746]
+wait_time = 0.7
 
 [node name="electro" type="Node2D" parent="weapon_state_machine" unique_id=1936269907]
 script = ExtResource("11_oaeto")
@@ -242,9 +242,9 @@ damage = 20.0
 
 [node name="lightning_line" type="Line2D" parent="weapon_state_machine/electro" unique_id=1745800343]
 modulate = Color(2.342, 2.342, 2.342, 1)
-z_index = -1
+z_index = 2
 points = PackedVector2Array(0, 0, 150, 0)
-width = 2.0
+width = 1.0
 default_color = Color(0.4543986, 1.1364014, 1.1364014, 1)
 begin_cap_mode = 2
 end_cap_mode = 2

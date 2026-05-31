@@ -243,6 +243,7 @@ script = ExtResource("8_bj07i")
 [node name="death_state" type="Node" parent="enemy_state_machine" unique_id=1269588791]
 script = ExtResource("9_00218")
 coin_scene = ExtResource("10_2tqvs")
+health_drop_chance = 0.2
 
 [node name="Timer" type="Timer" parent="enemy_state_machine/death_state" unique_id=1540455213]
 wait_time = 3.0
