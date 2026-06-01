@@ -86,7 +86,7 @@ theme_override_constants/separation = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.72, 0.69, 0.62, 1)
 theme_override_font_sizes/font_size = 11
-text = "MAKSYMALNA RUNDA"
+text = "BEST ROUND"
 horizontal_alignment = 1
 
 [node name="MaxRoundValue" type="Label" parent="Root/TopRightStats/MaxRoundPanel/MaxRoundBox" unique_id=1106613766]
@@ -109,7 +109,7 @@ theme_override_constants/separation = 0
 layout_mode = 2
 theme_override_colors/font_color = Color(0.72, 0.69, 0.62, 1)
 theme_override_font_sizes/font_size = 11
-text = "RUNDA"
+text = "ROUND"
 horizontal_alignment = 1
 
 [node name="RoundValue" type="Label" parent="Root/TopRightStats/RoundPanel/RoundBox" unique_id=253064881]

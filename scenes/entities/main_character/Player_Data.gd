@@ -31,13 +31,14 @@ var overdrive_active: bool = false
 var overdrive_time_left: float = 0.0
 var reached_milestones: Array[int] = []
 
-const COMBO_WINDOW := 4.0
+const COMBO_WINDOW := 3.25
+const COMBO_DECAY_WINDOW := 1.25
 const MAX_COMBO := 12
 const COMBO_DAMAGE_STEP := 0.04
 const COMBO_SPEED_STEP := 0.025
 const MAX_COMBO_DAMAGE_MULTIPLIER := 1.45
 const MAX_COMBO_SPEED_MULTIPLIER := 1.25
-const OVERDRIVE_DURATION := 5.0
+const OVERDRIVE_DURATION := 0.75
 
 
 const SAVE_PATH = "user://player_data.json"
@@ -66,18 +67,29 @@ func _process(delta: float) -> void:
 
 	combo_time_left -= delta
 	if combo_time_left <= 0.0:
-		reset_combo()
+		decay_combo()
 
 
 func register_enemy_kill(source: String = "weapon") -> void:
 	var combo_gain := 2 if source == "dash" else 1
 	combo_count = min(combo_count + combo_gain, MAX_COMBO)
 	combo_time_left = COMBO_WINDOW
-	combo_damage_multiplier = min(1.0 + combo_count * COMBO_DAMAGE_STEP, MAX_COMBO_DAMAGE_MULTIPLIER)
-	combo_speed_multiplier = min(1.0 + combo_count * COMBO_SPEED_STEP, MAX_COMBO_SPEED_MULTIPLIER)
+	_update_combo_multipliers()
 	combo_changed.emit(combo_count, combo_damage_multiplier, combo_speed_multiplier)
 	combo_kill_registered.emit(source, combo_count)
 	_check_combo_milestones()
+
+
+func decay_combo() -> void:
+	combo_count = max(combo_count - 1, 0)
+	if combo_count <= 0:
+		reset_combo()
+		return
+
+	combo_time_left = COMBO_DECAY_WINDOW
+	_update_combo_multipliers()
+	_forget_unreached_milestones()
+	combo_changed.emit(combo_count, combo_damage_multiplier, combo_speed_multiplier)
 
 
 func reset_combo() -> void:
@@ -103,6 +115,17 @@ func get_cooldown_multiplier() -> float:
 	elif combo_count >= 3:
 		combo_cooldown_multiplier = 0.9
 	return max(cooldown_upgrade_multiplier * combo_cooldown_multiplier, 0.45)
+
+
+func _update_combo_multipliers() -> void:
+	combo_damage_multiplier = min(1.0 + combo_count * COMBO_DAMAGE_STEP, MAX_COMBO_DAMAGE_MULTIPLIER)
+	combo_speed_multiplier = min(1.0 + combo_count * COMBO_SPEED_STEP, MAX_COMBO_SPEED_MULTIPLIER)
+
+
+func _forget_unreached_milestones() -> void:
+	for milestone in reached_milestones.duplicate():
+		if milestone > combo_count:
+			reached_milestones.erase(milestone)
 
 
 func _check_combo_milestones() -> void:
@@ -158,7 +181,8 @@ func save_game() -> void:
 		"dash_damage_multiplier": dash_damage_multiplier,
 		"player_coins":player_coins,
 		"owned_weapons":owned_weapons,
-		"max_round":max_round
+		"max_round":max_round,
+		"tutorial_seen_this_session": tutorial_seen_this_session
 	}
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file:
@@ -188,8 +212,14 @@ func load_data() -> bool:
 			player_coins = int(data.get("player_coins", player_coins))
 			owned_weapons = data.get("owned_weapons", owned_weapons)
 			max_round = int(data.get("max_round", max_round))
+			tutorial_seen_this_session = bool(data.get("tutorial_seen_this_session", max_round > 0))
 			current_round = 0
 			
 			return true
 
 	return false
+
+
+func mark_tutorial_seen() -> void:
+	tutorial_seen_this_session = true
+	save_game()

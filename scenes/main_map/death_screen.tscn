@@ -87,14 +87,14 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.82, 0.68, 1)
 theme_override_font_sizes/font_size = 38
-text = "ZGON"
+text = "DEFEAT"
 horizontal_alignment = 1
 
 [node name="Summary" type="Label" parent="Root/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.86, 0.82, 0.74, 1)
 theme_override_font_sizes/font_size = 16
-text = "Wyprawa dobiegla konca."
+text = "The expedition has ended."
 horizontal_alignment = 1
 
 [node name="ButtonRow" type="HBoxContainer" parent="Root/Panel/MarginContainer/VBoxContainer"]
@@ -118,7 +118,7 @@ theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
 theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
-text = "WYJSCIE"
+text = "QUIT"
 
 [connection signal="pressed" from="Root/Panel/MarginContainer/VBoxContainer/ButtonRow/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Root/Panel/MarginContainer/VBoxContainer/ButtonRow/QuitButton" to="." method="_on_quit_button_pressed"]

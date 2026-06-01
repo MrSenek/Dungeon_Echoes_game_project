@@ -8,31 +8,31 @@ var last_step_time := 0.0
 
 var steps := [
 	{
-		"text": "A/D - ruch    SPACJA - skok    SHIFT - dash",
+		"text": "A/D - move    SPACE - jump    SHIFT - dash",
 		"actions": ["left", "right", "ui_accept", "shift"],
 		"minimum_time": 1.0,
 		"fallback_time": 7.0
 	},
 	{
-		"text": "LPM albo E - atak. Trzymaj dystans i celuj w przeciwnikow.",
+		"text": "LMB or E - attack. Keep your distance and aim at enemies.",
 		"actions": ["strzal"],
 		"minimum_time": 0.6,
 		"fallback_time": 8.0
 	},
 	{
-		"text": "Zbieraj monety po walce. Wydasz je na bronie i ulepszenia.",
+		"text": "Collect coins after fights. Spend them on weapons and upgrades.",
 		"actions": [],
 		"minimum_time": 5.0,
 		"fallback_time": 5.0
 	},
 	{
-		"text": "F - interakcja ze sklepem, lub winda.",
+		"text": "F - interact with the shop or elevator.",
 		"actions": ["interaction"],
 		"minimum_time": 1.0,
 		"fallback_time": 9.0
 	},
 	{
-		"text": "1-4 - zmiana broni po kupieniu nowych ulepszen.",
+		"text": "1-4 - switch weapons after buying new upgrades.",
 		"actions": ["Weapon 1", "Weapon 2", "Weapon 3", "Weapon 4"],
 		"minimum_time": 1.0,
 		"fallback_time": 7.0
@@ -46,7 +46,7 @@ func _ready() -> void:
 		tutorial_ui.hide_hint()
 		return
 
-	PlayerData.tutorial_seen_this_session = true
+	PlayerData.mark_tutorial_seen()
 	await get_tree().create_timer(2).timeout
 	start_tutorial()
 
@@ -93,4 +93,4 @@ func next_step() -> void:
 
 func finish_tutorial() -> void:
 	tutorial_active = false
-	tutorial_ui.show_hint("Przetrwaj jak najwiecej rund. Powodzenia!", 3.0)
+	tutorial_ui.show_hint("Survive as many rounds as you can. Good luck!", 3.0)

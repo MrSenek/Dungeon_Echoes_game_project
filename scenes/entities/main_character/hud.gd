@@ -344,8 +344,8 @@ func _play_combo_milestone_effect(combo_count: int, milestone_name: String) -> v
 	var flash_alpha := 0.16
 	var banner_scale := Vector2(1.3, 1.3)
 	if combo_count >= PlayerData.MAX_COMBO:
-		flash_alpha = 0.28
-		banner_scale = Vector2(1.55, 1.55)
+		flash_alpha = 0.12
+		banner_scale = Vector2(1.28, 1.28)
 
 	screen_flash.color = Color(color.r, color.g, color.b, flash_alpha)
 	if screen_fx_tween:
@@ -378,14 +378,14 @@ func _spawn_combo_streaks(color: Color, combo_count: int) -> void:
 	if combo_count >= 9:
 		streak_count = 12
 	if combo_count >= PlayerData.MAX_COMBO:
-		streak_count = 18
+		streak_count = 8
 
 	for i in range(streak_count):
 		var streak := ColorRect.new()
 		streak.name = "ComboStreak"
 		streak.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		streak.color = Color(color.r, color.g, color.b, 0.75)
-		streak.size = Vector2(randf_range(42.0, 110.0), randf_range(3.0, 7.0))
+		streak.color = Color(color.r, color.g, color.b, 0.42)
+		streak.size = Vector2(randf_range(32.0, 86.0), randf_range(2.0, 5.0))
 		streak.pivot_offset = streak.size * 0.5
 		streak.rotation = randf_range(-0.45, 0.45)
 		streak.position = Vector2(
@@ -410,7 +410,7 @@ func _set_overdrive_overlay(active: bool) -> void:
 		return
 	var target_alpha := 0.0
 	if active:
-		target_alpha = 0.08
+		target_alpha = 0.025
 	var tween := create_tween()
 	tween.tween_property(overdrive_overlay, "color:a", target_alpha, 0.22)
 

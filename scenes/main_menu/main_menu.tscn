@@ -625,7 +625,7 @@ layout_mode = 0
 offset_top = -2.0
 offset_right = 530.0
 offset_bottom = 48.0
-text = "DZWIEK"
+text = "AUDIO"
 label_settings = SubResource("LabelSettings_audio_title")
 horizontal_alignment = 1
 
@@ -635,7 +635,7 @@ offset_left = 12.0
 offset_top = 61.0
 offset_right = 145.0
 offset_bottom = 99.0
-text = "MUZYKA"
+text = "MUSIC"
 label_settings = SubResource("LabelSettings_audio_label")
 vertical_alignment = 1
 
@@ -663,7 +663,7 @@ offset_left = 12.0
 offset_top = 122.0
 offset_right = 145.0
 offset_bottom = 160.0
-text = "EFEKTY"
+text = "SFX"
 label_settings = SubResource("LabelSettings_audio_label")
 vertical_alignment = 1
 

@@ -246,7 +246,6 @@ coin_scene = ExtResource("10_2tqvs")
 health_drop_chance = 0.2
 
 [node name="Timer" type="Timer" parent="enemy_state_machine/death_state" unique_id=1540455213]
-wait_time = 3.0
 one_shot = true
 
 [node name="HP" parent="." unique_id=1180813858 instance=ExtResource("3_om87s")]

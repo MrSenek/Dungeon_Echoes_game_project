@@ -12,7 +12,7 @@ gradient = SubResource("Gradient_n43gj")
 
 [sub_resource type="Curve" id="Curve_tu5gh"]
 _limits = [0.0, 0.3, 0.0, 1.0]
-_data = [Vector2(0, 0.05302015), 0.0, 0.0, 0, 0, Vector2(0.11290324, 0.21677853), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.12550336), 0.0, 0.0, 0, 0, Vector2(0.24193549, 0.3), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_tjav3"]
@@ -39,7 +39,7 @@ damage = 4
 
 [node name="Smoke_Effect" type="GPUParticles2D" parent="." unique_id=1671940298]
 light_mask = 2
-amount = 100
+amount = 20
 texture = ExtResource("1_3j2f8")
 lifetime = 2.3299999999999996
 preprocess = 1.4
