@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var heart_beat: AudioStreamPlayer = $heart_beat
 @onready var hud = $HUD
 @onready var weapon_state_machine: Weapon_State_Machine = $weapon_state_machine
+@onready var hp = $HP
 
 
 
@@ -44,7 +45,6 @@ func _process(delta: float) -> void:
 	if Input.get_axis("left","right") != 0:
 		dir = Input.get_axis("left", "right")
 	
-	var hp = get_node("HP")
 	var health_percent = float(hp.CURRENT_HEALTH) / float(hp.MAX_HEALTH)
 
 	if health_percent <= 0.4 and not low_hp_active:

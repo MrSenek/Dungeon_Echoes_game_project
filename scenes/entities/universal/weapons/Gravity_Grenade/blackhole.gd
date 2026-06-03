@@ -21,6 +21,11 @@ var _birth: float = 0.0
 var _captured_enemies: Array[Node2D] = []
 var _imploded: bool = false
 
+static var _halo_texture: GradientTexture2D
+static var _core_texture: GradientTexture2D
+static var _additive_material: CanvasItemMaterial
+static var _implosion_ring_points: PackedVector2Array = PackedVector2Array()
+
 func _ready() -> void:
 	monitoring = true
 	gravity_space_override = Area2D.SPACE_OVERRIDE_COMBINE
@@ -93,9 +98,10 @@ func _pull_enemy(enemy: Node2D, delta: float) -> void:
 func _setup_visuals() -> void:
 	_particles = get_node_or_null("GPUParticles2D")
 	if _particles:
-		_particles.amount = 150
+		_particles.amount = 90
 		_particles.lifetime = 1.15
 		_particles.speed_scale = 1.25
+		_particles.fixed_fps = 30
 		_particles.emitting = true
 
 	var old_glow = get_node_or_null("Sprite2D2")
@@ -107,11 +113,7 @@ func _setup_visuals() -> void:
 		old_core.visible = false
 
 	_halo = _make_sprite(
-		_make_radial_texture(
-			Color(0.16, 0.68, 1.0, 0.32),
-			Color(0.15, 0.0, 0.38, 0.0),
-			160
-		),
+		_get_halo_texture(),
 		Vector2.ONE * 1.95,
 		true
 	)
@@ -119,11 +121,7 @@ func _setup_visuals() -> void:
 	add_child(_halo)
 
 	_core = _make_sprite(
-		_make_radial_texture(
-			Color(0.0, 0.0, 0.0, 1.0),
-			Color(0.06, 0.0, 0.18, 0.0),
-			96
-		),
+		_get_core_texture(),
 		Vector2.ONE * 1.15,
 		false
 	)
@@ -198,7 +196,7 @@ func _play_implosion_ring() -> void:
 	var ring: Line2D = Line2D.new()
 	ring.width = 4.0
 	ring.default_color = Color(0.58, 0.92, 1.0, 0.9)
-	ring.points = _make_circle_points(12.0, 30)
+	ring.points = _get_implosion_ring_points()
 	ring.z_index = 4
 	add_child(ring)
 
@@ -224,8 +222,32 @@ func _make_sprite(texture: Texture2D, sprite_scale: Vector2, additive: bool) -> 
 	sprite.texture = texture
 	sprite.scale = sprite_scale
 	if additive:
-		sprite.material = _make_additive_material()
+		sprite.material = _get_additive_material()
 	return sprite
+
+
+func _get_halo_texture() -> GradientTexture2D:
+	if _halo_texture == null:
+		_halo_texture = _make_radial_texture(Color(0.16, 0.68, 1.0, 0.32), Color(0.15, 0.0, 0.38, 0.0), 160)
+	return _halo_texture
+
+
+func _get_core_texture() -> GradientTexture2D:
+	if _core_texture == null:
+		_core_texture = _make_radial_texture(Color(0.0, 0.0, 0.0, 1.0), Color(0.06, 0.0, 0.18, 0.0), 96)
+	return _core_texture
+
+
+func _get_additive_material() -> CanvasItemMaterial:
+	if _additive_material == null:
+		_additive_material = _make_additive_material()
+	return _additive_material
+
+
+func _get_implosion_ring_points() -> PackedVector2Array:
+	if _implosion_ring_points.is_empty():
+		_implosion_ring_points = _make_circle_points(12.0, 30)
+	return _implosion_ring_points
 
 
 func _make_radial_texture(center_color: Color, edge_color: Color, size: int) -> GradientTexture2D:

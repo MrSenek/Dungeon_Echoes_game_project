@@ -19,6 +19,12 @@ var current_wave: int = 0
 var wave_queue: Array[PackedScene] = []
 var active_enemies: int = 0
 var base_spawn_interval: float = 2.0
+var portal_shadow_texture: GradientTexture2D
+var portal_glow_texture: GradientTexture2D
+var portal_additive_material: CanvasItemMaterial
+var portal_ring_points: PackedVector2Array = PackedVector2Array()
+var portal_inner_ring_points: PackedVector2Array = PackedVector2Array()
+var portal_core_points: PackedVector2Array = PackedVector2Array()
 
 func _ready() -> void:
 	base_spawn_interval = min(time_between_scenes, spawn_timer.wait_time)
@@ -107,36 +113,36 @@ func play_spawn_telegraph(spawn_position: Vector2) -> void:
 
 	var shadow: Sprite2D = Sprite2D.new()
 	shadow.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	shadow.texture = make_radial_texture(Color(0.0, 0.0, 0.0, 0.92), Color(0.0, 0.0, 0.0, 0.0), 118)
+	shadow.texture = get_portal_shadow_texture()
 	shadow.scale = Vector2.ZERO
 	shadow.z_index = -2
 	portal.add_child(shadow)
 
 	var glow: Sprite2D = Sprite2D.new()
 	glow.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	glow.texture = make_radial_texture(Color(0.38, 0.02, 0.12, 0.72), Color(0.05, 0.0, 0.12, 0.0), 110)
+	glow.texture = get_portal_glow_texture()
 	glow.scale = Vector2.ZERO
-	glow.material = make_additive_material()
+	glow.material = get_portal_additive_material()
 	glow.z_index = -1
 	portal.add_child(glow)
 
 	var ring: Line2D = Line2D.new()
 	ring.width = 2.2
 	ring.default_color = Color(0.82, 0.05, 0.16, 0.95)
-	ring.points = make_circle_points(25.0, 34)
+	ring.points = get_portal_ring_points()
 	ring.scale = Vector2.ZERO
 	portal.add_child(ring)
 
 	var inner_ring: Line2D = Line2D.new()
 	inner_ring.width = 1.3
 	inner_ring.default_color = Color(0.58, 0.03, 0.82, 0.82)
-	inner_ring.points = make_circle_points(14.0, 24)
+	inner_ring.points = get_portal_inner_ring_points()
 	inner_ring.scale = Vector2.ZERO
 	portal.add_child(inner_ring)
 
 	var core: Polygon2D = Polygon2D.new()
 	core.color = Color(0.02, 0.0, 0.035, 0.88)
-	core.polygon = make_circle_points(8.0, 18)
+	core.polygon = get_portal_core_points()
 	core.scale = Vector2.ZERO
 	core.z_index = 1
 	portal.add_child(core)
@@ -185,6 +191,42 @@ func play_spawn_telegraph(spawn_position: Vector2) -> void:
 	tween.tween_property(core, "modulate:a", 0.0, spawn_telegraph_time * 0.2).set_delay(spawn_telegraph_time * 0.78)
 	tween.tween_property(rune, "modulate:a", 0.0, spawn_telegraph_time * 0.25).set_delay(spawn_telegraph_time * 0.75)
 	tween.tween_callback(portal.queue_free).set_delay(spawn_telegraph_time + 0.05)
+
+
+func get_portal_shadow_texture() -> GradientTexture2D:
+	if portal_shadow_texture == null:
+		portal_shadow_texture = make_radial_texture(Color(0.0, 0.0, 0.0, 0.92), Color(0.0, 0.0, 0.0, 0.0), 118)
+	return portal_shadow_texture
+
+
+func get_portal_glow_texture() -> GradientTexture2D:
+	if portal_glow_texture == null:
+		portal_glow_texture = make_radial_texture(Color(0.38, 0.02, 0.12, 0.72), Color(0.05, 0.0, 0.12, 0.0), 110)
+	return portal_glow_texture
+
+
+func get_portal_additive_material() -> CanvasItemMaterial:
+	if portal_additive_material == null:
+		portal_additive_material = make_additive_material()
+	return portal_additive_material
+
+
+func get_portal_ring_points() -> PackedVector2Array:
+	if portal_ring_points.is_empty():
+		portal_ring_points = make_circle_points(25.0, 34)
+	return portal_ring_points
+
+
+func get_portal_inner_ring_points() -> PackedVector2Array:
+	if portal_inner_ring_points.is_empty():
+		portal_inner_ring_points = make_circle_points(14.0, 24)
+	return portal_inner_ring_points
+
+
+func get_portal_core_points() -> PackedVector2Array:
+	if portal_core_points.is_empty():
+		portal_core_points = make_circle_points(8.0, 18)
+	return portal_core_points
 
 
 func make_circle_points(radius: float, segments: int) -> PackedVector2Array:

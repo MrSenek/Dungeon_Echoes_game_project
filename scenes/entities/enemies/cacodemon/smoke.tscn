@@ -45,7 +45,6 @@ lifetime = 2.3299999999999996
 preprocess = 1.4
 speed_scale = 0.5
 randomness = 0.96
-fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_t71sc")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2005143912]

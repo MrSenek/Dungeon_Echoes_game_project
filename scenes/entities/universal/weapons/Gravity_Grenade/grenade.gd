@@ -13,6 +13,10 @@ var _aura: Sprite2D
 var _trail: Line2D
 var _trail_points: Array[Vector2] = []
 
+static var _aura_texture: GradientTexture2D
+static var _core_texture: GradientTexture2D
+static var _additive_material: CanvasItemMaterial
+
 func _ready() -> void:
 	_setup_visuals()
 	var throw_x = 300 * dir
@@ -52,21 +56,13 @@ func _setup_visuals() -> void:
 	add_child(_visual_root)
 
 	_aura = _make_sprite(
-		_make_radial_texture(
-			Color(0.42, 0.88, 1.0, 0.65),
-			Color(0.32, 0.05, 0.95, 0.0),
-			96
-		),
+		_get_aura_texture(),
 		Vector2.ONE * 0.95
 	)
 	_visual_root.add_child(_aura)
 
 	_core = _make_sprite(
-		_make_radial_texture(
-			Color(0.95, 1.0, 1.0, 1.0),
-			Color(0.08, 0.0, 0.28, 0.0),
-			64
-		),
+		_get_core_texture(),
 		Vector2.ONE * 0.34
 	)
 	_visual_root.add_child(_core)
@@ -113,8 +109,26 @@ func _make_sprite(texture: Texture2D, sprite_scale: Vector2) -> Sprite2D:
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	sprite.texture = texture
 	sprite.scale = sprite_scale
-	sprite.material = _make_additive_material()
+	sprite.material = _get_additive_material()
 	return sprite
+
+
+func _get_aura_texture() -> GradientTexture2D:
+	if _aura_texture == null:
+		_aura_texture = _make_radial_texture(Color(0.42, 0.88, 1.0, 0.65), Color(0.32, 0.05, 0.95, 0.0), 96)
+	return _aura_texture
+
+
+func _get_core_texture() -> GradientTexture2D:
+	if _core_texture == null:
+		_core_texture = _make_radial_texture(Color(0.95, 1.0, 1.0, 1.0), Color(0.08, 0.0, 0.28, 0.0), 64)
+	return _core_texture
+
+
+func _get_additive_material() -> CanvasItemMaterial:
+	if _additive_material == null:
+		_additive_material = _make_additive_material()
+	return _additive_material
 
 
 func _make_radial_texture(center_color: Color, edge_color: Color, size: int) -> GradientTexture2D:

@@ -12,4 +12,5 @@ func _ready() -> void:
 	for body in bodies:
 		if body.has_node("HP"):
 			body.get_node("HP").damage_taken(explosion_damage)
+	monitoring = false
 	get_tree().create_timer(1.0).timeout.connect(queue_free)

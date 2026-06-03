@@ -8,12 +8,14 @@ var SPEED = 300
 var smoke_damage: int
 
 var collided: bool = false
+
+static var impact_flash_texture: GradientTexture2D
+static var additive_material: CanvasItemMaterial
+
+
 func _physics_process(delta: float) -> void:
 	if collided:
 		return
-	global_position += direction * SPEED * delta
-
-func _process(delta: float) -> void:
 	if ray_cast_2d.is_colliding() and not collided:
 		collided = true
 		var impact_position: Vector2 = ray_cast_2d.get_collision_point()
@@ -24,6 +26,8 @@ func _process(delta: float) -> void:
 		_spawn_toxic_cloud(impact_position)
 		await get_tree().create_timer(0.16).timeout
 		queue_free()
+		return
+	global_position += direction * SPEED * delta
 
 
 func _spawn_toxic_cloud(impact_position: Vector2) -> void:
@@ -50,9 +54,9 @@ func _play_impact_effect(impact_position: Vector2) -> void:
 
 	var flash: Sprite2D = Sprite2D.new()
 	flash.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	flash.texture = _make_radial_texture(Color(0.56, 1.0, 0.38, 0.82), Color(0.02, 0.25, 0.08, 0.0), 72)
+	flash.texture = _get_impact_flash_texture()
 	flash.scale = Vector2.ZERO
-	flash.material = _make_additive_material()
+	flash.material = _get_additive_material()
 	impact_root.add_child(flash)
 
 	for i in range(5):
@@ -74,7 +78,20 @@ func _play_impact_effect(impact_position: Vector2) -> void:
 	tween.tween_callback(impact_root.queue_free).set_delay(0.28)
 
 
-func _make_radial_texture(center_color: Color, edge_color: Color, size: int) -> GradientTexture2D:
+func _get_impact_flash_texture() -> GradientTexture2D:
+	if impact_flash_texture == null:
+		impact_flash_texture = _make_radial_texture(Color(0.56, 1.0, 0.38, 0.82), Color(0.02, 0.25, 0.08, 0.0), 72)
+	return impact_flash_texture
+
+
+func _get_additive_material() -> CanvasItemMaterial:
+	if additive_material == null:
+		additive_material = CanvasItemMaterial.new()
+		additive_material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	return additive_material
+
+
+static func _make_radial_texture(center_color: Color, edge_color: Color, size: int) -> GradientTexture2D:
 	var gradient: Gradient = Gradient.new()
 	gradient.offsets = PackedFloat32Array([0.0, 0.45, 1.0])
 	gradient.colors = PackedColorArray([
@@ -91,9 +108,3 @@ func _make_radial_texture(center_color: Color, edge_color: Color, size: int) -> 
 	texture.fill_to = Vector2(0.96, 0.5)
 	texture.gradient = gradient
 	return texture
-
-
-func _make_additive_material() -> CanvasItemMaterial:
-	var material: CanvasItemMaterial = CanvasItemMaterial.new()
-	material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-	return material
