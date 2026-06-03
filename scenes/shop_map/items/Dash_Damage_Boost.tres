@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="ItemData" format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bfsmwymhxupjf"]
 
 [ext_resource type="Script" uid="uid://cb8abpm52h0m1" path="res://scenes/shop_map/item_data.gd" id="1_dash_damage"]
+[ext_resource type="Texture2D" uid="uid://7qn5pif6mhwl" path="res://scenes/shop_map/items/Dmgboosticon.png" id="2_j0tnh"]
 
 [resource]
 script = ExtResource("1_dash_damage")
 item_name = "+25% Dash Damage"
 price = 35
+texture = ExtResource("2_j0tnh")
 type = "Stat"
 metadata/_custom_type_script = "uid://cb8abpm52h0m1"

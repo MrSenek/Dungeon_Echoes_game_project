@@ -61,6 +61,7 @@ position = Vector2(-121, 0)
 shape = SubResource("CapsuleShape2D_f65g5")
 
 [node name="Sprite2D" type="Sprite2D" parent="Item1" unique_id=772949763]
+scale = Vector2(0.5, 0.5)
 texture = SubResource("GradientTexture2D_f0tsd")
 
 [node name="Node2D" type="Node2D" parent="Item1" unique_id=435763758]
@@ -84,7 +85,8 @@ autowrap_mode = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Item2" unique_id=1683036592]
 shape = SubResource("CapsuleShape2D_1ieia")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Item2" unique_id=1252276651]
+[node name="Sprite2D" type="Sprite2D" parent="Item2" unique_id=1252276651]
+scale = Vector2(0.5, 0.5)
 texture = SubResource("GradientTexture2D_f0tsd")
 
 [node name="Node2D" type="Node2D" parent="Item2" unique_id=1704400616]
@@ -110,6 +112,7 @@ position = Vector2(128, 0)
 shape = SubResource("CapsuleShape2D_f1klk")
 
 [node name="Sprite2D" type="Sprite2D" parent="Item3" unique_id=1225185354]
+scale = Vector2(0.5, 0.5)
 texture = SubResource("GradientTexture2D_f0tsd")
 
 [node name="Node2D" type="Node2D" parent="Item3" unique_id=393480972]

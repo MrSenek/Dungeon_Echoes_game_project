@@ -206,10 +206,9 @@ stats = SubResource("Resource_slime_stats")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1259969182]
 sprite_frames = SubResource("SpriteFrames_tfmds")
-animation = &"death"
+animation = &"idle"
 autoplay = "idle"
-frame = 3
-frame_progress = 1.0
+frame_progress = 0.5030858
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=850031334]
 visible = false
@@ -217,6 +216,7 @@ position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_2oqe7")
 
 [node name="enemy_state_machine" type="Node2D" parent="." unique_id=1387929067 node_paths=PackedStringArray("initial_state")]
+visible = false
 script = ExtResource("2_d6ha7")
 initial_state = NodePath("idle_state")
 
@@ -252,6 +252,7 @@ one_shot = true
 position = Vector2(0, -5)
 
 [node name="player_detection" type="Node2D" parent="." unique_id=1689289340]
+visible = false
 
 [node name="detection_range" type="Area2D" parent="player_detection" unique_id=1389581841]
 

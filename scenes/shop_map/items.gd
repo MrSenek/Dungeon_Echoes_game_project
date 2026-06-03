@@ -70,19 +70,19 @@ func randomize_items() -> void:
 	item1 = items_list.pick_random()
 	text = item1.item_name + "\n" + str(item1.price)
 	get_node("Item1/Node2D/Label").text = text
-	#set_item_texture("Item1", item1)
+	set_item_texture("Item1", item1)
 	items_list.erase(item1)
 	
 	item2 = items_list.pick_random()
 	text = item2.item_name + "\n" + str(item2.price)
 	get_node("Item2/Node2D/Label").text = text
-	#set_item_texture("Item2", item2)
+	set_item_texture("Item2", item2)
 	items_list.erase(item2)
 	
 	item3 = items_list.pick_random()
 	text = item3.item_name + "\n" + str(item3.price)
 	get_node("Item3/Node2D/Label").text = text
-	#set_item_texture("Item3", item3)
+	set_item_texture("Item3", item3)
 	items_list.erase(item3)
 	
 
