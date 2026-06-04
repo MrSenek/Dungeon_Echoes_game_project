@@ -38,11 +38,13 @@ var combo_tween: Tween
 var milestone_tween: Tween
 var screen_fx_tween: Tween
 var banner_tween: Tween
+var wave_banner_tween: Tween
 var combo_bar_fill: StyleBoxFlat
 var effect_layer: Control
 var screen_flash: ColorRect
 var overdrive_overlay: ColorRect
 var milestone_banner: Label
+var wave_banner: Label
 var selected_weapon_id := "fireball"
 var slot_styles: Dictionary = {}
 var selected_slot_styles: Dictionary = {}
@@ -62,6 +64,7 @@ func _ready() -> void:
 	PlayerData.combo_changed.connect(_on_combo_changed)
 	PlayerData.combo_milestone_reached.connect(_on_combo_milestone_reached)
 	PlayerData.overdrive_changed.connect(_on_overdrive_changed)
+	PlayerData.wave_cleared.connect(_on_wave_cleared)
 	_create_combo_label()
 	_create_combo_effects()
 	_prepare_slot_styles()
@@ -102,9 +105,10 @@ func _on_combo_milestone_reached(combo_count: int, milestone_name: String) -> vo
 	if not combo_panel:
 		return
 	combo_panel.visible = true
-	combo_status_label.text = milestone_name
+	var reward_text := _get_milestone_reward_text(combo_count)
+	combo_status_label.text = milestone_name if reward_text.is_empty() else "%s  %s" % [milestone_name, reward_text]
 	_apply_combo_color(combo_count)
-	_play_combo_milestone_effect(combo_count, milestone_name)
+	_play_combo_milestone_effect(combo_count, milestone_name, reward_text)
 	if milestone_tween:
 		milestone_tween.kill()
 	milestone_tween = create_tween()
@@ -122,6 +126,29 @@ func _on_overdrive_changed(active: bool) -> void:
 		combo_status_label.text = "OVERDRIVE"
 		_apply_combo_color(PlayerData.MAX_COMBO)
 	_set_overdrive_overlay(active)
+
+
+func _on_wave_cleared(wave_number: int) -> void:
+	_show_wave_banner("WAVE %d CLEARED" % wave_number, Color(0.54, 0.96, 1.0, 1))
+
+
+func _show_wave_banner(text: String, color: Color) -> void:
+	if not wave_banner:
+		return
+
+	wave_banner.text = text
+	wave_banner.visible = true
+	wave_banner.modulate = Color(1, 1, 1, 1)
+	wave_banner.scale = Vector2(1.12, 1.12)
+	wave_banner.add_theme_color_override("font_color", color)
+
+	if wave_banner_tween:
+		wave_banner_tween.kill()
+	wave_banner_tween = create_tween()
+	wave_banner_tween.set_parallel(true)
+	wave_banner_tween.tween_property(wave_banner, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	wave_banner_tween.tween_property(wave_banner, "modulate:a", 0.0, 0.38).set_delay(1.0)
+	wave_banner_tween.tween_callback(func(): wave_banner.visible = false).set_delay(1.42)
 
 
 func show_cooldown(weapon_name: String, duration: float) -> void:
@@ -335,8 +362,24 @@ func _create_combo_effects() -> void:
 	milestone_banner.add_theme_constant_override("shadow_offset_y", 4)
 	effect_layer.add_child(milestone_banner)
 
+	wave_banner = Label.new()
+	wave_banner.name = "WaveClearedBanner"
+	wave_banner.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	wave_banner.custom_minimum_size = Vector2(620, 92)
+	wave_banner.position = Vector2(-310, 108)
+	wave_banner.pivot_offset = Vector2(310, 46)
+	wave_banner.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	wave_banner.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	wave_banner.visible = false
+	wave_banner.add_theme_font_size_override("font_size", 34)
+	wave_banner.add_theme_color_override("font_color", Color(0.54, 0.96, 1.0, 1))
+	wave_banner.add_theme_color_override("font_shadow_color", Color(0.01, 0.02, 0.025, 0.95))
+	wave_banner.add_theme_constant_override("shadow_offset_x", 3)
+	wave_banner.add_theme_constant_override("shadow_offset_y", 3)
+	effect_layer.add_child(wave_banner)
 
-func _play_combo_milestone_effect(combo_count: int, milestone_name: String) -> void:
+
+func _play_combo_milestone_effect(combo_count: int, milestone_name: String, reward_text: String = "") -> void:
 	if not screen_flash or not milestone_banner:
 		return
 
@@ -353,7 +396,7 @@ func _play_combo_milestone_effect(combo_count: int, milestone_name: String) -> v
 	screen_fx_tween = create_tween()
 	screen_fx_tween.tween_property(screen_flash, "color:a", 0.0, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
-	milestone_banner.text = milestone_name
+	milestone_banner.text = milestone_name if reward_text.is_empty() else "%s\n%s" % [milestone_name, reward_text]
 	milestone_banner.visible = true
 	milestone_banner.modulate = Color(1, 1, 1, 1)
 	milestone_banner.scale = banner_scale
@@ -433,3 +476,15 @@ func _get_combo_color(combo_count: int) -> Color:
 	if combo_count >= 3:
 		return Color(1.0, 0.86, 0.25, 1.0)
 	return Color(0.45, 0.95, 1.0, 1.0)
+
+
+func _get_milestone_reward_text(combo_count: int) -> String:
+	if combo_count >= 12:
+		return "+5 COINS"
+	if combo_count >= 9:
+		return "+8 HP"
+	if combo_count >= 6:
+		return "+2 COINS"
+	if combo_count >= 3:
+		return "+4 HP"
+	return ""

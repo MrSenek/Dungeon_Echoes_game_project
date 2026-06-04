@@ -3,15 +3,20 @@ extends CanvasLayer
 @onready var root: Control = $Root
 @onready var dim: ColorRect = $Root/Dim
 @onready var panel: PanelContainer = $Root/Panel
+@onready var vbox: VBoxContainer = $Root/Panel/MarginContainer/VBoxContainer
+@onready var summary: Label = $Root/Panel/MarginContainer/VBoxContainer/Summary
 @onready var restart_button: Button = $Root/Panel/MarginContainer/VBoxContainer/ButtonRow/RestartButton
 @onready var quit_button: Button = $Root/Panel/MarginContainer/VBoxContainer/ButtonRow/QuitButton
 
 var show_tween: Tween
 var selected_button: Button
+var stats_label: Label
 
 func _ready() -> void:
 	hide()
 	root.modulate.a = 0.0
+	panel.custom_minimum_size = Vector2(560, 340)
+	_create_stats_label()
 	_setup_button_selection(restart_button)
 	_setup_button_selection(quit_button)
 
@@ -24,6 +29,7 @@ func show_death_screen() -> void:
 	Engine.time_scale = 0
 	restart_button.disabled = true
 	quit_button.disabled = true
+	_update_stats_text()
 
 	root.modulate.a = 1.0
 	dim.modulate.a = 0.0
@@ -97,3 +103,29 @@ func _set_button_selected(button: Button, selected: bool) -> void:
 	else:
 		button.scale = Vector2.ONE
 		button.modulate = Color.WHITE
+
+
+func _create_stats_label() -> void:
+	stats_label = Label.new()
+	stats_label.name = "RunStats"
+	stats_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	stats_label.add_theme_font_size_override("font_size", 17)
+	stats_label.add_theme_color_override("font_color", Color(0.96, 0.9, 0.78, 1))
+	stats_label.add_theme_color_override("font_shadow_color", Color(0.02, 0.01, 0.0, 0.85))
+	stats_label.add_theme_constant_override("shadow_offset_x", 1)
+	stats_label.add_theme_constant_override("shadow_offset_y", 1)
+	stats_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+
+	var button_row := $Root/Panel/MarginContainer/VBoxContainer/ButtonRow
+	vbox.add_child(stats_label)
+	vbox.move_child(stats_label, button_row.get_index())
+
+
+func _update_stats_text() -> void:
+	summary.text = "The expedition has ended. Your best run details:"
+	stats_label.text = "Waves cleared: %d\nEnemies defeated: %d\nCoins collected: %d\nBest combo: x%d" % [
+		PlayerData.run_waves_cleared,
+		PlayerData.run_enemies_killed,
+		PlayerData.run_coins_collected,
+		PlayerData.run_best_combo
+	]

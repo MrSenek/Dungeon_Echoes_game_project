@@ -28,9 +28,8 @@ var portal_core_points: PackedVector2Array = PackedVector2Array()
 
 func _ready() -> void:
 	base_spawn_interval = min(time_between_scenes, spawn_timer.wait_time)
+	PlayerData.start_run()
 	current_wave = 0
-	PlayerData.current_round = 0
-	PlayerData.reset_combo()
 	start_new_wave()
 
 
@@ -304,6 +303,7 @@ func _on_enemy_removed():
 	active_enemies -= 1
 
 	if active_enemies <= 0 and not wave_queue:
+		PlayerData.register_wave_cleared(current_wave)
 		call_deferred("start_new_wave")
 
 

@@ -21,12 +21,43 @@ var player_in = {
 var item1: ItemData
 var item2: ItemData
 var item3: ItemData
+var shop_available := true
+var shop_hint_label: Label
+var shop_message_label: Label
+var shop_message_tween: Tween
+var item_nodes := {}
+var item_descriptions := {
+	"+10HP": "Small heal buffer for longer waves.",
+	"+25HP": "Big max health boost.",
+	"Electric Weapon": "Chains lightning through nearby enemies.",
+	"Gravity Grenade": "Pulls groups together for crowd control.",
+	"Self Guiding Missile": "Strong homing shot for priority targets.",
+	"1,5x Damage": "Huge permanent damage spike.",
+	"+20% Damage": "Reliable permanent damage boost.",
+	"+8% Move Speed": "Better dodging and kiting.",
+	"-10% Weapon Cooldown": "Fire every weapon more often.",
+	"+25% Dash Damage": "Turns dash kills into a combo tool."
+}
+var rarity_colors := {
+	"COMMON": Color(0.9, 0.9, 0.84, 1.0),
+	"RARE": Color(0.42, 0.78, 1.0, 1.0),
+	"EPIC": Color(0.82, 0.45, 1.0, 1.0),
+	"CURSED": Color(1.0, 0.28, 0.22, 1.0),
+}
 
 func _ready() -> void:
+	item_nodes = {
+		"item1": item_1,
+		"item2": item_2,
+		"item3": item_3,
+	}
+	create_shop_info_labels()
 	load_item_resources()
 	randomize_items()
 
 func _process(_delta: float) -> void:
+	if not shop_available:
+		return
 	if player_in["item1"] and Input.is_action_just_pressed("interaction"):
 		attempt_purchase(item1)
 	if player_in["item2"] and Input.is_action_just_pressed("interaction"):
@@ -45,6 +76,7 @@ func attempt_purchase(item: ItemData) -> void:
 		return
 	var price: int = item.price
 	if PlayerData.player_coins < price:
+		show_shop_message("Need %d more coins" % (price - PlayerData.player_coins), Color(1.0, 0.45, 0.35, 1.0))
 		return
 	var players: Array[Node] = get_tree().get_nodes_in_group("Player")
 	if players.is_empty():
@@ -58,6 +90,8 @@ func attempt_purchase(item: ItemData) -> void:
 	PlayerData.player_coins -= price
 	give_item(item)
 	audio_stream_player.play()
+	shop_available = false
+	show_shop_message("Picked: %s" % item.item_name, Color(0.55, 1.0, 0.65, 1.0))
 	delete_items()
 
 
@@ -68,21 +102,24 @@ func randomize_items() -> void:
 		push_warning("Shop needs at least 3 available items after filtering owned weapons.")
 		return
 	item1 = items_list.pick_random()
-	text = item1.item_name + "\n" + str(item1.price)
+	text = get_item_offer_text(item1)
 	get_node("Item1/Node2D/Label").text = text
 	set_item_texture("Item1", item1)
+	apply_item_rarity_style("Item1", item1)
 	items_list.erase(item1)
 	
 	item2 = items_list.pick_random()
-	text = item2.item_name + "\n" + str(item2.price)
+	text = get_item_offer_text(item2)
 	get_node("Item2/Node2D/Label").text = text
 	set_item_texture("Item2", item2)
+	apply_item_rarity_style("Item2", item2)
 	items_list.erase(item2)
 	
 	item3 = items_list.pick_random()
-	text = item3.item_name + "\n" + str(item3.price)
+	text = get_item_offer_text(item3)
 	get_node("Item3/Node2D/Label").text = text
 	set_item_texture("Item3", item3)
+	apply_item_rarity_style("Item3", item3)
 	items_list.erase(item3)
 	
 
@@ -160,22 +197,139 @@ func set_item_texture(item_node_name: String, item: ItemData) -> void:
 		sprite.texture = item.texture
 
 
+func get_item_offer_text(item: ItemData) -> String:
+	var description: String = item_descriptions.get(item.item_name, "Permanent upgrade.")
+	var rarity := get_item_rarity(item)
+	return "[%s]\n%s\n%d coins\n%s\nPress F" % [rarity, item.item_name, item.price, description]
+
+
+func get_item_rarity(item: ItemData) -> String:
+	if item.item_name == "1,5x Damage":
+		return "CURSED"
+	if item.price >= 80:
+		return "EPIC"
+	if item.type == "Weapon" or item.price >= 50:
+		return "RARE"
+	return "COMMON"
+
+
+func get_item_rarity_color(item: ItemData) -> Color:
+	return rarity_colors.get(get_item_rarity(item), Color.WHITE)
+
+
+func apply_item_rarity_style(item_node_name: String, item: ItemData) -> void:
+	var color := get_item_rarity_color(item)
+	var item_node := get_node_or_null(item_node_name) as Node2D
+	if item_node:
+		item_node.modulate = Color.WHITE
+
+	var sprite := get_node_or_null(item_node_name + "/Sprite2D") as Sprite2D
+	if sprite:
+		sprite.modulate = color
+
+	var label := get_node_or_null(item_node_name + "/Node2D/Label") as Label
+	if label:
+		label.add_theme_color_override("font_color", color)
+		label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.92))
+
+
+func create_shop_info_labels() -> void:
+	prepare_offer_label("Item1")
+	prepare_offer_label("Item2")
+	prepare_offer_label("Item3")
+
+	shop_hint_label = Label.new()
+	shop_hint_label.name = "ShopHint"
+	shop_hint_label.position = Vector2(-250, -184)
+	shop_hint_label.custom_minimum_size = Vector2(500, 42)
+	shop_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	shop_hint_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	shop_hint_label.text = "CHOOSE ONE UPGRADE"
+	shop_hint_label.add_theme_font_size_override("font_size", 24)
+	shop_hint_label.add_theme_color_override("font_color", Color(1.0, 0.88, 0.48, 1.0))
+	shop_hint_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.9))
+	shop_hint_label.add_theme_constant_override("shadow_offset_x", 2)
+	shop_hint_label.add_theme_constant_override("shadow_offset_y", 2)
+	add_child(shop_hint_label)
+
+	shop_message_label = Label.new()
+	shop_message_label.name = "ShopMessage"
+	shop_message_label.position = Vector2(-250, 74)
+	shop_message_label.custom_minimum_size = Vector2(500, 36)
+	shop_message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	shop_message_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	shop_message_label.modulate.a = 0.0
+	shop_message_label.add_theme_font_size_override("font_size", 18)
+	shop_message_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.9))
+	shop_message_label.add_theme_constant_override("shadow_offset_x", 2)
+	shop_message_label.add_theme_constant_override("shadow_offset_y", 2)
+	add_child(shop_message_label)
+
+
+func prepare_offer_label(item_node_name: String) -> void:
+	var label := get_node_or_null(item_node_name + "/Node2D/Label") as Label
+	if not label:
+		return
+
+	label.offset_left = -520.0
+	label.offset_top = -168.0
+	label.offset_right = 520.0
+	label.offset_bottom = 88.0
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	if label.label_settings:
+		label.label_settings = label.label_settings.duplicate()
+		label.label_settings.font_size = 88
+
+
+func show_shop_message(text: String, color: Color) -> void:
+	if not shop_message_label:
+		return
+	if shop_message_tween:
+		shop_message_tween.kill()
+
+	shop_message_label.text = text
+	shop_message_label.add_theme_color_override("font_color", color)
+	shop_message_label.modulate.a = 1.0
+
+	shop_message_tween = create_tween()
+	shop_message_tween.tween_property(shop_message_label, "modulate:a", 0.0, 0.3).set_delay(1.35)
+
+
+func set_item_highlight(item_key: String, highlighted: bool) -> void:
+	var item_node: Node2D = item_nodes.get(item_key) as Node2D
+	if not item_node or not is_instance_valid(item_node):
+		return
+
+	var target_scale := Vector2(1.12, 1.12) if highlighted else Vector2.ONE
+	var target_modulate := Color(1.25, 1.18, 0.82, 1.0) if highlighted else Color.WHITE
+	item_node.scale = target_scale
+	item_node.modulate = target_modulate
+
+
 #signals for knowing in which item is player standing
 func _on_item_1_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in["item1"] = true
+		set_item_highlight("item1", true)
 func _on_item_2_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in["item2"] = true
+		set_item_highlight("item2", true)
 func _on_item_3_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in["item3"] = true
+		set_item_highlight("item3", true)
 func _on_item_1_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in["item1"] = false
+		set_item_highlight("item1", false)
 func _on_item_2_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in["item2"] = false
+		set_item_highlight("item2", false)
 func _on_item_3_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in["item3"] = false
+		set_item_highlight("item3", false)

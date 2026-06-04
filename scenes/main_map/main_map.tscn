@@ -577,7 +577,7 @@ enemy_scenes = Array[PackedScene]([ExtResource("5_ip2l2"), ExtResource("6_cx1gv"
 spawn_points = [NodePath("../spawn_points/spawn_point"), NodePath("../spawn_points/spawn_point2"), NodePath("../spawn_points/spawn_point3"), NodePath("../spawn_points/spawn_point4")]
 time_between_scenes = 1.0
 min_spawn_interval = 0.5
-min_player_spawn_distance = 50.0
+min_player_spawn_distance = 220.0
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=2028480731]
 navigation_polygon = SubResource("NavigationPolygon_uv10n")
