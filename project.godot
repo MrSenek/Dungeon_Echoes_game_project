@@ -21,6 +21,7 @@ buses/default_bus_layout="uid://djfj2coxcm8ln"
 [autoload]
 
 AudioSettings="*res://scenes/main_menu/audio_settings.gd"
+DifficultySettings="*res://difficulty_settings.gd"
 Money="*uid://b72exv3wtncm0"
 PlayerData="*uid://cicacqiedb47w"
 

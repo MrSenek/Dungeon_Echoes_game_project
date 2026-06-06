@@ -14,8 +14,10 @@ class_name Stats
 
 
 func get_scaled_max_hp(round: int) -> int:
-	return base_max_hp + (round - 1) * health_scaling
+	var scaled_hp := base_max_hp + (round - 1) * health_scaling
+	return DifficultySettings.get_enemy_health(scaled_hp)
 
 
 func get_scaled_attack(round: int) -> float:
-	return base_attack + (round - 1) * attack_scaling
+	var scaled_attack := base_attack + (round - 1) * attack_scaling
+	return DifficultySettings.get_enemy_attack(scaled_attack)

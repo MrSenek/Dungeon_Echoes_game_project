@@ -28,6 +28,10 @@ var portal_core_points: PackedVector2Array = PackedVector2Array()
 
 func _ready() -> void:
 	base_spawn_interval = min(time_between_scenes, spawn_timer.wait_time)
+	min_spawn_interval = DifficultySettings.get_float("min_spawn_interval", min_spawn_interval)
+	burst_chance = DifficultySettings.get_float("burst_chance", burst_chance)
+	max_burst_size = DifficultySettings.get_int("max_burst_size", max_burst_size)
+	spawn_telegraph_time = DifficultySettings.get_float("spawn_telegraph_time", spawn_telegraph_time)
 	PlayerData.start_run()
 	current_wave = 0
 	start_new_wave()
@@ -51,20 +55,20 @@ func start_new_wave():
 
 
 func calc_budget() -> int:
-	return 40 + current_wave * 35
+	return DifficultySettings.get_wave_budget(current_wave)
 
 
 func calc_spawn_interval() -> float:
-	return max(min_spawn_interval, base_spawn_interval - current_wave * 0.08)
+	return DifficultySettings.get_spawn_interval(base_spawn_interval, current_wave)
 
 func fill_queue(budget):
 	wave_queue.clear()
 	var available_enemies: Array = []
 	for scene in enemy_scenes:
 		var temp_enemy = scene.instantiate()
-		if temp_enemy.stats.min_wave <= current_wave:
+		if DifficultySettings.get_enemy_unlock_wave(temp_enemy.stats.min_wave) <= current_wave:
 			available_enemies.append({"scene":scene, "cost": temp_enemy.stats.spawn_cost})
-			temp_enemy.queue_free()
+		temp_enemy.queue_free()
 	
 	while budget > 0 and available_enemies.size() > 0:
 		var affordable = available_enemies.filter(func(e): return e.cost <= budget)
@@ -290,10 +294,17 @@ func get_safe_spawn_point() -> Node2D:
 
 func _on_enemy_killed(enemy: Node = null) -> void:
 	var source: String = "weapon"
+	var enemy_score := 100
+	var world_position := PlayerData.NO_WORLD_SCORE_POSITION
 	if enemy and enemy.has_meta("combo_source"):
 		source = str(enemy.get_meta("combo_source"))
 		enemy.remove_meta("combo_source")
-	PlayerData.register_enemy_kill(source)
+	if enemy:
+		world_position = enemy.global_position
+		var enemy_stats = enemy.get("stats")
+		if enemy_stats:
+			enemy_score = enemy_stats.spawn_cost * PlayerData.SCORE_PER_ENEMY_COST
+	PlayerData.register_enemy_kill(source, enemy_score, world_position)
 
 
 func _on_enemy_removed():
@@ -310,7 +321,8 @@ func _on_enemy_removed():
 func _on_spawn_timer_timeout() -> void:
 	if wave_queue.size() > 0:
 		var burst_size: int = 1
-		if current_wave >= 3 and randf() < burst_chance:
+		var burst_start_wave := DifficultySettings.get_int("burst_start_wave", 4)
+		if current_wave >= burst_start_wave and randf() < burst_chance:
 			burst_size = min(max_burst_size, 1 + int(current_wave / 4))
 		for i in range(burst_size):
 			if wave_queue.is_empty():

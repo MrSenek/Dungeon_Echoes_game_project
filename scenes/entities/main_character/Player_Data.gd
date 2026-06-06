@@ -7,6 +7,8 @@ signal combo_kill_registered(source: String, combo_count: int)
 signal overdrive_changed(active: bool)
 signal wave_cleared(wave_number: int)
 signal run_stats_changed
+signal score_changed(score: int)
+signal score_gained(amount: int, total_score: int, reason: String, world_position: Vector2, multiplier: float)
 
 @export var max_health: int = 100:
 	set(value):
@@ -22,12 +24,15 @@ var cooldown_upgrade_multiplier: float = 1.0
 var dash_damage_multiplier: float = 1.0
 var player_coins: int = 200
 var owned_weapons = ["fireball"]
+var difficulty: String = DifficultySettings.NORMAL
 var max_round: int = 0
 var current_round: int = 0
 var run_coins_collected: int = 0
 var run_enemies_killed: int = 0
 var run_best_combo: int = 0
 var run_waves_cleared: int = 0
+var run_score: int = 0
+var best_score: int = 0
 var tutorial_seen_this_session = false
 var combo_count: int = 0
 var combo_damage_multiplier: float = 1.0
@@ -49,6 +54,9 @@ const FLOW_HEAL_REWARD := 4
 const HOT_STREAK_COIN_REWARD := 2
 const RAMPAGE_HEAL_REWARD := 8
 const OVERDRIVE_COIN_REWARD := 5
+const SCORE_PER_ENEMY_COST := 10
+const WAVE_CLEAR_SCORE := 250
+const NO_WORLD_SCORE_POSITION := Vector2(-999999.0, -999999.0)
 
 
 const SAVE_PATH = "user://player_data.json"
@@ -80,13 +88,14 @@ func _process(delta: float) -> void:
 		decay_combo()
 
 
-func register_enemy_kill(source: String = "weapon") -> void:
+func register_enemy_kill(source: String = "weapon", enemy_score: int = 100, world_position: Vector2 = NO_WORLD_SCORE_POSITION) -> void:
 	var combo_gain := 2 if source == "dash" else 1
 	combo_count = min(combo_count + combo_gain, MAX_COMBO)
 	run_enemies_killed += 1
 	run_best_combo = max(run_best_combo, combo_count)
 	combo_time_left = COMBO_WINDOW
 	_update_combo_multipliers()
+	_add_score(enemy_score, source, world_position)
 	combo_changed.emit(combo_count, combo_damage_multiplier, combo_speed_multiplier)
 	combo_kill_registered.emit(source, combo_count)
 	run_stats_changed.emit()
@@ -108,12 +117,16 @@ func start_run() -> void:
 	run_enemies_killed = 0
 	run_best_combo = 0
 	run_waves_cleared = 0
+	run_score = 0
 	reset_combo()
+	score_changed.emit(run_score)
 	run_stats_changed.emit()
 
 
 func register_wave_cleared(wave_number: int) -> void:
 	run_waves_cleared = max(run_waves_cleared, wave_number)
+	var wave_score := wave_number * WAVE_CLEAR_SCORE
+	_add_score(wave_score, "wave", NO_WORLD_SCORE_POSITION)
 	wave_cleared.emit(wave_number)
 	run_stats_changed.emit()
 
@@ -153,6 +166,42 @@ func get_cooldown_multiplier() -> float:
 	elif combo_count >= 3:
 		combo_cooldown_multiplier = 0.9
 	return max(cooldown_upgrade_multiplier * combo_cooldown_multiplier, 0.45)
+
+
+func get_score_multiplier(source: String = "weapon") -> float:
+	var multiplier: float = DifficultySettings.get_score_multiplier() * _get_combo_score_multiplier()
+	if source == "dash":
+		multiplier *= 1.25
+	elif source == "gravity_grenade":
+		multiplier *= 1.15
+	elif source == "wave":
+		multiplier = DifficultySettings.get_score_multiplier()
+	if overdrive_active and source != "wave":
+		multiplier *= 1.2
+	return multiplier
+
+
+func _add_score(base_score: int, source: String, world_position: Vector2) -> void:
+	if base_score <= 0:
+		return
+	var multiplier: float = get_score_multiplier(source)
+	var gained_score: int = maxi(1, int(round(float(base_score) * multiplier)))
+	run_score += gained_score
+	best_score = max(best_score, run_score)
+	score_changed.emit(run_score)
+	score_gained.emit(gained_score, run_score, source, world_position, multiplier)
+
+
+func _get_combo_score_multiplier() -> float:
+	if combo_count >= 12:
+		return 2.0
+	if combo_count >= 9:
+		return 1.6
+	if combo_count >= 6:
+		return 1.35
+	if combo_count >= 3:
+		return 1.15
+	return 1.0
 
 
 func _update_combo_multipliers() -> void:
@@ -222,13 +271,14 @@ func _set_overdrive(active: bool) -> void:
 
 
 func reset_data() -> void:
+	DifficultySettings.set_difficulty(difficulty)
 	max_health = DEFAULT_MAX_HEALTH
 	defence = DEFAULT_DEFENCE
 	attack = DEFAULT_ATTACK
 	movement_speed_multiplier = DEFAULT_MOVEMENT_SPEED_MULTIPLIER
 	cooldown_upgrade_multiplier = DEFAULT_COOLDOWN_UPGRADE_MULTIPLIER
 	dash_damage_multiplier = DEFAULT_DASH_DAMAGE_MULTIPLIER
-	player_coins = DEFAULT_PLAYER_COINS
+	player_coins = DifficultySettings.get_starting_coins()
 	owned_weapons = DEFAULT_OWNED_WEAPONS.duplicate()
 	max_round = 0
 	current_round = 0
@@ -236,6 +286,7 @@ func reset_data() -> void:
 	run_enemies_killed = 0
 	run_best_combo = 0
 	run_waves_cleared = 0
+	run_score = 0
 	tutorial_seen_this_session = false
 	reset_combo()
 
@@ -248,9 +299,11 @@ func save_game() -> void:
 		"movement_speed_multiplier": movement_speed_multiplier,
 		"cooldown_upgrade_multiplier": cooldown_upgrade_multiplier,
 		"dash_damage_multiplier": dash_damage_multiplier,
+		"difficulty": DifficultySettings.current_difficulty,
 		"player_coins":player_coins,
 		"owned_weapons":owned_weapons,
 		"max_round":max_round,
+		"best_score": best_score,
 		"tutorial_seen_this_session": tutorial_seen_this_session
 	}
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -278,9 +331,13 @@ func load_data() -> bool:
 			movement_speed_multiplier = float(data.get("movement_speed_multiplier", movement_speed_multiplier))
 			cooldown_upgrade_multiplier = float(data.get("cooldown_upgrade_multiplier", cooldown_upgrade_multiplier))
 			dash_damage_multiplier = float(data.get("dash_damage_multiplier", dash_damage_multiplier))
+			difficulty = str(data.get("difficulty", DifficultySettings.NORMAL))
+			DifficultySettings.set_difficulty(difficulty)
+			difficulty = DifficultySettings.current_difficulty
 			player_coins = int(data.get("player_coins", player_coins))
 			owned_weapons = data.get("owned_weapons", owned_weapons)
 			max_round = int(data.get("max_round", max_round))
+			best_score = int(data.get("best_score", best_score))
 			tutorial_seen_this_session = bool(data.get("tutorial_seen_this_session", max_round > 0))
 			current_round = 0
 			

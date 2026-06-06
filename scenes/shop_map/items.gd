@@ -74,7 +74,7 @@ func delete_items() -> void:
 func attempt_purchase(item: ItemData) -> void:
 	if item == null:
 		return
-	var price: int = item.price
+	var price: int = DifficultySettings.get_shop_price(item.price)
 	if PlayerData.player_coins < price:
 		show_shop_message("Need %d more coins" % (price - PlayerData.player_coins), Color(1.0, 0.45, 0.35, 1.0))
 		return
@@ -200,7 +200,8 @@ func set_item_texture(item_node_name: String, item: ItemData) -> void:
 func get_item_offer_text(item: ItemData) -> String:
 	var description: String = item_descriptions.get(item.item_name, "Permanent upgrade.")
 	var rarity := get_item_rarity(item)
-	return "[%s]\n%s\n%d coins\n%s\nPress F" % [rarity, item.item_name, item.price, description]
+	var price := DifficultySettings.get_shop_price(item.price)
+	return "[%s]\n%s\n%d coins\n%s\nPress F" % [rarity, item.item_name, price, description]
 
 
 func get_item_rarity(item: ItemData) -> String:

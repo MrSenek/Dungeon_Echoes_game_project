@@ -12,7 +12,7 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
-		PlayerData.add_coins(1)
+		PlayerData.add_coins(DifficultySettings.get_coin_reward(1))
 		audio_stream_player_2d.play()
 		set_collision_mask_value(1, false)
 		hide()

@@ -15,7 +15,7 @@ var stats_label: Label
 func _ready() -> void:
 	hide()
 	root.modulate.a = 0.0
-	panel.custom_minimum_size = Vector2(560, 340)
+	panel.custom_minimum_size = Vector2(580, 430)
 	_create_stats_label()
 	_setup_button_selection(restart_button)
 	_setup_button_selection(quit_button)
@@ -123,7 +123,10 @@ func _create_stats_label() -> void:
 
 func _update_stats_text() -> void:
 	summary.text = "The expedition has ended. Your best run details:"
-	stats_label.text = "Waves cleared: %d\nEnemies defeated: %d\nCoins collected: %d\nBest combo: x%d" % [
+	stats_label.text = "Score: %d\nBest score: %d\nDifficulty: %s\nWaves cleared: %d\nEnemies defeated: %d\nCoins collected: %d\nBest combo: x%d" % [
+		PlayerData.run_score,
+		PlayerData.best_score,
+		DifficultySettings.get_display_name(),
 		PlayerData.run_waves_cleared,
 		PlayerData.run_enemies_killed,
 		PlayerData.run_coins_collected,

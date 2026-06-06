@@ -39,6 +39,10 @@ var milestone_tween: Tween
 var screen_fx_tween: Tween
 var banner_tween: Tween
 var wave_banner_tween: Tween
+var score_tween: Tween
+var score_panel: PanelContainer
+var score_value_label: Label
+var score_mult_label: Label
 var combo_bar_fill: StyleBoxFlat
 var effect_layer: Control
 var screen_flash: ColorRect
@@ -65,6 +69,9 @@ func _ready() -> void:
 	PlayerData.combo_milestone_reached.connect(_on_combo_milestone_reached)
 	PlayerData.overdrive_changed.connect(_on_overdrive_changed)
 	PlayerData.wave_cleared.connect(_on_wave_cleared)
+	PlayerData.score_changed.connect(_on_score_changed)
+	PlayerData.score_gained.connect(_on_score_gained)
+	_create_score_panel()
 	_create_combo_label()
 	_create_combo_effects()
 	_prepare_slot_styles()
@@ -178,6 +185,8 @@ func _update_stats() -> void:
 	round_value.text = str(PlayerData.current_round)
 	coins_value.text = str(int(PlayerData.player_coins))
 	max_round_value.text = str(int(PlayerData.max_round))
+	if score_value_label:
+		score_value_label.text = str(PlayerData.run_score)
 
 
 func _update_weapon_slots() -> void:
@@ -253,6 +262,164 @@ func _prepare_slot_styles() -> void:
 			selected_flat.border_color = Color(0.35, 0.95, 1.0, 0.95)
 			selected_flat.bg_color = Color(0.04, 0.09, 0.095, 0.9)
 		selected_slot_styles[weapon_id] = selected_style
+
+
+func _create_score_panel() -> void:
+	score_panel = PanelContainer.new()
+	score_panel.name = "ScorePanel"
+	score_panel.position = Vector2(760, 24)
+	score_panel.custom_minimum_size = Vector2(400, 72)
+	score_panel.pivot_offset = Vector2(200, 36)
+
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.032, 0.028, 0.024, 0.82)
+	panel_style.border_color = Color(1.0, 0.74, 0.26, 0.72)
+	panel_style.border_width_left = 2
+	panel_style.border_width_top = 2
+	panel_style.border_width_right = 2
+	panel_style.border_width_bottom = 2
+	panel_style.corner_radius_top_left = 6
+	panel_style.corner_radius_top_right = 6
+	panel_style.corner_radius_bottom_right = 6
+	panel_style.corner_radius_bottom_left = 6
+	panel_style.content_margin_left = 16
+	panel_style.content_margin_top = 8
+	panel_style.content_margin_right = 16
+	panel_style.content_margin_bottom = 8
+	score_panel.add_theme_stylebox_override("panel", panel_style)
+
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 0)
+	score_panel.add_child(box)
+
+	var title := Label.new()
+	title.text = "SCORE"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_color_override("font_color", Color(0.78, 0.72, 0.62, 1.0))
+	title.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.9))
+	title.add_theme_constant_override("shadow_offset_x", 1)
+	title.add_theme_constant_override("shadow_offset_y", 1)
+	title.add_theme_font_size_override("font_size", 13)
+	box.add_child(title)
+
+	score_value_label = Label.new()
+	score_value_label.name = "ScoreValue"
+	score_value_label.text = "0"
+	score_value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	score_value_label.add_theme_color_override("font_color", Color(1.0, 0.86, 0.28, 1.0))
+	score_value_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.95))
+	score_value_label.add_theme_constant_override("shadow_offset_x", 3)
+	score_value_label.add_theme_constant_override("shadow_offset_y", 3)
+	score_value_label.add_theme_font_size_override("font_size", 34)
+	box.add_child(score_value_label)
+
+	score_mult_label = Label.new()
+	score_mult_label.name = "ScoreMultiplier"
+	score_mult_label.text = "x%.2f difficulty" % DifficultySettings.get_score_multiplier()
+	score_mult_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	score_mult_label.add_theme_color_override("font_color", Color(0.52, 0.95, 1.0, 1.0))
+	score_mult_label.add_theme_font_size_override("font_size", 12)
+	box.add_child(score_mult_label)
+	root.add_child(score_panel)
+
+
+func _on_score_changed(score: int) -> void:
+	if not score_value_label:
+		return
+	score_value_label.text = str(score)
+	score_panel.scale = Vector2(1.08, 1.08)
+	score_value_label.modulate = Color(1.35, 1.25, 0.72, 1.0)
+	if score_tween:
+		score_tween.kill()
+	score_tween = create_tween()
+	score_tween.set_parallel(true)
+	score_tween.tween_property(score_panel, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	score_tween.tween_property(score_value_label, "modulate", Color.WHITE, 0.2)
+
+
+func _on_score_gained(amount: int, _total_score: int, reason: String, world_position: Vector2, multiplier: float) -> void:
+	var text := "+%d" % amount
+	if multiplier >= 1.15:
+		text = "%s  x%.2f" % [text, multiplier]
+	var color := _get_score_reason_color(reason, multiplier)
+	if reason == "wave":
+		_show_wave_banner("WAVE BONUS  +%d" % amount, color)
+		_spawn_score_popup(text, Vector2(960, 162), color, true)
+	else:
+		_spawn_score_popup(text, _score_world_to_screen(world_position), color, false)
+
+
+func _spawn_score_popup(text: String, screen_position: Vector2, color: Color, big := false) -> void:
+	if not effect_layer:
+		return
+
+	var label := Label.new()
+	label.name = "ScorePopup"
+	label.text = text
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.custom_minimum_size = Vector2(240, 54) if big else Vector2(170, 42)
+	label.position = screen_position - label.custom_minimum_size * 0.5 + Vector2(randf_range(-14.0, 14.0), randf_range(-10.0, 8.0))
+	label.pivot_offset = label.custom_minimum_size * 0.5
+	label.add_theme_font_size_override("font_size", 34 if big else 24)
+	label.add_theme_color_override("font_color", color)
+	label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.95))
+	label.add_theme_constant_override("shadow_offset_x", 3)
+	label.add_theme_constant_override("shadow_offset_y", 3)
+	effect_layer.add_child(label)
+
+	_spawn_score_sparks(screen_position, color, big)
+
+	var popup_tween := create_tween()
+	popup_tween.set_parallel(true)
+	popup_tween.tween_property(label, "position", label.position + Vector2(0, -54 if big else -38), 0.52).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	popup_tween.tween_property(label, "scale", Vector2(1.22, 1.22) if big else Vector2(1.12, 1.12), 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	popup_tween.tween_property(label, "scale", Vector2.ONE, 0.18).set_delay(0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	popup_tween.tween_property(label, "modulate:a", 0.0, 0.22).set_delay(0.36)
+	popup_tween.tween_callback(label.queue_free).set_delay(0.62)
+
+
+func _spawn_score_sparks(screen_position: Vector2, color: Color, big: bool) -> void:
+	var spark_count: int = 8 if big else 5
+	for i in range(spark_count):
+		var spark := ColorRect.new()
+		spark.name = "ScoreSpark"
+		spark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		spark.color = Color(color.r, color.g, color.b, 0.54)
+		spark.size = Vector2(randf_range(12.0, 26.0), randf_range(2.0, 3.5))
+		spark.pivot_offset = spark.size * 0.5
+		spark.rotation = TAU * float(i) / float(spark_count) + randf_range(-0.22, 0.22)
+		spark.position = screen_position - spark.pivot_offset
+		effect_layer.add_child(spark)
+
+		var direction: Vector2 = Vector2.RIGHT.rotated(spark.rotation)
+		var distance: float = randf_range(34.0, 68.0) if big else randf_range(22.0, 44.0)
+		var spark_tween := create_tween()
+		spark_tween.set_parallel(true)
+		spark_tween.tween_property(spark, "position", spark.position + direction * distance, 0.26).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		spark_tween.tween_property(spark, "scale", Vector2(1.45, 0.35), 0.2)
+		spark_tween.tween_property(spark, "modulate:a", 0.0, 0.18).set_delay(0.08)
+		spark_tween.tween_callback(spark.queue_free).set_delay(0.3)
+
+
+func _score_world_to_screen(world_position: Vector2) -> Vector2:
+	if world_position == PlayerData.NO_WORLD_SCORE_POSITION:
+		return Vector2(960, 180)
+	return get_viewport().get_canvas_transform() * world_position
+
+
+func _get_score_reason_color(reason: String, multiplier: float) -> Color:
+	if reason == "wave":
+		return Color(0.54, 0.96, 1.0, 1.0)
+	if reason == "dash":
+		return Color(0.62, 0.9, 1.0, 1.0)
+	if reason == "gravity_grenade":
+		return Color(0.78, 0.48, 1.0, 1.0)
+	if multiplier >= 1.6:
+		return Color(1.0, 0.32, 0.22, 1.0)
+	if multiplier >= 1.25:
+		return Color(1.0, 0.68, 0.2, 1.0)
+	return Color(1.0, 0.88, 0.32, 1.0)
 
 
 func _create_combo_label() -> void:

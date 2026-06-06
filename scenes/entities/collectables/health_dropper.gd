@@ -15,7 +15,7 @@ static func try_drop(drop_position: Vector2, base_chance: float) -> void:
 	if not tree or not tree.current_scene:
 		return
 
-	var chance := _get_adjusted_chance(base_chance)
+	var chance := _get_adjusted_chance(DifficultySettings.get_health_drop_chance(base_chance))
 	if randf() > chance:
 		return
 
