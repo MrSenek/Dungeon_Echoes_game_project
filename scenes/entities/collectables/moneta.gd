@@ -4,6 +4,9 @@ extends RigidBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var graphics_settings = get_node_or_null("/root/GraphicsSettings")
+	if graphics_settings:
+		graphics_settings.apply_to_tree(self)
 	var Throw_x = randi_range(-100,100)
 	var Throw_y = randi_range(-120,-160)
 	var Throw = Vector2(Throw_x, Throw_y)

@@ -17,6 +17,9 @@ var current_time = 0
 
 func _ready() -> void:
 	hitstop.ignore_time_scale = true
+	var graphics_settings = get_node_or_null("/root/GraphicsSettings")
+	if graphics_settings:
+		graphics_settings.apply_to_tree(self)
 	audio_stream_player_2d.play()
 	closest_enemy = find_enemy()
 	if closest_enemy == null:

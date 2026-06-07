@@ -33,6 +33,9 @@ func _ready() -> void:
 	gravity_point_unit_distance = 100
 	gravity = 1000
 	_setup_visuals()
+	var graphics_settings = get_node_or_null("/root/GraphicsSettings")
+	if graphics_settings:
+		graphics_settings.apply_to_tree(self)
 	
 	await get_tree().create_timer(max(life_time - 0.35, 0.1)).timeout
 	_collapse_out()

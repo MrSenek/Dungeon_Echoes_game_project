@@ -63,9 +63,15 @@ func calc_spawn_interval() -> float:
 
 func fill_queue(budget):
 	wave_queue.clear()
+	var all_enemies: Array = []
 	var available_enemies: Array = []
 	for scene in enemy_scenes:
 		var temp_enemy = scene.instantiate()
+		if temp_enemy == null or temp_enemy.stats == null:
+			if temp_enemy:
+				temp_enemy.queue_free()
+			continue
+		all_enemies.append({"scene":scene, "cost": temp_enemy.stats.spawn_cost})
 		if DifficultySettings.get_enemy_unlock_wave(temp_enemy.stats.min_wave) <= current_wave:
 			available_enemies.append({"scene":scene, "cost": temp_enemy.stats.spawn_cost})
 		temp_enemy.queue_free()
@@ -77,6 +83,13 @@ func fill_queue(budget):
 		var chosen = affordable.pick_random()
 		wave_queue.append(chosen.scene)
 		budget -= chosen.cost
+
+	if wave_queue.is_empty() and not available_enemies.is_empty():
+		available_enemies.sort_custom(func(a, b): return a.cost < b.cost)
+		wave_queue.append(available_enemies[0].scene)
+	elif wave_queue.is_empty() and not all_enemies.is_empty():
+		all_enemies.sort_custom(func(a, b): return a.cost < b.cost)
+		wave_queue.append(all_enemies[0].scene)
 
 func spawn_random(scene: PackedScene) -> bool:
 	var sp = get_safe_spawn_point()
@@ -287,7 +300,16 @@ func get_safe_spawn_point() -> Node2D:
 			safe_spawn_points.append(spawn_point)
 
 	if safe_spawn_points.is_empty():
-		return null
+		var farthest_spawn_point: Node2D = null
+		var farthest_distance := -INF
+		for spawn_point in spawn_points:
+			if spawn_point == null:
+				continue
+			var distance := spawn_point.global_position.distance_to(player.global_position)
+			if distance > farthest_distance:
+				farthest_distance = distance
+				farthest_spawn_point = spawn_point
+		return farthest_spawn_point
 
 	return safe_spawn_points.pick_random()
 

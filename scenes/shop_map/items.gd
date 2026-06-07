@@ -7,6 +7,7 @@ extends Node2D
 
 const EXTRA_ITEMS_PATH := "res://scenes/shop_map/items"
 const WEAPON_ITEMS := ["Electric Weapon", "Gravity Grenade", "Self Guiding Missile"]
+const SHOP_FONT: FontFile = preload("res://scenes/shop_map/VCR_OSD_MONO_1.001.ttf")
 
 
 var player_in = {
@@ -21,8 +22,10 @@ var player_in = {
 var item1: ItemData
 var item2: ItemData
 var item3: ItemData
+var item_offers := {}
 var shop_available := true
 var shop_hint_label: Label
+var shop_message_root: Node2D
 var shop_message_label: Label
 var shop_message_tween: Tween
 var item_nodes := {}
@@ -59,19 +62,18 @@ func _process(_delta: float) -> void:
 	if not shop_available:
 		return
 	if player_in["item1"] and Input.is_action_just_pressed("interaction"):
-		attempt_purchase(item1)
+		attempt_purchase("item1")
+		return
 	if player_in["item2"] and Input.is_action_just_pressed("interaction"):
-		attempt_purchase(item2)
+		attempt_purchase("item2")
+		return
 	if player_in["item3"] and Input.is_action_just_pressed("interaction"):
-		attempt_purchase(item3)
-
-func delete_items() -> void:
-		item_2.queue_free()
-		item_3.queue_free()
-		item_1.queue_free()
+		attempt_purchase("item3")
+		return
 
 
-func attempt_purchase(item: ItemData) -> void:
+func attempt_purchase(item_key: String) -> void:
+	var item := item_offers.get(item_key) as ItemData
 	if item == null:
 		return
 	var price: int = DifficultySettings.get_shop_price(item.price)
@@ -90,9 +92,8 @@ func attempt_purchase(item: ItemData) -> void:
 	PlayerData.player_coins -= price
 	give_item(item)
 	audio_stream_player.play()
-	shop_available = false
 	show_shop_message("Picked: %s" % item.item_name, Color(0.55, 1.0, 0.65, 1.0))
-	delete_items()
+	remove_purchased_item(item_key)
 
 
 func randomize_items() -> void:
@@ -102,6 +103,7 @@ func randomize_items() -> void:
 		push_warning("Shop needs at least 3 available items after filtering owned weapons.")
 		return
 	item1 = items_list.pick_random()
+	item_offers["item1"] = item1
 	text = get_item_offer_text(item1)
 	get_node("Item1/Node2D/Label").text = text
 	set_item_texture("Item1", item1)
@@ -109,6 +111,7 @@ func randomize_items() -> void:
 	items_list.erase(item1)
 	
 	item2 = items_list.pick_random()
+	item_offers["item2"] = item2
 	text = get_item_offer_text(item2)
 	get_node("Item2/Node2D/Label").text = text
 	set_item_texture("Item2", item2)
@@ -116,6 +119,7 @@ func randomize_items() -> void:
 	items_list.erase(item2)
 	
 	item3 = items_list.pick_random()
+	item_offers["item3"] = item3
 	text = get_item_offer_text(item3)
 	get_node("Item3/Node2D/Label").text = text
 	set_item_texture("Item3", item3)
@@ -204,6 +208,26 @@ func get_item_offer_text(item: ItemData) -> String:
 	return "[%s]\n%s\n%d coins\n%s\nPress F" % [rarity, item.item_name, price, description]
 
 
+func remove_purchased_item(item_key: String) -> void:
+	player_in[item_key] = false
+	item_offers.erase(item_key)
+
+	var item_node: Node2D = item_nodes.get(item_key) as Node2D
+	if item_node and is_instance_valid(item_node):
+		item_node.queue_free()
+
+	if item_offers.is_empty():
+		shop_available = false
+	else:
+		update_shop_hint()
+
+
+func update_shop_hint() -> void:
+	if not shop_hint_label:
+		return
+	shop_hint_label.text = ""
+
+
 func get_item_rarity(item: ItemData) -> String:
 	if item.item_name == "1,5x Damage":
 		return "CURSED"
@@ -245,26 +269,35 @@ func create_shop_info_labels() -> void:
 	shop_hint_label.custom_minimum_size = Vector2(500, 42)
 	shop_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	shop_hint_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	shop_hint_label.text = "CHOOSE ONE UPGRADE"
+	shop_hint_label.text = ""
+	shop_hint_label.visible = false
 	shop_hint_label.add_theme_font_size_override("font_size", 24)
+	shop_hint_label.add_theme_font_override("font", SHOP_FONT)
 	shop_hint_label.add_theme_color_override("font_color", Color(1.0, 0.88, 0.48, 1.0))
 	shop_hint_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.9))
 	shop_hint_label.add_theme_constant_override("shadow_offset_x", 2)
 	shop_hint_label.add_theme_constant_override("shadow_offset_y", 2)
 	add_child(shop_hint_label)
 
+	shop_message_root = Node2D.new()
+	shop_message_root.name = "ShopMessageRoot"
+	shop_message_root.position = Vector2(-250, 74)
+	shop_message_root.scale = Vector2(0.16, 0.16)
+	add_child(shop_message_root)
+
 	shop_message_label = Label.new()
 	shop_message_label.name = "ShopMessage"
-	shop_message_label.position = Vector2(-250, 74)
-	shop_message_label.custom_minimum_size = Vector2(500, 36)
+	shop_message_label.position = Vector2.ZERO
+	shop_message_label.custom_minimum_size = Vector2(3125, 225)
 	shop_message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	shop_message_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	shop_message_label.modulate.a = 0.0
-	shop_message_label.add_theme_font_size_override("font_size", 18)
+	shop_message_label.add_theme_font_override("font", SHOP_FONT)
+	shop_message_label.add_theme_font_size_override("font_size", 120)
 	shop_message_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.9))
-	shop_message_label.add_theme_constant_override("shadow_offset_x", 2)
-	shop_message_label.add_theme_constant_override("shadow_offset_y", 2)
-	add_child(shop_message_label)
+	shop_message_label.add_theme_constant_override("shadow_offset_x", 10)
+	shop_message_label.add_theme_constant_override("shadow_offset_y", 10)
+	shop_message_root.add_child(shop_message_label)
 
 
 func prepare_offer_label(item_node_name: String) -> void:

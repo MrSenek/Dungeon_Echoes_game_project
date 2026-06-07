@@ -6,6 +6,9 @@ extends Area2D
 
 
 func _ready() -> void:
+	var graphics_settings = get_node_or_null("/root/GraphicsSettings")
+	if graphics_settings:
+		graphics_settings.apply_to_tree(self)
 	line_2d.visible = false
 	healing_cooldown.start(2)
 

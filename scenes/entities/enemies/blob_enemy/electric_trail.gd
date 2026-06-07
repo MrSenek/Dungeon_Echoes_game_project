@@ -10,6 +10,9 @@ var last_frame_played: bool = false
 var dmg_multiplier 
 
 func _ready() -> void:
+	var graphics_settings = get_node_or_null("/root/GraphicsSettings")
+	if graphics_settings:
+		graphics_settings.apply_to_tree(self)
 	life_timer.start()
 	animated_sprite_2d.frame = randi_range(0,18)
 	animated_sprite_2d.sprite_frames.set_animation_loop("default", true)

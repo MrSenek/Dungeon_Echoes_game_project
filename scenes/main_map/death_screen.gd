@@ -26,6 +26,7 @@ func show_death_screen() -> void:
 		show_tween.kill()
 
 	show()
+	get_tree().paused = true
 	Engine.time_scale = 0
 	restart_button.disabled = true
 	quit_button.disabled = true
@@ -55,12 +56,14 @@ func _finish_show() -> void:
 
 
 func _on_restart_button_pressed() -> void:
+	get_tree().paused = false
 	Engine.time_scale = 1
 	hide()
 	get_tree().current_scene.reset_scene()
 
 
 func _on_quit_button_pressed() -> void:
+	get_tree().paused = false
 	Engine.time_scale = 1
 	PlayerData.save_game()
 	get_tree().quit()

@@ -18,6 +18,9 @@ func _ready() -> void:
 	if active_smoke_clouds >= MAX_ACTIVE_SMOKE_CLOUDS:
 		queue_free()
 		return
+	var graphics_settings = get_node_or_null("/root/GraphicsSettings")
+	if graphics_settings:
+		graphics_settings.apply_to_tree(self)
 	active_smoke_clouds += 1
 	counted_as_active = true
 
